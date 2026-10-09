@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical English Master 2.1</title>
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Thư viện đọc Excel -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+    <style>
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
+        .animate-slideUp { animation: slideUp 0.3s ease-out forwards; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+
+    <meta name="theme-color" content="#004b87">
+    <meta name="apple-mobile-web-app-title" content="Medical English">
+    <meta name="format-detection" content="telephone=no">
+    <style>
+      :root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+      *{box-sizing:border-box}
+      html,body,#root{width:100%;height:100%;margin:0}
+      html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+      body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+      button,input{font-family:inherit}
+      button{touch-action:manipulation}
+      .v2-shell{min-height:100dvh}
+      .v2-bottom{display:none}
+      .v2-setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #eef2f7}
+      .v2-dark body{background:#0f172a!important}
+      .v2-dark .v2-card{background:#111827!important;color:#e5e7eb!important;border-color:#263244!important}
+      .v2-dark .v2-muted{color:#94a3b8!important}
+      .v2-dark .v2-panel{background:#0f172a!important;color:#e5e7eb!important}
+      .v2-dark .v2-bottom{background:rgba(15,23,42,.97);border-color:#263244}
+      .v2-dark .v2-bottom button{color:#94a3b8}
+      .v2-dark .v2-bottom button.active{background:#172554;color:#60a5fa}
+      .v2-switch{width:52px;height:30px;border-radius:99px;border:0;background:#cbd5e1;padding:3px;position:relative}
+      .v2-switch span{display:block;width:24px;height:24px;border-radius:50%;background:white;transition:.2s}
+      .v2-switch.on{background:#004b87}
+      .v2-switch.on span{transform:translateX(22px)}
+      .v2-progress-ring{font-variant-numeric:tabular-nums}
+      @media(max-width:767px){
+        body{overflow:hidden!important}
+        #root>div{height:100dvh!important;min-height:100dvh}
+        #root .hidden.md\:flex{display:none!important}
+        #root .p-8{padding:16px!important}
+        #root .p-6{padding:14px!important}
+        #root .p-10{padding:20px 16px!important}
+        #root .p-12{padding:22px 16px!important}
+        #root .p-16{padding:24px 16px!important}
+        #root h1{font-size:27px!important;line-height:1.12!important}
+        #root .text-4xl{font-size:27px!important}
+        #root .text-3xl{font-size:23px!important}
+        #root .text-2xl{font-size:20px!important}
+        #root .md\:grid-cols-4{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+        #root .md\:grid-cols-2,#root .lg\:grid-cols-3{grid-template-columns:1fr!important}
+        #root input[type=text]{font-size:16px!important;min-height:52px}
+        #root button{min-height:44px}
+        #root .min-h-\[450px\]{min-height:380px!important}
+        #root .text-5xl{font-size:37px!important}
+        #root .md\:text-6xl{font-size:39px!important}
+        #root .md\:text-5xl{font-size:30px!important}
+        #root .md\:text-3xl{font-size:23px!important}
+        #root .v2-action-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:9px!important}
+        #root .v2-action-grid button{min-height:62px}
+        #root .v2-bottom{display:flex!important;position:fixed;left:0;right:0;bottom:0;z-index:9999;height:calc(66px + var(--safe-bottom));padding:5px 7px var(--safe-bottom);background:rgba(255,255,255,.97);border-top:1px solid #e5e7eb;box-shadow:0 -8px 24px rgba(0,0,0,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+        #root .v2-bottom button{flex:1;border:0;background:transparent;border-radius:13px;color:#64748b;font-weight:800;font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+        #root .v2-bottom button i{font-size:17px}
+        #root .v2-bottom button.active{background:#eff6ff;color:#004b87}
+        #root .v2-scroll{padding-bottom:calc(80px + var(--safe-bottom))!important}
+      }
+    </style>
+
+
+    <meta name="theme-color" content="#0f766e">
+    <meta name="description" content="Ứng dụng học từ vựng tiếng Anh y khoa bằng flashcards, điền từ và ôn tập ngắt quãng.">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Medical English">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+</head>
+<body class="bg-gray-50 text-gray-900 overflow-hidden font-sans">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        const CollapsibleSection = ({ title, icon, children }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            return (
+                <div className="border-b border-gray-100 last:border-0 bg-white">
+                    <button 
+                        onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
+                        className="w-full flex justify-between items-center py-4 px-5 text-left hover:bg-gray-50 transition-colors"
+                    >
+                        <span className="font-bold text-[#004b87] text-sm flex items-center gap-3 uppercase tracking-wider">
+                            <i className={`fas ${icon} w-4 text-center text-blue-400`}></i> {title}
+                        </span>
+                        <i className={`fas fa-chevron-${isOpen ? 'up' : 'down'} text-gray-400 text-sm`}></i>
+                    </button>
+                    {isOpen && (
+                        <div className="px-5 pb-5 pt-1 text-gray-700 text-sm animate-fadeIn" onClick={(e) => e.stopPropagation()}>
+                            {children}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('home');
+            const [terms, setTerms] = useState([]);
+            const [decks, setDecks] = useState([]);
+            
+            // Learning State
+            const [activeDeck, setActiveDeck] = useState(null);
+            const [learningQueue, setLearningQueue] = useState([]);
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [isRevealed, setIsRevealed] = useState(false);
+            const [sessionStats, setSessionStats] = useState({ studied: 0, again: 0, hard: 0, good: 0, easy: 0 });
+            const [showSummary, setShowSummary] = useState(false);
+            
+            // Search State
+            
+            const [searchQuery, setSearchQuery] = useState("");
+            const [darkMode, setDarkMode] = useState(() => localStorage.getItem('mem_dark_mode') === '1');
+            const [dailyGoal, setDailyGoal] = useState(() => Number(localStorage.getItem('mem_daily_goal') || 20));
+            const [dailyCount, setDailyCount] = useState(() => Number(localStorage.getItem('mem_daily_count') || 0));
+            const [streak, setStreak] = useState(() => Number(localStorage.getItem('mem_streak') || 0));
+            const [lastStudyDate, setLastStudyDate] = useState(() => localStorage.getItem('mem_last_study_date') || '');
+            const [favoriteIds, setFavoriteIds] = useState(() => JSON.parse(localStorage.getItem('mem_favorites') || '[]'));
+            const [showSettings, setShowSettings] = useState(false);
+            const [newWord, setNewWord] = useState({term:'', vietnamese:'', type:'', ipa:'', example:'', exampleVi:'', definition:''});
+            const [clozeIndex, setClozeIndex] = useState(0);
+            const [clozeAnswer, setClozeAnswer] = useState('');
+            const [clozeChecked, setClozeChecked] = useState(false);
+            const [clozeQueue, setClozeQueue] = useState([]);
+
+
+            useEffect(() => {
+                const savedTerms = localStorage.getItem('medical_terms_db');
+                const savedDecks = localStorage.getItem('medical_decks_db');
+                if (savedTerms && savedDecks) {
+                    try {
+                        setTerms(JSON.parse(savedTerms));
+                        setDecks(JSON.parse(savedDecks));
+                    } catch (e) { console.error("Lỗi đọc LocalStorage", e); }
+                }
+            }, []);
+
+            useEffect(() => {
+                document.documentElement.classList.toggle('v2-dark', darkMode);
+                localStorage.setItem('mem_dark_mode', darkMode ? '1' : '0');
+            }, [darkMode]);
+
+            useEffect(() => {
+                localStorage.setItem('mem_daily_goal', String(dailyGoal));
+                localStorage.setItem('mem_daily_count', String(dailyCount));
+                localStorage.setItem('mem_streak', String(streak));
+                if (lastStudyDate) localStorage.setItem('mem_last_study_date', lastStudyDate);
+                localStorage.setItem('mem_favorites', JSON.stringify(favoriteIds));
+            }, [dailyGoal, dailyCount, streak, lastStudyDate, favoriteIds]);
+
+            const todayKey = () => new Date().toISOString().slice(0,10);
+            const markStudyDay = () => {
+                const today = todayKey();
+                if (lastStudyDate === today) return;
+                const prev = new Date();
+                prev.setDate(prev.getDate()-1);
+                const prevKey = prev.toISOString().slice(0,10);
+                setStreak(lastStudyDate === prevKey ? streak + 1 : 1);
+                setLastStudyDate(today);
+            };
+
+            const toggleFavorite = (id) => {
+                setFavoriteIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+            };
+
+            const speakTerm = (term) => {
+                if (!('speechSynthesis' in window) || !term) return;
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(term);
+                u.lang = 'en-US';
+                u.rate = 0.82;
+                window.speechSynthesis.speak(u);
+            };
+
+            const exportBackup = () => {
+                const payload = {
+                    version: '2.0',
+                    exportedAt: new Date().toISOString(),
+                    terms, decks, favoriteIds, dailyGoal, dailyCount, streak, lastStudyDate
+                };
+                const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href=url; a.download='medical-english-master-backup.json';
+                document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+            };
+
+            const importBackup = (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = ev => {
+                    try {
+                        const p = JSON.parse(ev.target.result);
+                        if (!Array.isArray(p.terms) || !Array.isArray(p.decks)) throw new Error('File backup không hợp lệ');
+                        setTerms(p.terms); setDecks(p.decks);
+                        setFavoriteIds(Array.isArray(p.favoriteIds) ? p.favoriteIds : []);
+                        setDailyGoal(Number(p.dailyGoal) || 20);
+                        setDailyCount(Number(p.dailyCount) || 0);
+                        setStreak(Number(p.streak) || 0);
+                        setLastStudyDate(p.lastStudyDate || '');
+                        saveToStorage(p.terms, p.decks);
+                        alert('Khôi phục dữ liệu thành công.');
+                    } catch(err) { alert('Không thể khôi phục: ' + err.message); }
+                };
+                reader.readAsText(file);
+                e.target.value='';
+            };
+
+            const resetDailyProgress = () => {
+                setDailyCount(0);
+                localStorage.setItem('mem_daily_count','0');
+            };
+
+            const startCloze = () => {
+                const eligible = terms.filter(t => t.example && String(t.example).trim().length > 0);
+                if (!eligible.length) { alert('Chưa có câu ví dụ. Hãy nhập từ có câu ví dụ tiếng Anh hoặc bổ sung câu ví dụ cho từ.'); return; }
+                setClozeQueue([...eligible].sort(() => Math.random() - 0.5));
+                setClozeIndex(0); setClozeAnswer(''); setClozeChecked(false); setActiveTab('cloze');
+            };
+            const addNewTerm = (e) => {
+                e.preventDefault();
+                if (!newWord.term.trim() || !newWord.vietnamese.trim()) { alert('Vui lòng nhập thuật ngữ tiếng Anh và nghĩa tiếng Việt.'); return; }
+                const id = 'USER_' + Date.now();
+                const deckId = 'CUSTOM_TERMS';
+                const existingDeck = decks.some(d => d.id === deckId);
+                const item = { ...newWord, term:newWord.term.trim(), vietnamese:newWord.vietnamese.trim(), definition:newWord.definition.trim() || newWord.vietnamese.trim(), example:newWord.example.trim(), exampleVi:newWord.exampleVi.trim(), id, deckId, collocations:[], status:'new', interval:0, easeFactor:2.5, dueAt:Date.now() };
+                const nextTerms = [...terms, item];
+                const nextDecks = existingDeck ? decks.map(d => d.id===deckId ? {...d,count:(d.count||0)+1} : d) : [...decks,{id:deckId,title:'Từ tự thêm',topic:'Từ tự thêm',count:1}];
+                setTerms(nextTerms); setDecks(nextDecks); saveToStorage(nextTerms,nextDecks);
+                setNewWord({term:'', vietnamese:'', type:'', ipa:'', example:'', exampleVi:'', definition:''});
+                alert('Đã thêm thuật ngữ mới!');
+            };
+            const renderAddWord = () => (
+                <div className="v2-scroll p-6 max-w-3xl mx-auto h-full overflow-y-auto">
+                    <h2 className="text-3xl font-black text-gray-800 mb-2">Thêm từ mới</h2><p className="text-gray-500 mb-5">Từ mới được lưu trên thiết bị và xuất hiện trong bộ “Từ tự thêm”.</p>
+                    <form onSubmit={addNewTerm} className="v2-card bg-white rounded-2xl border p-5 space-y-3">
+                    {[['term','Thuật ngữ tiếng Anh *'],['vietnamese','Nghĩa tiếng Việt *'],['type','Loại từ (noun, verb...)'],['ipa','Phiên âm IPA'],['definition','Định nghĩa / ghi chú'],['example','Câu ví dụ tiếng Anh (dùng cho bài điền từ)'],['exampleVi','Dịch câu ví dụ tiếng Việt']].map(([key,label])=><label key={key} className="block text-sm font-bold text-gray-700">{label}<textarea rows={key==='example'?3:1} value={newWord[key]} onChange={e=>setNewWord(v=>({...v,[key]:e.target.value}))} className="mt-1 w-full border rounded-xl p-3 font-normal" placeholder={label}/></label>)}
+                    <button type="submit" className="w-full rounded-xl bg-[#004b87] text-white font-black py-3">Lưu từ mới</button></form>
+                </div>
+            );
+            const renderCloze = () => {
+                if (!clozeQueue.length) return <div className="p-6">Chưa có câu ví dụ để luyện tập.</div>;
+                const item = clozeQueue[clozeIndex];
+                const escaped = String(item.term||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+                const hasTerm = item.term && new RegExp(escaped,'i').test(item.example||'');
+                const prompt = hasTerm ? String(item.example).replace(new RegExp(escaped,'i'),'________') : String(item.example);
+                const correct = clozeAnswer.trim().toLowerCase() === String(item.term).trim().toLowerCase();
+                return <div className="v2-scroll p-6 max-w-3xl mx-auto h-full overflow-y-auto"><div className="flex justify-between items-center mb-5"><h2 className="text-2xl font-black text-[#004b87]">Điền từ còn thiếu</h2><button onClick={()=>setActiveTab('home')} className="px-4 py-2 rounded-xl bg-gray-100">Thoát</button></div>
+                <div className="v2-card bg-white rounded-2xl border p-5"><p className="text-sm text-gray-500 mb-3">Câu {clozeIndex+1} / {clozeQueue.length}</p><p className="text-xl leading-relaxed font-semibold mb-4">{prompt}</p>{!hasTerm && <p className="text-sm text-gray-500 mb-3">Gợi ý nghĩa: {item.vietnamese}</p>}
+                <input value={clozeAnswer} onChange={e=>setClozeAnswer(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!clozeChecked){setClozeChecked(true)}}} className="w-full border-2 rounded-xl p-3 mb-3" placeholder="Nhập thuật ngữ tiếng Anh..." />
+                {!clozeChecked ? <button onClick={()=>setClozeChecked(true)} className="w-full bg-[#004b87] text-white font-bold rounded-xl p-3">Kiểm tra đáp án</button> : <div className="rounded-xl bg-blue-50 p-4"><p className={"font-black " + (correct ? "text-green-700" : "text-red-600")}>{correct ? "Chính xác!" : "Chưa chính xác — hãy ghi nhớ đáp án"}</p><p className="font-black text-[#004b87] mt-1">Đáp án: {item.term}</p><p className="text-gray-700">{item.vietnamese}</p>{item.exampleVi&&<p className="italic text-gray-500 mt-1">{item.exampleVi}</p>}<button onClick={()=>{setClozeIndex(i=>(i+1)%clozeQueue.length);setClozeAnswer('');setClozeChecked(false)}} className="mt-3 w-full bg-[#004b87] text-white rounded-xl p-3 font-bold">Câu tiếp theo</button></div>}</div></div>;
+            };
+
+            const renderSettings = () => (
+                <div className="v2-scroll p-8 max-w-3xl mx-auto h-full overflow-y-auto animate-fadeIn">
+                    <div className="mb-7">
+                        <h2 className="text-3xl font-extrabold text-gray-800 tracking-tight">Cài đặt</h2>
+                        <p className="text-gray-500 text-sm mt-2">Cá nhân hóa Medical English Master 2.1</p>
+                    </div>
+                    <div className="v2-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                        <div className="v2-setting-row">
+                            <div><b>Chế độ tối</b><div className="text-xs text-gray-500 mt-1">Dễ học buổi tối trên iPhone</div></div>
+                            <button className={`v2-switch ${darkMode?'on':''}`} onClick={()=>setDarkMode(v=>!v)}><span></span></button>
+                        </div>
+                        <div className="v2-setting-row">
+                            <div><b>Mục tiêu mỗi ngày</b><div className="text-xs text-gray-500 mt-1">Số thuật ngữ muốn học/ngày</div></div>
+                            <select value={dailyGoal} onChange={e=>setDailyGoal(Number(e.target.value))} className="border rounded-xl px-3 py-2 font-bold">
+                                {[10,15,20,30,40,50].map(n=><option key={n} value={n}>{n} từ</option>)}
+                            </select>
+                        </div>
+                        <div className="v2-setting-row">
+                            <div><b>Streak</b><div className="text-xs text-gray-500 mt-1">Chuỗi ngày học liên tiếp</div></div>
+                            <span className="font-black text-amber-500 text-xl">🔥 {streak}</span>
+                        </div>
+                        <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onClick={()=>setActiveTab('addword')} className="py-3 rounded-xl bg-indigo-50 text-indigo-700 font-bold"><i className="fas fa-plus mr-2"></i>Thêm từ mới</button>
+                            <button onClick={startCloze} className="py-3 rounded-xl bg-purple-50 text-purple-700 font-bold"><i className="fas fa-pen mr-2"></i>Ôn điền từ</button>
+                            <button onClick={startQuickReview} className="py-3 rounded-xl bg-cyan-50 text-cyan-700 font-bold"><i className="fas fa-calendar-check mr-2"></i>Ôn SRS đến hạn</button>
+                            <button onClick={exportBackup} className="py-3 rounded-xl bg-blue-50 text-[#004b87] font-bold"><i className="fas fa-download mr-2"></i>Xuất backup</button>
+                            <label className="py-3 rounded-xl bg-gray-50 text-gray-700 font-bold text-center cursor-pointer"><i className="fas fa-upload mr-2"></i>Nhập backup<input type="file" accept=".json" className="hidden" onChange={importBackup}/></label>
+                            <button onClick={resetDailyProgress} className="py-3 rounded-xl bg-amber-50 text-amber-700 font-bold"><i className="fas fa-rotate-left mr-2"></i>Reset mục tiêu hôm nay</button>
+                            <button onClick={resetData} className="py-3 rounded-xl bg-red-50 text-red-600 font-bold"><i className="fas fa-trash-alt mr-2"></i>Xóa toàn bộ dữ liệu</button>
+                        </div>
+                    </div>
+                    <div className="v2-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mt-4">
+                        <h3 className="font-black text-gray-800 mb-3">Medical English Master 2.1</h3>
+                        <p className="text-sm text-gray-500 leading-relaxed">Bản tối ưu iPhone, không dùng PWA. Dữ liệu học được lưu cục bộ trong trình duyệt của thiết bị.</p>
+                    </div>
+                </div>
+            );
+
+            const saveToStorage = (newTerms, newDecks) => {
+                try {
+                    localStorage.setItem('medical_terms_db', JSON.stringify(newTerms));
+                    if (newDecks) localStorage.setItem('medical_decks_db', JSON.stringify(newDecks));
+                } catch (e) { console.error("Local storage đầy", e); }
+            };
+
+            const resetData = () => {
+                if (window.confirm("Bạn có chắc muốn xóa toàn bộ dữ liệu và tiến trình học?")) {
+                    localStorage.removeItem('medical_terms_db');
+                    localStorage.removeItem('medical_decks_db');
+                    localStorage.removeItem('mem_daily_goal');
+                    localStorage.removeItem('mem_daily_count');
+                    localStorage.removeItem('mem_streak');
+                    localStorage.removeItem('mem_last_study_date');
+                    localStorage.removeItem('mem_favorites');
+                    setTerms([]);
+                    setDecks([]);
+                    setActiveTab('home');
+                }
+            };
+
+            const handleFileUpload = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    try {
+                        const data = evt.target.result;
+                        const workbook = XLSX.read(data, { type: 'binary' });
+                        
+                        let allParsedTerms = [];
+                        let parsedDecks = [];
+                        let deckCounter = 1;
+                        let idCounter = 1;
+
+                        const sheetsToProcess = workbook.SheetNames.length > 1 ? workbook.SheetNames.slice(1) : workbook.SheetNames;
+
+                        sheetsToProcess.forEach(sheetName => {
+                            const worksheet = workbook.Sheets[sheetName];
+                            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" }); 
+                            if (jsonData.length === 0) return;
+
+                            let headerRowIndex = -1;
+                            let colMap = { term: -1, type: -1, ipa: -1, viet: -1, ex_en: -1, ex_vi: -1 };
+
+                            for (let i = 0; i < Math.min(20, jsonData.length); i++) {
+                                const row = jsonData[i];
+                                if (!row || !Array.isArray(row)) continue;
+                                
+                                const filledCells = row.filter(cell => String(cell).trim() !== "");
+                                if (filledCells.length < 3) continue;
+
+                                const rowStr = row.map(cell => String(cell).toLowerCase()).join(' | ');
+                                
+                                if (rowStr.includes('từ vựng') || rowStr.includes('định nghĩa') || rowStr.includes('loại từ')) {
+                                    headerRowIndex = i;
+                                    row.forEach((cell, idx) => {
+                                        const c = String(cell).toLowerCase().trim();
+                                        
+                                        // THUẬT TOÁN QUÉT TỪ KHÓA ƯU TIÊN MỚI
+                                        if (c.includes('từ vựng') || c.includes('thuật ngữ') || (c.includes('term') && !c.includes('determine'))) {
+                                            colMap.term = idx;
+                                        } else if (c.includes('loại từ') || c.includes('part of speech') || c === 'loại') {
+                                            colMap.type = idx;
+                                        } else if (c.includes('phát âm') || c.includes('ipa')) {
+                                            colMap.ipa = idx;
+                                        } else if (c.includes('dịch nghĩa ví dụ') || c.includes('dịch ví dụ') || (c.includes('ví dụ') && c.includes('việt'))) {
+                                            colMap.ex_vi = idx;
+                                        } else if (c.includes('ví dụ tiếng anh') || (c.includes('ví dụ') && (c.includes('anh') || c.includes('en'))) || c.includes('english example')) {
+                                            colMap.ex_en = idx;
+                                        } else if (c.includes('định nghĩa') || c.includes('tiếng việt') || c.includes('nghĩa') || c.includes('dịch')) {
+                                            colMap.viet = idx;
+                                        } else if (c.includes('ví dụ')) {
+                                            if (colMap.ex_en === -1) colMap.ex_en = idx;
+                                        }
+                                    });
+                                    break;
+                                }
+                            }
+
+                            if (headerRowIndex === -1 || colMap.term === -1) return;
+
+                            let validRows = [];
+                            for (let i = headerRowIndex + 1; i < jsonData.length; i++) {
+                                const row = jsonData[i];
+                                if (!row || row.length === 0) continue;
+                                
+                                const termVal = String(row[colMap.term] || '').trim();
+                                
+                                if (!termVal) continue;
+                                if (/^\d+$/.test(termVal) || termVal.toLowerCase() === 'stt') continue; 
+                                if (termVal.toLowerCase().includes("bảng tổng hợp") || termVal.toLowerCase().includes("chuyên ngành")) continue;
+                                
+                                validRows.push(row);
+                            }
+
+                            const chunkSize = 35;
+                            const totalParts = Math.ceil(validRows.length / chunkSize);
+
+                            for (let p = 0; p < totalParts; p++) {
+                                const chunk = validRows.slice(p * chunkSize, (p + 1) * chunkSize);
+                                if (chunk.length === 0) continue;
+
+                                const deckId = `DECK_${String(deckCounter).padStart(2, '0')}`;
+                                const deckTopic = totalParts > 1 ? `${sheetName} (Part ${p + 1})` : sheetName;
+                                
+                                parsedDecks.push({
+                                    id: deckId,
+                                    topic: sheetName,
+                                    title: deckTopic,
+                                    count: chunk.length,
+                                });
+
+                                chunk.forEach(row => {
+                                    // Tạo collocations mẫu nếu không có sẵn
+                                    const typeStr = colMap.type !== -1 ? String(row[colMap.type] || '').trim().toLowerCase() : '';
+                                    const termStr = String(row[colMap.term] || '').trim();
+                                    let autoCollocations = [];
+                                    if(typeStr.includes('n')) autoCollocations = [`acute ${termStr.toLowerCase()}`, `severe ${termStr.toLowerCase()}`];
+                                    if(typeStr.includes('v')) autoCollocations = [`${termStr.toLowerCase()} a patient`, `properly ${termStr.toLowerCase()}`];
+
+                                    const vietStr = colMap.viet !== -1 ? String(row[colMap.viet] || '').trim() : '';
+
+                                    allParsedTerms.push({
+                                        id: `MED${String(idCounter).padStart(4, '0')}`,
+                                        deckId: deckId,
+                                        term: termStr,
+                                        type: colMap.type !== -1 ? String(row[colMap.type] || '').trim() : '',
+                                        ipa: colMap.ipa !== -1 ? String(row[colMap.ipa] || '').trim() : '',
+                                        vietnamese: vietStr,
+                                        definition: vietStr, // Gán định nghĩa để hiển thị ở mục Expand
+                                        example: colMap.ex_en !== -1 ? String(row[colMap.ex_en] || '').trim() : '',
+                                        exampleVi: colMap.ex_vi !== -1 ? String(row[colMap.ex_vi] || '').trim() : '',
+                                        collocations: autoCollocations,
+                                        status: 'new', interval: 0, easeFactor: 2.5
+                                    });
+                                    idCounter++;
+                                });
+                                deckCounter++;
+                            }
+                        });
+
+                        if (allParsedTerms.length > 0) {
+                            setTerms(allParsedTerms);
+                            setDecks(parsedDecks);
+                            saveToStorage(allParsedTerms, parsedDecks);
+                            alert(`Thành công! Đã nạp chính xác ${allParsedTerms.length} thuật ngữ và tạo ra ${parsedDecks.length} bộ thẻ.`);
+                        } else {
+                            alert("Không tìm thấy dữ liệu. Vui lòng kiểm tra file Excel.");
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        alert("Lỗi đọc file Excel: " + error.message);
+                    }
+                };
+                reader.readAsBinaryString(file);
+                e.target.value = null; 
+            };
+
+            const stats = useMemo(() => {
+                const total = terms.length;
+                const learned = terms.filter(t => t.status !== 'new').length;
+                const mastered = terms.filter(t => t.status === 'mastered').length;
+                const needReview = terms.filter(t => t.status === 'learning' || t.status === 'review').length;
+                const progress = total === 0 ? 0 : Math.round((mastered / total) * 100);
+                return { total, learned, mastered, needReview, progress };
+            }, [terms]);
+
+            const startDeck = (deckId) => {
+                const deckTerms = terms.filter(t => t.deckId === deckId);
+                if (deckTerms.length === 0) return;
+                
+                const shuffled = [...deckTerms].sort(() => Math.random() - 0.5);
+                setActiveDeck(decks.find(d => d.id === deckId));
+                setLearningQueue(shuffled);
+                setCurrentIndex(0);
+                setIsRevealed(false);
+                setShowSummary(false);
+                setSessionStats({ studied: 0, again: 0, hard: 0, good: 0, easy: 0 });
+                setActiveTab('learning');
+            };
+
+            const startQuickReview = () => {
+                const now = Date.now();
+                const reviewTerms = terms.filter(t => t.status === 'learning' || t.status === 'review' || t.status === 'new').filter(t => !t.dueAt || Number(t.dueAt) <= now);
+                if (reviewTerms.length === 0) {
+                    alert("Hiện chưa có từ đến hạn ôn. Hãy học bộ từ mới hoặc quay lại sau.");
+                    return;
+                }
+                const shuffled = [...reviewTerms].sort(() => Math.random() - 0.5).slice(0, 20);
+                setActiveDeck({ title: "SRS Review", topic: "Ôn tập ngắt quãng", count: shuffled.length });
+                setLearningQueue(shuffled);
+                setCurrentIndex(0);
+                setIsRevealed(false);
+                setShowSummary(false);
+                setActiveTab('learning');
+            };
+
+            const handleRating = (ratingStr) => {
+                const currentTerm = learningQueue[currentIndex];
+                const updatedTerms = terms.map(t => {
+                    if (t.id === currentTerm.id) {
+                        let newStatus = 'learning';
+                        if (ratingStr === 'easy') newStatus = 'mastered';
+                        if (ratingStr === 'good') newStatus = (t.status === 'new') ? 'learning' : 'review';
+                        if (ratingStr === 'again') newStatus = 'learning';
+                        const oldInterval = Number(t.interval || 0);
+                        const nextInterval = ratingStr === 'again' ? 10 / 1440 : ratingStr === 'hard' ? Math.max(1, oldInterval * 1.2) : ratingStr === 'good' ? (oldInterval < 1 ? 1 : oldInterval < 3 ? 3 : Math.round(oldInterval * Number(t.easeFactor || 2.5))) : Math.max(4, oldInterval * 2.5);
+                        const ease = Math.max(1.3, Number(t.easeFactor || 2.5) + (ratingStr === 'easy' ? 0.15 : ratingStr === 'hard' ? -0.15 : ratingStr === 'again' ? -0.2 : 0));
+                        return { ...t, status: newStatus, interval: nextInterval, easeFactor: ease, dueAt: Date.now() + nextInterval * 24 * 60 * 60 * 1000, lastReviewedAt: Date.now() };
+                    }
+                    return t;
+                });
+                
+                setTerms(updatedTerms);
+                saveToStorage(updatedTerms, null);
+                setDailyCount(prev => prev + 1);
+                markStudyDay();
+                setSessionStats(prev => ({ ...prev, studied: prev.studied + 1, [ratingStr]: prev[ratingStr] + 1 }));
+
+                if (currentIndex < learningQueue.length - 1) {
+                    setCurrentIndex(currentIndex + 1);
+                    setIsRevealed(false);
+                } else {
+                    setShowSummary(true);
+                }
+            };
+
+            const renderDashboard = () => (
+                <div className="v2-scroll p-8 max-w-6xl mx-auto space-y-8 animate-fadeIn h-full overflow-y-auto pb-20">
+                    <div>
+                        <h1 className="text-4xl font-black text-[#004b87] tracking-tight uppercase">Medical English Master</h1>
+                        <p className="text-gray-500 text-lg mt-2 font-medium">Hệ thống Học & Ôn tập Thuật ngữ Y khoa (Spaced Repetition)</p>
+                    </div>
+
+                    {terms.length === 0 ? (
+                        <div className="bg-white p-12 rounded-3xl shadow-sm border-2 border-dashed border-gray-300 text-center">
+                            <div className="w-24 h-24 bg-blue-50 text-[#004b87] rounded-full flex items-center justify-center mx-auto mb-6">
+                                <i className="fas fa-file-excel text-4xl"></i>
+                            </div>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-2">Nạp dữ liệu từ Excel</h2>
+                            <p className="text-gray-500 mb-8 max-w-md mx-auto">Vui lòng tải lên file Excel gốc chứa 1050 từ của bạn. Thuật toán sẽ tự động quét thông minh và tạo các Decks học tập.</p>
+                            
+                            <label className="bg-[#004b87] text-white px-8 py-4 rounded-xl font-bold cursor-pointer hover:bg-blue-900 transition shadow-lg shadow-blue-900/20 inline-block">
+                                <i className="fas fa-upload mr-2"></i> Chọn File Excel để Nạp
+                                <input type="file" accept=".xlsx, .xls, .csv" className="hidden" onChange={handleFileUpload} />
+                            </label>
+                        </div>
+                    ) : (
+                        <div className="space-y-8">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center border-b-4 border-b-blue-500">
+                                    <div className="text-gray-400 text-xs font-bold tracking-wider mb-2">TOTAL TERMS</div>
+                                    <div className="text-4xl font-black text-[#004b87]">{stats.total}</div>
+                                </div>
+                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center border-b-4 border-b-green-500">
+                                    <div className="text-gray-400 text-xs font-bold tracking-wider mb-2">MASTERED</div>
+                                    <div className="text-4xl font-black text-[#00a651]">{stats.mastered}</div>
+                                </div>
+                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center border-b-4 border-b-amber-500">
+                                    <div className="text-gray-400 text-xs font-bold tracking-wider mb-2">NEED REVIEW</div>
+                                    <div className="text-4xl font-black text-amber-500">{stats.needReview}</div>
+                                </div>
+                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center border-b-4 border-b-purple-500">
+                                    <div className="text-gray-400 text-xs font-bold tracking-wider mb-2">PROGRESS</div>
+                                    <div className="text-4xl font-black text-purple-600">{stats.progress}%</div>
+                                    <div className="w-full bg-gray-100 rounded-full h-2 mt-4 overflow-hidden">
+                                        <div className="bg-purple-500 h-2 rounded-full transition-all" style={{ width: `${stats.progress}%` }}></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <div className="v2-card bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+                                    <div className="flex justify-between items-center mb-3"><span className="text-xs font-black text-gray-400">MỤC TIÊU HÔM NAY</span><span className="font-black text-[#004b87]">{dailyCount}/{dailyGoal}</span></div>
+                                    <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden"><div className="bg-[#004b87] h-3 rounded-full transition-all" style={{width:`${Math.min(100,Math.round(dailyCount/dailyGoal*100))}%`}}></div></div>
+                                    <p className="text-xs text-gray-500 mt-2">{Math.max(0,dailyGoal-dailyCount)} từ còn lại</p>
+                                </div>
+                                <div className="v2-card bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                                    <div><div className="text-xs font-black text-gray-400">STREAK</div><div className="text-3xl font-black text-amber-500 mt-1">🔥 {streak}</div></div>
+                                    <div className="text-right text-xs text-gray-500">ngày<br/>liên tiếp</div>
+                                </div>
+                                <div className="v2-card bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                                    <div><div className="text-xs font-black text-gray-400">YÊU THÍCH</div><div className="text-3xl font-black text-pink-500 mt-1">{favoriteIds.length}</div></div>
+                                    <button onClick={()=>setActiveTab('favorites')} className="text-xs font-bold text-[#004b87]">Xem →</button>
+                                </div>
+                            </div>
+
+                            <div className="bg-green-50 border border-green-200 rounded-2xl p-6 flex items-start justify-between">
+                                <div>
+                                    <h3 className="text-green-800 font-bold mb-1 flex items-center gap-2"><i className="fas fa-check-circle"></i> Đã nạp thành công</h3>
+                                    <p className="text-green-900/80 text-sm">Hệ thống đã phân loại {stats.total} từ vựng thành {decks.length} Topic Decks.</p>
+                                </div>
+                                <button onClick={resetData} className="text-red-500 text-sm font-bold bg-white px-4 py-2 rounded-lg border border-red-100 hover:bg-red-50 shadow-sm transition-colors">
+                                    <i className="fas fa-trash-alt mr-1"></i> Reset Data
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+
+            const renderDecks = () => (
+                <div className="p-8 max-w-6xl mx-auto space-y-8 animate-fadeIn h-full overflow-y-auto pb-20">
+                    <div>
+                        <h2 className="text-3xl font-extrabold text-gray-800 tracking-tight">Deck Library</h2>
+                        <p className="text-gray-500 text-sm mt-2 font-medium">Tổ chức theo Logic Chuyên Khoa</p>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {decks.map((deck) => {
+                            const deckTerms = terms.filter(t => t.deckId === deck.id);
+                            const masteredInDeck = deckTerms.filter(t => t.status === 'mastered').length;
+                            const progress = deckTerms.length === 0 ? 0 : Math.round((masteredInDeck / deckTerms.length) * 100);
+                            
+                            return (
+                                <div key={deck.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 transition-all flex flex-col h-full group">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-[#004b87]">
+                                            <i className="fas fa-layer-group"></i>
+                                        </div>
+                                        <span className="text-xs font-black text-gray-500 bg-gray-100 px-2 py-1 rounded tracking-widest">{deck.id}</span>
+                                    </div>
+                                    <h3 className="font-bold text-gray-800 text-lg mb-1 leading-tight">{deck.title}</h3>
+                                    
+                                    <div className="mt-auto pt-6">
+                                        <div className="flex justify-between text-xs font-bold text-gray-400 mb-2">
+                                            <span>PROGRESS {progress}%</span>
+                                            <span>{deck.count} TERMS</span>
+                                        </div>
+                                        <div className="w-full bg-gray-100 rounded-full h-1.5 mb-4 overflow-hidden">
+                                            <div className="bg-[#00a651] h-1.5 rounded-full" style={{ width: `${progress}%` }}></div>
+                                        </div>
+                                        <button onClick={() => startDeck(deck.id)} className="w-full py-3 bg-gray-50 text-[#004b87] rounded-xl font-bold group-hover:bg-[#004b87] group-hover:text-white transition-colors flex items-center justify-center gap-2">
+                                            <i className="fas fa-play text-sm"></i> Học Bộ Này
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+
+            const renderSearch = () => {
+                const filteredTerms = terms.filter(t => {
+                    if (!searchQuery.trim()) return false;
+                    const query = searchQuery.toLowerCase();
+                    return (t.term || '').toLowerCase().includes(query) || 
+                           (t.vietnamese || '').toLowerCase().includes(query) || 
+                           (t.type || '').toLowerCase().includes(query) || 
+                           (t.deckId || '').toLowerCase().includes(query);
+                });
+                const displayTerms = searchQuery.trim() === '' ? [] : filteredTerms.slice(0, 50);
+
+                return (
+                    <div className="p-8 max-w-6xl mx-auto space-y-8 animate-fadeIn h-full overflow-y-auto pb-20">
+                        <div>
+                            <h2 className="text-3xl font-extrabold text-gray-800 tracking-tight">Search Dictionary</h2>
+                            <p className="text-gray-500 text-sm mt-2 font-medium">Tìm kiếm trên toàn bộ {terms.length} thuật ngữ</p>
+                        </div>
+                        
+                        <div className="relative group">
+                            <i className="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl group-focus-within:text-[#004b87]"></i>
+                            <input type="text" placeholder="Gõ tiếng Anh, tiếng Việt, viết tắt, ID bộ thẻ..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-white border-2 border-gray-200 rounded-2xl py-4 pl-14 pr-4 text-lg focus:outline-none focus:border-[#004b87] focus:ring-4 focus:ring-blue-50 transition-all font-medium shadow-sm" />
+                        </div>
+
+                        <div className="space-y-4">
+                            {searchQuery.trim() !== '' && displayTerms.length === 0 && (
+                                <div className="text-center p-12 bg-white rounded-2xl border border-gray-200">
+                                    <i className="fas fa-search-minus text-4xl text-gray-300 mb-4 block"></i>
+                                    <p className="text-gray-500 font-medium">Không tìm thấy "{searchQuery}"</p>
+                                </div>
+                            )}
+                            
+                            {displayTerms.map(t => {
+                                const deck = decks.find(d => d.id === t.deckId);
+                                return (
+                                    <div key={t.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-4 justify-between hover:border-blue-200 transition-all">
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <div className="flex items-center gap-2"><h3 className="text-2xl font-black text-[#004b87]">{t.term}</h3><button title="Phát âm" onClick={()=>speakTerm(t.term)} className="text-blue-500"><i className="fas fa-volume-up"></i></button><button title="Yêu thích" onClick={()=>toggleFavorite(t.id)} className={favoriteIds.includes(t.id) ? "text-pink-500" : "text-gray-300"}><i className="fas fa-star"></i></button></div>
+                                                {t.type && <span className="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded font-bold uppercase">{t.type}</span>}
+                                                {t.ipa && <span className="text-gray-400 font-mono text-sm">{t.ipa}</span>}
+                                            </div>
+                                            <p className="text-gray-800 font-bold text-lg mb-2">{t.vietnamese}</p>
+                                            {t.example && <p className="text-gray-500 text-sm italic">"{t.example}"</p>}
+                                        </div>
+                                        <div className="text-right flex-shrink-0">
+                                            <div className="text-xs font-bold text-gray-500 bg-gray-50 px-3 py-2 rounded-xl border border-gray-100 mb-2">
+                                                <i className="fas fa-folder mr-1"></i> {deck ? deck.title : t.deckId}
+                                            </div>
+                                            <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider ${t.status === 'mastered' ? 'bg-green-100 text-green-700' : t.status === 'learning' ? 'bg-amber-100 text-amber-700' : t.status === 'review' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-500'}`}>
+                                                {t.status}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                            
+                            {filteredTerms.length > 50 && (
+                                <div className="text-center p-4 text-gray-500 text-sm font-medium">
+                                    Chỉ hiển thị 50 kết quả đầu tiên. Vui lòng gõ chi tiết hơn.
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                );
+            };
+
+            const renderFlashcard = () => {
+                if (showSummary) {
+                    return (
+                        <div className="flex flex-col items-center justify-center h-full p-6 bg-gray-50 animate-fadeIn">
+                            <div className="bg-white p-10 rounded-3xl shadow-xl border border-gray-100 max-w-md w-full text-center">
+                                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"><i className="fas fa-check-circle text-green-500 text-4xl"></i></div>
+                                <h2 className="text-2xl font-black text-gray-800 mb-2">SESSION COMPLETE</h2>
+                                <p className="text-gray-500 mb-8 font-medium">Bạn đã học {sessionStats.studied} thuật ngữ.</p>
+                                <button onClick={() => setActiveTab('decks')} className="w-full py-4 bg-[#004b87] text-white rounded-xl font-bold shadow-lg hover:bg-blue-900 transition-colors">Back to Library</button>
+                            </div>
+                        </div>
+                    )
+                }
+
+                if (learningQueue.length === 0) return null;
+                const currentCard = learningQueue[currentIndex];
+
+                return (
+                    <div className="flex flex-col h-full bg-gray-50/50">
+                        <div className="p-6 flex justify-between items-center bg-white border-b border-gray-200 shrink-0 shadow-sm z-10">
+                            <button onClick={() => setActiveTab('decks')} className="text-gray-500 hover:text-gray-800 font-bold text-sm bg-gray-100 px-4 py-2 rounded-lg transition-colors"><i className="fas fa-times mr-2"></i> Thoát</button>
+                            <div className="text-sm font-bold text-gray-500 tracking-widest bg-gray-50 px-4 py-2 rounded-lg border border-gray-100">{activeDeck.title} • CARD {currentIndex + 1} / {learningQueue.length}</div>
+                            <div className="w-[84px]"></div>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center">
+                            <div className="w-full max-w-2xl">
+                                <div className={`w-full bg-white rounded-[2rem] shadow-xl border border-gray-100 transition-all duration-300 overflow-hidden ${!isRevealed ? 'cursor-pointer hover:shadow-2xl hover:-translate-y-1' : ''}`} onClick={() => !isRevealed && setIsRevealed(true)}>
+                                
+                                {/* LEVEL 1: ACTIVE RECALL (Mặt trước) */}
+                                {!isRevealed ? (
+                                    <div className="flex flex-col items-center justify-center p-16 min-h-[450px]">
+                                        <h2 className="text-5xl md:text-6xl font-black text-[#004b87] text-center mb-10 leading-tight">{currentCard.term}</h2>
+                                        <div className="px-6 py-3 bg-blue-50 text-blue-600 text-sm font-bold rounded-full animate-pulse"><i className="fas fa-eye mr-2"></i> CLICK ĐỂ XEM ĐÁP ÁN</div>
+                                    </div>
+                                ) : (
+                                    /* LEVEL 2, 3, 4: REVEALED STATE (Mặt sau) */
+                                    <div className="flex flex-col min-h-[450px] animate-fadeIn pb-4">
+                                        {/* CORE ANSWER */}
+                                        <div className="p-8 pb-6 border-b-2 border-gray-50">
+                                            <div className="flex justify-between items-start mb-3">
+                                                <div className="flex items-center gap-3"><h2 className="text-4xl md:text-5xl font-black text-[#004b87] leading-tight">{currentCard.term}</h2><button onClick={()=>speakTerm(currentCard.term)} className="text-blue-500 bg-blue-50 w-10 h-10 rounded-full"><i className="fas fa-volume-up"></i></button><button onClick={()=>toggleFavorite(currentCard.id)} className={(favoriteIds.includes(currentCard.id) ? "text-pink-500" : "text-gray-300") + " w-10 h-10"}><i className="fas fa-star"></i></button></div>
+                                                {currentCard.type && <span className="bg-gray-100 text-gray-500 px-3 py-1 rounded-lg text-sm font-bold tracking-wider uppercase">{currentCard.type}</span>}
+                                            </div>
+                                            <h3 className="text-2xl md:text-3xl font-bold text-gray-800">{currentCard.vietnamese}</h3>
+                                        </div>
+
+                                        {/* OPTIONAL EXPANSION (Collapsed by default) */}
+                                        <div className="flex-grow bg-gray-50/30">
+                                            {(currentCard.ipa || currentCard.definition) && (
+                                                <CollapsibleSection title="Định nghĩa & Phát âm" icon="fa-book">
+                                                    {currentCard.ipa && <p className="font-mono text-[#004b87] mb-2 font-bold text-base">{currentCard.ipa}</p>}
+                                                    {currentCard.definition && <p className="text-gray-700 leading-relaxed text-base">{currentCard.definition}</p>}
+                                                </CollapsibleSection>
+                                            )}
+                                            {currentCard.collocations && currentCard.collocations.length > 0 && (
+                                                <CollapsibleSection title="Cụm từ thường dùng (Collocations)" icon="fa-link">
+                                                    <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                                                        {currentCard.collocations.map((col, idx) => <li key={idx}>{col}</li>)}
+                                                    </ul>
+                                                </CollapsibleSection>
+                                            )}
+                                            {(currentCard.example) && (
+                                                <CollapsibleSection title="Ví dụ lâm sàng" icon="fa-stethoscope">
+                                                    <div className="bg-blue-50/50 p-5 rounded-xl border border-blue-100/50">
+                                                        <p className="text-gray-900 font-medium mb-2 text-base leading-relaxed">{currentCard.example}</p>
+                                                        {currentCard.exampleVi && <p className="text-gray-600 text-sm italic">{currentCard.exampleVi}</p>}
+                                                    </div>
+                                                </CollapsibleSection>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ACTION BAR (Spaced Repetition) */}
+                        {isRevealed && (
+                            <div className="bg-white border-t border-gray-200 p-5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] animate-slideUp shrink-0 z-50">
+                                <div className="max-w-2xl mx-auto flex justify-between gap-3">
+                                    <button onClick={() => handleRating('again')} className="flex-1 py-4 bg-white border-2 border-red-100 text-red-600 rounded-2xl font-black hover:bg-red-50 transition-colors flex flex-col items-center">AGAIN <span className="text-xs font-bold text-red-400 mt-1 uppercase">Quên</span></button>
+                                    <button onClick={() => handleRating('hard')} className="flex-1 py-4 bg-white border-2 border-amber-100 text-amber-600 rounded-2xl font-black hover:bg-amber-50 transition-colors flex flex-col items-center">HARD <span className="text-xs font-bold text-amber-400 mt-1 uppercase">Khó</span></button>
+                                    <button onClick={() => handleRating('good')} className="flex-1 py-4 bg-[#004b87] text-white rounded-2xl font-black shadow-lg shadow-blue-900/20 hover:bg-blue-900 transition-colors flex flex-col items-center">GOOD <span className="text-xs font-bold text-blue-200 mt-1 uppercase">Đã nhớ</span></button>
+                                    <button onClick={() => handleRating('easy')} className="flex-1 py-4 bg-white border-2 border-green-100 text-green-600 rounded-2xl font-black hover:bg-green-50 transition-colors flex flex-col items-center">EASY <span className="text-xs font-bold text-green-400 mt-1 uppercase">Rất dễ</span></button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                );
+            };
+
+
+            const renderFavorites = () => {
+                const favs = terms.filter(t => favoriteIds.includes(t.id));
+                return (
+                    <div className="v2-scroll p-8 max-w-5xl mx-auto h-full overflow-y-auto animate-fadeIn">
+                        <div className="mb-7"><h2 className="text-3xl font-extrabold text-gray-800">Từ yêu thích</h2><p className="text-gray-500 text-sm mt-2">{favs.length} thuật ngữ được đánh dấu</p></div>
+                        {favs.length===0 ? (
+                            <div className="v2-card bg-white rounded-2xl p-12 text-center border border-gray-100"><i className="fas fa-star text-4xl text-gray-200 mb-4"></i><p className="text-gray-500">Chưa có thuật ngữ yêu thích.</p></div>
+                        ) : (
+                            <div className="space-y-3">{favs.map(t=>(
+                                <div key={t.id} className="v2-card bg-white rounded-2xl p-5 border border-gray-100 flex items-center justify-between gap-4">
+                                    <div><div className="flex items-center gap-2"><b className="text-xl text-[#004b87]">{t.term}</b><button onClick={()=>speakTerm(t.term)} className="text-blue-500"><i className="fas fa-volume-up"></i></button></div><div className="font-bold text-gray-700">{t.vietnamese}</div><div className="text-xs text-gray-400 mt-1">{t.type} {t.ipa ? '• '+t.ipa : ''}</div></div>
+                                    <button onClick={()=>toggleFavorite(t.id)} className="text-pink-500 text-lg"><i className="fas fa-star"></i></button>
+                                </div>
+                            ))}</div>
+                        )}
+                    </div>
+                );
+            };
+
+            return (
+                <div className="v2-shell flex h-screen bg-gray-50 text-gray-900 overflow-hidden">
+                    {/* SIDEBAR */}
+                    <div className="w-72 bg-white border-r border-gray-200 flex flex-col z-10 shadow-sm shrink-0 hidden md:flex">
+                        <div className="p-6 border-b border-gray-100 flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-[#004b87] flex items-center justify-center text-white font-black text-2xl shadow-md"><i className="fas fa-heartbeat"></i></div>
+                            <div>
+                                <h2 className="font-black text-gray-900 tracking-tight leading-tight text-lg">MEDICAL</h2>
+                                <h2 className="font-bold text-gray-500 tracking-tight leading-tight text-sm">ENGLISH MASTER</h2>
+                            </div>
+                        </div>
+                        
+                        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+                            <div className="text-[10px] font-black text-gray-400 tracking-widest px-4 mb-3 mt-2">DASHBOARD</div>
+                            <button onClick={() => setActiveTab('home')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'home' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-chart-pie w-5"></i> Overview</button>
+                            <button onClick={() => setActiveTab('decks')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'decks' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-layer-group w-5"></i> Deck Library</button>
+                            
+                            <div className="text-[10px] font-black text-gray-400 tracking-widest px-4 mb-3 mt-6">LEARNING</div>
+                            <button onClick={startQuickReview} className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all text-amber-600 hover:bg-amber-50"><i className="fas fa-bolt w-5"></i> Quick Review</button>
+                            <button onClick={() => setActiveTab('search')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'search' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-search w-5"></i> Search Dictionary</button>
+                            <button onClick={() => setActiveTab('favorites')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'favorites' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-star w-5"></i> Favorites</button>
+                            <button onClick={() => setActiveTab('settings')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'settings' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-cog w-5"></i> Settings</button>
+                        </nav>
+                    </div>
+
+                    {/* MAIN CONTENT */}
+                    <div className="flex-1 overflow-hidden relative">
+                        {activeTab === 'home' && renderDashboard()}
+                        {activeTab === 'decks' && renderDecks()}
+                        {activeTab === 'search' && renderSearch()}
+                        {activeTab === 'favorites' && renderFavorites()}
+                        {activeTab === 'settings' && renderSettings()}
+                        {activeTab === 'learning' && renderFlashcard()}
+                        {activeTab === 'cloze' && renderCloze()}
+                        {activeTab === 'addword' && renderAddWord()}
+                    </div>
+                    <div className="v2-bottom" aria-label="Điều hướng">
+                        <button className={activeTab==='home'?'active':''} onClick={()=>setActiveTab('home')}><i className="fas fa-chart-pie"></i><span>Home</span></button>
+                        <button className={activeTab==='decks'?'active':''} onClick={()=>setActiveTab('decks')}><i className="fas fa-layer-group"></i><span>Decks</span></button>
+                        <button onClick={startQuickReview}><i className="fas fa-bolt"></i><span>Review</span></button>
+                        <button className={activeTab==='search'?'active':''} onClick={()=>setActiveTab('search')}><i className="fas fa-search"></i><span>Search</span></button>
+                        <button className={activeTab==='settings'?'active':''} onClick={()=>setActiveTab('settings')}><i className="fas fa-cog"></i><span>More</span></button>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+
+<script>
+  // PWA service worker: registration works on HTTPS hosting such as GitHub Pages.
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js').catch(function (err) {
+        console.warn('Service worker registration failed:', err);
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
