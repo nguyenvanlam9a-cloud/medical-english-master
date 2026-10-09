@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Medical English Master 4.2</title>
+    <title>Medical English Master 4.4</title>
     
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Tích hợp 10 Font chữ (Hiện đại, Cổ điển, Viết tay) -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Comfortaa:wght@400;700&family=Dancing+Script:wght@400;700&family=Inter:wght@400;700;900&family=Lora:wght@400;700&family=Mali:wght@400;700&family=Montserrat:wght@400;700;900&family=Nunito:wght@400;700;900&family=Playfair+Display:wght@400;700;900&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
@@ -47,15 +48,14 @@
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
-        .v3-dark ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
         
         :root {
             --safe-top: env(safe-area-inset-top, 0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
-        /* 16 DYNAMIC PASTEL THEMES */
+        /* 16 BẢNG MÀU PASTEL */
         html[data-theme="t-sky"] { --bg-base: #e0f2fe; --tw-color-primary: #0284c7; --tw-color-primary-50: #f0f9ff; --tw-color-primary-100: #e0f2fe; --tw-color-primary-200: #bae6fd; --tw-color-primary-300: #7dd3fc; --tw-color-primary-400: #38bdf8; --tw-color-primary-500: #0ea5e9; --tw-color-primary-600: #0284c7; --tw-color-primary-700: #0369a1; --tw-color-primary-800: #075985; --tw-color-primary-900: #0c4a6e; }
         html[data-theme="t-emerald"] { --bg-base: #d1fae5; --tw-color-primary: #059669; --tw-color-primary-50: #ecfdf5; --tw-color-primary-100: #d1fae5; --tw-color-primary-200: #a7f3d0; --tw-color-primary-300: #6ee7b7; --tw-color-primary-400: #34d399; --tw-color-primary-500: #10b981; --tw-color-primary-600: #059669; --tw-color-primary-700: #047857; --tw-color-primary-800: #065f46; --tw-color-primary-900: #064e3b; }
         html[data-theme="t-violet"] { --bg-base: #ede9fe; --tw-color-primary: #7c3aed; --tw-color-primary-50: #f5f3ff; --tw-color-primary-100: #ede9fe; --tw-color-primary-200: #ddd6fe; --tw-color-primary-300: #c4b5fd; --tw-color-primary-400: #a78bfa; --tw-color-primary-500: #8b5cf6; --tw-color-primary-600: #7c3aed; --tw-color-primary-700: #6d28d9; --tw-color-primary-800: #5b21b6; --tw-color-primary-900: #4c1d95; }
@@ -88,75 +88,26 @@
         .v3-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
         
         #app-bg { position: fixed; inset: 0; z-index: 0; background-color: var(--bg-base); transition: background-color 0.4s ease; }
+        #app-bg-overlay { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; mix-blend-mode: multiply; background-size: cover; background-position: center; background-repeat: repeat; }
         
-        #app-bg-img { 
-            position: fixed; inset: 0; z-index: 1; 
-            background-size: cover; background-position: center; 
-            opacity: 0; transition: opacity 0.5s ease; pointer-events: none; 
-            mix-blend-mode: multiply; 
-            filter: grayscale(100%) contrast(1.4) brightness(1.1) opacity(0.12); 
-        }
-        #app-bg-img.active { opacity: 1; }
-        
-        .has-bg::before {
-            content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E");
-            mix-blend-mode: multiply;
-        }
-        
-        #app-bg-overlay { position: fixed; inset: 0; z-index: 2; background-color: var(--bg-base); opacity: 0; pointer-events: none; transition: 0.4s ease; }
-        .has-bg #app-bg-overlay { opacity: 0.2; }
+        /* Họa tiết SVG Patterns (Data URIs) */
+        body[data-bg="paper"] #app-bg-overlay { opacity: 0.12; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+        body[data-bg="grid"] #app-bg-overlay { opacity: 0.1; background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M0 39.5h40M39.5 0v40' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E"); background-size: 40px 40px; }
+        body[data-bg="ecg"] #app-bg-overlay { opacity: 0.05; background-image: url("data:image/svg+xml,%3Csvg width='100' height='50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 25h20l5-15 10 35 15-40 10 20h40' fill='none' stroke='%23000' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"); background-size: 100px 50px; }
+        body[data-bg="dna"] #app-bg-overlay { opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg width='60' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10c20 20 20 60 40 80M50 10C30 30 30 70 10 90' fill='none' stroke='%23000' stroke-width='3'/%3E%3Cline x1='15' y1='20' x2='45' y2='20' stroke='%23000' stroke-width='2'/%3E%3Cline x1='25' y1='50' x2='35' y2='50' stroke='%23000' stroke-width='2'/%3E%3Cline x1='15' y1='80' x2='45' y2='80' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E"); background-size: 60px 100px; }
+        body[data-bg="cells"] #app-bg-overlay { opacity: 0.05; background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='10' fill='none' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='20' cy='20' r='2' fill='%23000'/%3E%3Ccircle cx='60' cy='50' r='15' fill='none' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='62' cy='48' r='3' fill='%23000'/%3E%3C/svg%3E"); background-size: 80px 80px; }
+        body[data-bg="cross"] #app-bg-overlay { opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 10h10v10h10v10H30v10H20V30H10V20h10z' fill='%23000'/%3E%3C/svg%3E"); background-size: 50px 50px; }
+        body[data-bg="geo"] #app-bg-overlay { opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='30,10 50,50 10,50' fill='none' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='30' cy='35' r='5' fill='%23000'/%3E%3C/svg%3E"); background-size: 60px 60px; }
 
-        .v3-card, .bg-white { transition: background-color 0.3s, border-color 0.3s; }
-        .has-bg .v3-card, .has-bg .bg-white { 
+        /* Transparent Glass Effect on Cards when Background is active */
+        body:not([data-bg="none"]) .v3-card, body:not([data-bg="none"]) .bg-white { 
             background-color: rgba(255, 255, 255, 0.6) !important; 
             backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); 
             border-color: rgba(255, 255, 255, 0.6) !important; 
             box-shadow: 0 8px 32px rgba(0,0,0,0.04); 
         }
-        .has-bg .v3-bottom { background-color: rgba(255, 255, 255, 0.75) !important; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top-color: rgba(255,255,255,0.5); }
+        body:not([data-bg="none"]) .v3-bottom { background-color: rgba(255, 255, 255, 0.75) !important; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top-color: rgba(255,255,255,0.5); }
 
-        .v3-dark #app-bg { background-color: #0f172a !important; }
-        .v3-dark #app-bg-img {
-            mix-blend-mode: screen; 
-            filter: grayscale(100%) invert(100%) contrast(1.2) opacity(0.08); 
-        }
-        .v3-dark.has-bg::before { mix-blend-mode: screen; opacity: 0.3; } 
-        .v3-dark #app-bg-overlay { background-color: #0f172a !important; opacity: 0; }
-        .v3-dark.has-bg #app-bg-overlay { opacity: 0.4; } 
-        
-        .v3-dark body, .v3-dark #root, .v3-dark .text-gray-900, .v3-dark .text-gray-800 { color: #f8fafc !important; }
-        .v3-dark .v3-card, .v3-dark .bg-white { background-color: #1e293b !important; color: #e5e7eb !important; border-color: #334155 !important; }
-        .v3-dark.has-bg .v3-card, .v3-dark.has-bg .bg-white { background-color: rgba(30, 41, 59, 0.75) !important; border-color: rgba(255, 255, 255, 0.1) !important; }
-        
-        .v3-dark input, .v3-dark textarea, .v3-dark select { background: #0f172a !important; color: #e5e7eb !important; border-color: #334155 !important; }
-        .v3-dark .text-gray-700, .v3-dark .text-gray-600 { color: #cbd5e1 !important; }
-        .v3-dark .text-gray-500, .v3-dark .text-gray-400 { color: #94a3b8 !important; }
-        .v3-dark .v3-bottom { background: rgba(15, 23, 42, 0.95) !important; border-color: #334155 !important; }
-        .v3-dark.has-bg .v3-bottom { background-color: rgba(15, 23, 42, 0.85) !important; border-top-color: rgba(255, 255, 255, 0.1) !important; }
-        .v3-dark .border-b, .v3-dark .border-t { border-color: #334155 !important; }
-        .v3-dark .bg-gray-50, .v3-dark .bg-gray-100 { background: rgba(15, 23, 42, 0.5) !important; border-color: rgba(255,255,255,0.05) !important; }
-        
-        .v3-dark .text-primary { color: var(--tw-color-primary-300) !important; }
-        .v3-dark .bg-primary { background-color: var(--tw-color-primary-600) !important; color: #ffffff !important; }
-        .v3-dark .text-primary-500, .v3-dark .text-primary-600 { color: var(--tw-color-primary-400) !important; }
-        .v3-dark .bg-primary-50, .v3-dark .bg-primary-100 { background-color: color-mix(in srgb, var(--tw-color-primary-600) 20%, transparent) !important; color: var(--tw-color-primary-300) !important; border-color: color-mix(in srgb, var(--tw-color-primary-600) 30%, transparent) !important; }
-        
-        .v3-dark .v3-bottom button { color: #94a3b8; }
-        .v3-dark .v3-bottom button.active { background: #1e293b; color: var(--tw-color-primary-400); }
-
-        .v3-dark .text-green-600, .v3-dark .text-green-700 { color: #4ade80 !important; }
-        .v3-dark .text-amber-600, .v3-dark .text-amber-700 { color: #fbbf24 !important; }
-        .v3-dark .text-red-500, .v3-dark .text-red-600 { color: #f87171 !important; }
-        .v3-dark .text-purple-600 { color: #c084fc !important; }
-        .v3-dark .text-orange-600 { color: #fb923c !important; }
-        
-        .v3-dark .bg-green-50, .v3-dark .bg-green-100 { background-color: rgba(34, 197, 94, 0.15) !important; color: #4ade80 !important; border-color: rgba(34, 197, 94, 0.2) !important; }
-        .v3-dark .bg-amber-50, .v3-dark .bg-amber-100 { background-color: rgba(245, 158, 11, 0.15) !important; color: #fbbf24 !important; border-color: rgba(245, 158, 11, 0.2) !important; }
-        .v3-dark .bg-red-50, .v3-dark .bg-red-100 { background-color: rgba(239, 68, 68, 0.15) !important; color: #f87171 !important; border-color: rgba(239, 68, 68, 0.2) !important; }
-        .v3-dark .bg-purple-50, .v3-dark .bg-purple-100 { background-color: rgba(168, 85, 247, 0.15) !important; color: #c084fc !important; border-color: rgba(168, 85, 247, 0.2) !important; }
-        .v3-dark .bg-orange-50 { background-color: rgba(249, 115, 22, 0.15) !important; color: #fb923c !important; border-color: rgba(249, 115, 22, 0.2) !important;}
-        
         .v3-switch { width: 52px; height: 30px; border-radius: 99px; border: 0; background: #cbd5e1; padding: 3px; position: relative; }
         .v3-switch span { display: block; width: 24px; height: 24px; border-radius: 50%; background: white; transition: .2s; }
         .v3-switch.on { background: var(--tw-color-primary); }
@@ -164,6 +115,13 @@
         
         .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .break-words { word-break: break-word; overflow-wrap: break-word; }
+
+        /* Styles for Settings Selectors */
+        .color-circle { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s; position: relative; }
+        .color-circle.active { border-color: var(--tw-color-primary-900); transform: scale(1.1); box-shadow: 0 0 0 2px white, 0 0 0 4px var(--tw-color-primary-500); }
+        .bg-thumb { height: 80px; min-width: 110px; border-radius: 12px; background-size: cover; background-position: center; cursor: pointer; border: 2px solid transparent; flex-shrink: 0; display: flex; align-items: center; justify-content: center; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; overflow: hidden; background-color: #cbd5e1; }
+        .bg-thumb.active { border-color: var(--tw-color-primary); box-shadow: 0 0 0 3px var(--tw-color-primary-200); }
+        .bg-thumb span { background: rgba(255,255,255,0.9); padding: 4px 8px; border-radius: 8px; font-size: 11px; font-weight: bold; }
 
         @media (max-width: 767px) {
             .v3-bottom { display: flex !important; position: fixed; left: 0; right: 0; bottom: 0; z-index: 9999; height: calc(60px + var(--safe-bottom)); padding: 4px 6px var(--safe-bottom); background: rgba(255, 255, 255, .98); border-top: 1px solid #f1f5f9; box-shadow: 0 -4px 20px rgba(0, 0, 0, .05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: background-color 0.3s; }
@@ -173,13 +131,114 @@
             .mobile-p-4 { padding: 16px !important; }
         }
 
-        .color-circle { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
-        .color-circle.active { border-color: var(--tw-color-primary-900); transform: scale(1.1); box-shadow: 0 0 0 2px white, 0 0 0 4px var(--tw-color-primary-500); }
-        .bg-thumb { width: 80px; height: 100px; border-radius: 12px; background-size: cover; background-position: center; cursor: pointer; border: 2px solid transparent; flex-shrink: 0; display: flex; align-items: flex-end; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
-        .bg-thumb::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%); }
-        .bg-thumb > span { position: relative; z-index: 1; }
-        .bg-thumb.active { border-color: var(--tw-color-primary); box-shadow: 0 0 0 3px var(--tw-color-primary-200); }
-        .v3-dark .color-circle.active { box-shadow: 0 0 0 2px #0f172a, 0 0 0 4px var(--tw-color-primary-400); }
+        /* TỐI ƯU HÓA DARK MODE CSS CAO CẤP */
+        html.v3-dark { color-scheme: dark; }
+        .v3-dark body, .v3-dark #app-bg { background-color: #0f172a !important; }
+        
+        /* Đảo màu và hiện họa tiết trong Dark Mode thay vì tắt hẳn */
+        .v3-dark #app-bg-overlay { 
+            display: block !important; 
+            filter: invert(1) opacity(0.08) !important; /* Biến nét đen thành nét trắng mờ */
+            mix-blend-mode: screen !important;
+        }
+
+        /* Typography Hierarchy (Chữ sáng hơn) */
+        .v3-dark, .v3-dark body, .v3-dark #root { color: #e2e8f0 !important; }
+        .v3-dark .text-gray-900, .v3-dark .text-gray-800 { color: #f8fafc !important; }
+        .v3-dark .text-gray-700 { color: #e2e8f0 !important; }
+        .v3-dark .text-gray-600 { color: #cbd5e1 !important; }
+        .v3-dark .text-gray-500 { color: #94a3b8 !important; }
+        .v3-dark .text-gray-400 { color: #64748b !important; }
+
+        /* Khung và màu kính (Glassmorphism Dark) */
+        .v3-dark .v3-card, .v3-dark .bg-white { 
+            background-color: #1e293b !important; 
+            border-color: #334155 !important; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important; 
+        }
+        .v3-dark .bg-white\/40, .v3-dark .bg-white\/50, .v3-dark .bg-white\/60, .v3-dark .bg-white\/80, .v3-dark .bg-white\/90 { 
+            background-color: rgba(30, 41, 59, 0.8) !important; 
+            backdrop-filter: blur(16px); 
+            border-color: rgba(255,255,255,0.05) !important; 
+        }
+        
+        /* Fix nền xám */
+        .v3-dark .bg-gray-50, .v3-dark .bg-gray-50\/30, .v3-dark .bg-gray-50\/50, .v3-dark .bg-gray-50\/80, .v3-dark .bg-gray-100, .v3-dark .bg-gray-100\/50, .v3-dark .bg-gray-100\/80 { 
+            background-color: #0f172a !important; 
+            border-color: #334155 !important; 
+        }
+        
+        /* Viền (Borders) */
+        .v3-dark .border-gray-100, .v3-dark .border-gray-100\/50, .v3-dark .border-gray-200, .v3-dark .border-gray-200\/50, .v3-dark .border-gray-200\/80, .v3-dark .border-white\/20 { border-color: #334155 !important; }
+        .v3-dark .border-t, .v3-dark .border-b, .v3-dark .border-l, .v3-dark .border-r { border-color: #334155 !important; }
+
+        /* Accent Chính (Primary Color) - Làm sáng tông primary */
+        .v3-dark .text-primary, .v3-dark .text-primary-500, .v3-dark .text-primary-600 { color: var(--tw-color-primary-400) !important; }
+        .v3-dark .bg-primary { background-color: var(--tw-color-primary-600) !important; color: #ffffff !important; border-color: var(--tw-color-primary-500) !important; }
+        .v3-dark .bg-primary-50, .v3-dark .bg-primary-50\/50, .v3-dark .bg-primary-50\/80, .v3-dark .bg-primary-50\/90, .v3-dark .bg-primary-100, .v3-dark .bg-primary-100\/50 { 
+            background-color: color-mix(in srgb, var(--tw-color-primary-500) 15%, transparent) !important; 
+            border-color: color-mix(in srgb, var(--tw-color-primary-500) 30%, transparent) !important;
+            color: var(--tw-color-primary-300) !important;
+        }
+
+        /* Nền mờ cho Màu Nhấn (Semantic Soft Backgrounds) */
+        .v3-dark .bg-green-50, .v3-dark .bg-green-50\/80, .v3-dark .bg-green-50\/90, .v3-dark .bg-green-100, .v3-dark .bg-green-100\/50, .v3-dark .bg-green-100\/80 { background-color: rgba(34, 197, 94, 0.1) !important; border-color: rgba(34, 197, 94, 0.2) !important; color: #4ade80 !important;}
+        .v3-dark .bg-amber-50, .v3-dark .bg-amber-50\/80, .v3-dark .bg-amber-100, .v3-dark .bg-amber-100\/50, .v3-dark .bg-amber-100\/80 { background-color: rgba(245, 158, 11, 0.1) !important; border-color: rgba(245, 158, 11, 0.2) !important; color: #fbbf24 !important;}
+        .v3-dark .bg-red-50, .v3-dark .bg-red-50\/80, .v3-dark .bg-red-50\/90, .v3-dark .bg-red-100, .v3-dark .bg-red-100\/50, .v3-dark .bg-red-100\/80 { background-color: rgba(239, 68, 68, 0.1) !important; border-color: rgba(239, 68, 68, 0.2) !important; color: #f87171 !important;}
+        .v3-dark .bg-purple-50, .v3-dark .bg-purple-50\/50, .v3-dark .bg-purple-50\/80, .v3-dark .bg-purple-100, .v3-dark .bg-purple-100\/50, .v3-dark .bg-purple-100\/80 { background-color: rgba(168, 85, 247, 0.1) !important; border-color: rgba(168, 85, 247, 0.2) !important; color: #c084fc !important;}
+
+        /* Chữ cho Màu Nhấn (Semantic Colors) */
+        .v3-dark .text-green-500, .v3-dark .text-green-600, .v3-dark .text-green-700 { color: #4ade80 !important; }
+        .v3-dark .text-amber-500, .v3-dark .text-amber-600, .v3-dark .text-amber-700 { color: #fbbf24 !important; }
+        .v3-dark .text-red-400, .v3-dark .text-red-500, .v3-dark .text-red-600, .v3-dark .text-red-700 { color: #f87171 !important; }
+        .v3-dark .text-purple-500, .v3-dark .text-purple-600, .v3-dark .text-purple-700 { color: #c084fc !important; }
+        .v3-dark .text-orange-500, .v3-dark .text-orange-600, .v3-dark .text-orange-700 { color: #fb923c !important; }
+        
+        /* Nút lớn cụ thể (Quick Review, Quiz setup) */
+        .v3-dark button.bg-purple-600, .v3-dark button.bg-purple-600\/90 { background-color: #7e22ce !important; color: #ffffff !important; border-color: #9333ea !important;}
+        .v3-dark button.bg-orange-500, .v3-dark button.bg-orange-500\/90 { background-color: #c2410c !important; color: #ffffff !important; border-color: #ea580c !important;}
+
+        /* Viền Nút Học Flashcard */
+        .v3-dark .border-red-200\/60 { border-color: rgba(239, 68, 68, 0.4) !important; }
+        .v3-dark .border-green-700\/50 { border-color: rgba(34, 197, 94, 0.4) !important; }
+        .v3-dark .bg-green-600\/90 { background-color: rgba(22, 163, 74, 0.9) !important; color: white !important; border-color: #22c55e !important;}
+        .v3-dark .border-primary-200\/50 { border-color: color-mix(in srgb, var(--tw-color-primary-500) 40%, transparent) !important; }
+
+        /* Viền Trạng Thái Danh Sách */
+        .v3-dark .border-l-green-500 { border-left-color: #4ade80 !important; }
+        .v3-dark .border-l-amber-400 { border-left-color: #fbbf24 !important; }
+        .v3-dark .border-l-red-400 { border-left-color: #f87171 !important; }
+        .v3-dark .border-l-gray-300 { border-left-color: #475569 !important; }
+
+        /* Ô nhập liệu (Inputs, Selects, Textareas) */
+        .v3-dark input, .v3-dark textarea, .v3-dark select, .v3-dark optgroup, .v3-dark option { background-color: #0f172a !important; color: #f8fafc !important; border-color: #334155 !important; }
+        .v3-dark input::placeholder, .v3-dark textarea::placeholder { color: #64748b !important; }
+        .v3-dark input:focus, .v3-dark textarea:focus, .v3-dark select:focus { border-color: var(--tw-color-primary-400) !important; box-shadow: 0 0 0 2px rgba(255,255,255,0.1) !important; }
+
+        /* Thanh điều hướng dưới cùng */
+        .v3-dark .v3-bottom { background: rgba(15, 23, 42, 0.98) !important; border-top-color: #334155 !important; }
+        .v3-dark .v3-bottom button { color: #64748b !important; background: transparent !important; }
+        .v3-dark .v3-bottom button.active { background: transparent !important; color: var(--tw-color-primary-400) !important; }
+        .v3-dark .v3-bottom button.active i { color: var(--tw-color-primary-400) !important; }
+
+        /* Quiz Active Buttons */
+        .v3-dark button.border-green-500 { background-color: rgba(34, 197, 94, 0.15) !important; border-color: #4ade80 !important; color: #4ade80 !important; }
+        .v3-dark button.border-red-500 { background-color: rgba(239, 68, 68, 0.15) !important; border-color: #f87171 !important; color: #f87171 !important; }
+        .v3-dark button:disabled { opacity: 0.6 !important; }
+
+        /* Nút gạt & Cài đặt */
+        .v3-dark .v3-switch { background: #334155 !important; }
+        .v3-dark .v3-switch span { background: #94a3b8 !important; }
+        .v3-dark .v3-switch.on { background: var(--tw-color-primary-600) !important; }
+        .v3-dark .v3-switch.on span { background: #ffffff !important; }
+        
+        .v3-dark .color-circle.active { box-shadow: 0 0 0 2px #1e293b, 0 0 0 4px var(--tw-color-primary-400) !important; }
+        .v3-dark .bg-thumb { background-color: #1e293b !important; border-color: #334155 !important; }
+        .v3-dark .bg-thumb.active { border-color: var(--tw-color-primary-400) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--tw-color-primary-400) 30%, transparent) !important; }
+        .v3-dark .bg-thumb span { background: rgba(15, 23, 42, 0.9) !important; color: #e2e8f0 !important; border-color: #334155 !important; }
+
+        /* Sửa lỗi tối nền Modal */
+        .v3-dark .fixed.inset-0.bg-black\/50 { background-color: rgba(0, 0, 0, 0.75) !important; }
     </style>
 </head>
 <body>
@@ -199,28 +258,27 @@
             { id: 't-indigo', bgBase: '#e0e7ff', label: 'Indigo' }, { id: 't-lime', bgBase: '#ecfccb', label: 'Lime' }
         ];
 
-        const BG_IMAGES = [
-            { id: 'none', name: 'Trơn (Không nền)', url: '' },
-            { id: 'anatomy', name: 'Giải phẫu học', url: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&q=80&w=800' },
-            { id: 'botanical', name: 'Thảo dược', url: 'https://images.unsplash.com/photo-1460500063983-994d4c27756c?auto=format&fit=crop&q=80&w=800' },
-            { id: 'cardio', name: 'Điện tâm đồ', url: 'https://images.unsplash.com/photo-1628348070889-cb656235b4af?auto=format&fit=crop&q=80&w=800' },
-            { id: 'brain', name: 'Thần kinh não', url: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=800' },
-            { id: 'micro', name: 'Sinh học vi mô', url: 'https://images.unsplash.com/photo-1584982751601-97d8cb0f6669?auto=format&fit=crop&q=80&w=800' },
-            { id: 'xray', name: 'X-Quang sọ', url: 'https://images.unsplash.com/photo-1511174511562-5f7f18b874f8?auto=format&fit=crop&q=80&w=800' },
-            { id: 'instruments', name: 'Dụng cụ y khoa', url: 'https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&q=80&w=800' },
+        const BACKGROUNDS = [
+            { id: 'none', name: 'Không nền' },
+            { id: 'paper', name: 'Giấy nhám' },
+            { id: 'grid', name: 'Lưới y tế' },
+            { id: 'ecg', name: 'Nhịp tim' },
+            { id: 'dna', name: 'Xoắn DNA' },
+            { id: 'cells', name: 'Tế bào' },
+            { id: 'cross', name: 'Chữ thập' },
+            { id: 'geo', name: 'Hình học' }
         ];
 
         const FONTS = [
             { id: 'Inter, sans-serif', name: 'Inter (Hiện đại, Dễ đọc)' },
             { id: '"Nunito", sans-serif', name: 'Nunito (Mềm mại, Tròn trịa)' },
             { id: '"Quicksand", sans-serif', name: 'Quicksand (Thoáng đãng)' },
-            { id: '"Montserrat", sans-serif', name: 'Montserrat (Đậm đà, Chuyên nghiệp)' },
-            { id: '"Comfortaa", sans-serif', name: 'Comfortaa (Tối giản, Hình học)' },
-            { id: '"Lora", serif', name: 'Lora (Cổ điển, Sách học thuật)' },
-            { id: '"Playfair Display", serif', name: 'Playfair (Sang trọng, Truyền thống)' },
-            { id: '"Caveat", cursive', name: 'Caveat (Viết tay, Nhanh & Thanh thoát)' },
-            { id: '"Mali", cursive', name: 'Mali (Viết tay mộc mạc, Gần gũi)' },
-            { id: '"Dancing Script", cursive', name: 'Dancing Script (Viết tay nghệ thuật)' },
+            { id: '"Montserrat", sans-serif', name: 'Montserrat (Đậm đà)' },
+            { id: '"Lora", serif', name: 'Lora (Cổ điển, Học thuật)' },
+            { id: '"Playfair Display", serif', name: 'Playfair (Sang trọng)' },
+            { id: '"Caveat", cursive', name: 'Caveat (Viết tay thanh thoát)' },
+            { id: '"Mali", cursive', name: 'Mali (Viết tay mộc mạc)' },
+            { id: '"Dancing Script", cursive', name: 'Dancing Script (Nghệ thuật)' },
         ];
 
         const CollapsibleSection = ({ title, icon, children }) => {
@@ -259,7 +317,6 @@
             const [clozeDeckId, setClozeDeckId] = useState('all');
             const [clozeFilter, setClozeFilter] = useState('all'); 
             
-            // Quiz State
             const [quizDeckId, setQuizDeckId] = useState('all');
             const [quizLimit, setQuizLimit] = useState(10);
             const [quizQueue, setQuizQueue] = useState([]);
@@ -270,7 +327,6 @@
             const [showQuizResult, setShowQuizResult] = useState(false);
             const [quizTimeLeft, setQuizTimeLeft] = useState(30);
 
-            // Flashcard State
             const [activeDeck, setActiveDeck] = useState(null);
             const [learningQueue, setLearningQueue] = useState([]);
             const [currentIndex, setCurrentIndex] = useState(0);
@@ -278,7 +334,6 @@
             const [sessionStats, setSessionStats] = useState({ studied: 0, forgot: 0, mastered: 0 });
             const [showSummary, setShowSummary] = useState(false);
             
-            // Core App & Theme Settings State
             const [searchQuery, setSearchQuery] = useState("");
             
             const [appTheme, setAppTheme] = useState(() => localStorage.getItem('mem_app_theme') || 't-sky');
@@ -326,6 +381,11 @@
             }, [appTheme]);
 
             useEffect(() => {
+                document.body.setAttribute('data-bg', appBgImage);
+                localStorage.setItem('mem_bg_image', appBgImage);
+            }, [appBgImage]);
+
+            useEffect(() => {
                 document.documentElement.classList.toggle('v3-dark', darkMode);
                 localStorage.setItem('mem_dark_mode', darkMode ? '1' : '0');
             }, [darkMode]);
@@ -334,12 +394,6 @@
                 document.body.style.fontFamily = appFont;
                 localStorage.setItem('mem_app_font', appFont);
             }, [appFont]);
-
-            useEffect(() => {
-                const isHasBg = appBgImage !== 'none';
-                document.body.classList.toggle('has-bg', isHasBg);
-                localStorage.setItem('mem_bg_image', appBgImage);
-            }, [appBgImage]);
 
             useEffect(() => {
                 localStorage.setItem('mem_daily_goal', String(dailyGoal));
@@ -820,7 +874,7 @@
                     <div className="v3-scroll mobile-p-4 p-8 max-w-6xl mx-auto space-y-5 animate-fadeIn w-full overflow-x-hidden relative z-10">
                         <div className="py-2">
                             <h1 className="text-3xl md:text-4xl font-black text-primary tracking-tight uppercase drop-shadow-sm">Medical English</h1>
-                            <p className="text-gray-600 text-sm mt-1 font-medium bg-white/40 inline-block px-3 py-1 rounded-full backdrop-blur-sm border border-white/20">Spaced Repetition System 4.2</p>
+                            <p className="text-gray-600 text-sm mt-1 font-medium bg-white/40 inline-block px-3 py-1 rounded-full backdrop-blur-sm border border-white/20">Spaced Repetition System 4.4</p>
                         </div>
 
                         {terms.length === 0 ? (
@@ -889,10 +943,10 @@
                         <span className="text-[11px] md:text-xs font-normal text-orange-200 px-4 text-center mt-1">Gõ từ vựng vào chỗ trống</span>
                     </button>
 
-                    <button onClick={()=>setActiveTab('quiz_setup')} className="w-full py-5 md:py-6 bg-primary-500/90 backdrop-blur-md text-white rounded-2xl font-bold shadow-lg hover:bg-primary-600 transition flex flex-col items-center justify-center gap-2 active:scale-95 mt-4 border border-primary-400/50">
-                        <i className="fas fa-list-check text-2xl md:text-3xl mb-1 text-primary-200"></i>
+                    <button onClick={()=>setActiveTab('quiz_setup')} className="w-full py-5 md:py-6 bg-primary text-white rounded-2xl font-bold shadow-lg hover:opacity-90 transition flex flex-col items-center justify-center gap-2 active:scale-95 mt-4 border border-white/30 backdrop-blur-md">
+                        <i className="fas fa-list-check text-2xl md:text-3xl mb-1 text-white/90"></i>
                         <span className="text-base md:text-lg">Trắc Nghiệm (Multiple Choice)</span>
-                        <span className="text-[11px] md:text-xs font-normal text-primary-200 px-4 text-center mt-1">Chọn đáp án đúng điền vào câu</span>
+                        <span className="text-[11px] md:text-xs font-normal text-white/85 px-4 text-center mt-1">Chọn đáp án đúng điền vào câu</span>
                     </button>
                 </div>
             );
@@ -1169,10 +1223,16 @@
                     </div>
                     <div className="v3-card bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-3 w-full">
                         <label className="block text-xs font-bold text-gray-700 w-full">Chọn bộ từ
-                            <select value={clozeDeckId} onChange={e=>setClozeDeckId(e.target.value)} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all"><option value="all">Toàn bộ kho từ vựng</option>{decks.map(d => <option key={d.id} value={d.id}>{d.title}</option>)}</select>
+                            <select value={clozeDeckId} onChange={e=>setClozeDeckId(e.target.value)} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-no-repeat bg-[position:right_15px_center]">
+                                <option value="all">Toàn bộ kho từ vựng</option>
+                                {decks.map(d => <option key={d.id} value={d.id}>{d.title}</option>)}
+                            </select>
                         </label>
                         <label className="block text-xs font-bold text-gray-700 w-full">Lọc trạng thái
-                            <select value={clozeFilter} onChange={e=>setClozeFilter(e.target.value)} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all"><option value="all">Toàn bộ từ (có ví dụ)</option><option value="unmastered">Chỉ từ chưa thuộc</option></select>
+                            <select value={clozeFilter} onChange={e=>setClozeFilter(e.target.value)} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-no-repeat bg-[position:right_15px_center]">
+                                <option value="all">Toàn bộ từ (có ví dụ)</option>
+                                <option value="unmastered">Chỉ từ chưa thuộc</option>
+                            </select>
                         </label>
                         <button onClick={startCloze} className="w-full mt-2 bg-orange-500 text-white py-3 rounded-xl font-bold text-sm shadow-md active:scale-95 transition-transform">Bắt đầu luyện tập</button>
                     </div>
@@ -1223,17 +1283,20 @@
                     </div>
                     <div className="v3-card bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-3 w-full">
                         <label className="block text-xs font-bold text-gray-700 w-full">Chọn bộ từ
-                            <select value={quizDeckId} onChange={e=>setQuizDeckId(e.target.value)} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all"><option value="all">Toàn bộ kho từ vựng</option>{decks.map(d => <option key={d.id} value={d.id}>{d.title}</option>)}</select>
+                            <select value={quizDeckId} onChange={e=>setQuizDeckId(e.target.value)} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-no-repeat bg-[position:right_15px_center]">
+                                <option value="all">Toàn bộ kho từ vựng</option>
+                                {decks.map(d => <option key={d.id} value={d.id}>{d.title}</option>)}
+                            </select>
                         </label>
                         <label className="block text-xs font-bold text-gray-700 w-full">Số lượng câu hỏi
-                            <select value={quizLimit} onChange={e=>setQuizLimit(Number(e.target.value))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <select value={quizLimit} onChange={e=>setQuizLimit(Number(e.target.value))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-no-repeat bg-[position:right_15px_center]">
                                 <option value={10}>10 câu</option>
                                 <option value={20}>20 câu</option>
                                 <option value={30}>30 câu</option>
                                 <option value={50}>50 câu</option>
                             </select>
                         </label>
-                        <button onClick={startQuiz} className="w-full mt-2 bg-primary-600 text-white py-3 rounded-xl font-bold text-sm shadow-md active:scale-95 transition-transform">Bắt đầu thi</button>
+                        <button onClick={startQuiz} className="w-full mt-2 bg-primary text-white py-3 rounded-xl font-bold text-sm shadow-md active:scale-95 transition-transform">Bắt đầu thi</button>
                     </div>
                 </div>
             );
@@ -1247,7 +1310,7 @@
                                 <h2 className="text-xl font-black text-gray-800 mb-1">KẾT QUẢ</h2>
                                 <p className="text-gray-500 mb-5 text-sm font-medium">Bài trắc nghiệm đã hoàn thành.</p>
                                 <div className="text-4xl font-black text-primary-600 mb-6 drop-shadow-sm">{quizCorrectCount} <span className="text-xl text-gray-400">/ {quizQueue.length}</span></div>
-                                <button onClick={() => setActiveTab('practice')} className="w-full py-3 bg-primary-600 text-white rounded-xl font-bold shadow-md active:scale-95 transition-transform">Về Menu Ôn Tập</button>
+                                <button onClick={() => setActiveTab('practice')} className="w-full py-3 bg-primary text-white rounded-xl font-bold shadow-md active:scale-95 transition-transform">Về Menu Ôn Tập</button>
                             </div>
                         </div>
                     );
@@ -1386,23 +1449,25 @@
                         <h2 className="text-2xl font-black text-gray-800 drop-shadow-sm">Cài đặt</h2>
                     </div>
                     
+                    {/* KHỐI TÙY CHỈNH THEME/GIAO DIỆN MỚI */}
                     <div className="v3-card bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 mb-5 w-full">
                         <h3 className="font-black text-primary mb-5 text-sm tracking-widest uppercase flex items-center gap-2 border-b border-gray-100/50 pb-3"><i className="fas fa-palette text-primary-400"></i> Tùy chỉnh Giao diện</h3>
                         
                         <div className="space-y-6">
+                            {/* Phông chữ */}
                             <div>
                                 <div className="mb-2 flex items-center justify-between">
                                     <b className="text-gray-800 text-sm">Phông chữ (Typography)</b>
                                     <span className="text-[10px] bg-primary-50 text-primary-600 px-2 py-0.5 rounded font-bold uppercase">10 Lựa chọn</span>
                                 </div>
                                 <div className="relative">
-                                    <select value={appFont} onChange={e=>setAppFont(e.target.value)} className="w-full border-2 border-gray-200/80 rounded-xl p-3 bg-gray-50/80 text-base focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none cursor-pointer font-bold text-gray-700 shadow-sm" style={{fontFamily: appFont}}>
+                                    <select value={appFont} onChange={e=>setAppFont(e.target.value)} className="w-full border-2 border-gray-200/80 rounded-xl p-3 bg-gray-50/80 text-base focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none cursor-pointer font-bold text-gray-700 shadow-sm bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-no-repeat bg-[position:right_15px_center]" style={{fontFamily: appFont}}>
                                         {FONTS.map(f => <option key={f.id} value={f.id} style={{fontFamily: f.id, fontSize: '16px'}}>{f.name}</option>)}
                                     </select>
-                                    <i className="fas fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
                                 </div>
                             </div>
 
+                            {/* 16 Màu Pastel */}
                             <div>
                                 <div className="mb-3 flex items-center justify-between">
                                     <b className="text-gray-800 text-sm">Màu nền chủ đạo (Pastel Theme)</b>
@@ -1415,32 +1480,34 @@
                                 </div>
                             </div>
 
+                            {/* 8 Hậu cảnh Medical */}
                             <div>
                                 <div className="mb-2 flex items-center justify-between">
-                                    <b className="text-gray-800 text-sm">Hậu cảnh mờ (Vintage Sketch)</b>
-                                    <span className="text-[10px] bg-primary-50 text-primary-600 px-2 py-0.5 rounded font-bold uppercase">Paper Texture</span>
+                                    <b className="text-gray-800 text-sm">Hậu cảnh Y khoa (Background)</b>
                                 </div>
-                                <p className="text-xs text-gray-500 mb-3 font-medium">Bản vẽ phác thảo 2D hòa trộn theo tông màu nền.</p>
+                                <p className="text-xs text-gray-500 mb-3 font-medium">Bản vẽ họa tiết mờ ảo sẽ tự động thích ứng với Dark Mode.</p>
                                 <div className="flex gap-3 overflow-x-auto pb-3 pt-1 px-1 -mx-1 snap-x scroll-smooth">
-                                    {BG_IMAGES.map(bg => (
-                                        <div key={bg.id} onClick={() => setAppBgImage(bg.id)} className={`bg-thumb snap-start transition-all duration-300 ${appBgImage === bg.id ? 'active scale-105' : 'opacity-80 hover:opacity-100'}`} style={bg.url ? {backgroundImage: `url(${bg.url})`} : {backgroundColor: 'var(--bg-base)'}}>
-                                            <span className="text-[10px] font-bold text-white bg-black/60 px-1.5 py-1 rounded backdrop-blur-md truncate w-full text-center tracking-wide">{bg.name}</span>
+                                    {BACKGROUNDS.map(bg => (
+                                        <div key={bg.id} onClick={() => setAppBgImage(bg.id)} className={`bg-thumb snap-start transition-all duration-300 flex items-center justify-center ${appBgImage === bg.id ? 'active scale-105' : 'opacity-80 hover:opacity-100'}`} style={{ backgroundColor: bg.id === 'paper' ? '#cbd5e1' : 'var(--bg-base)' }}>
+                                            <span className="text-xs font-bold text-gray-800 bg-white/90 px-2 py-1.5 rounded-lg shadow-sm backdrop-blur-md truncate w-full text-center tracking-wide border border-gray-200">{bg.name}</span>
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
+                            {/* Dark Mode toggle */}
                             <div className="pt-2 border-t border-gray-100/50 flex items-center justify-between">
-                                <div><b className="text-gray-800 text-sm">Chế độ tối (Dark Mode)</b><div className="text-[11px] text-gray-500 mt-0.5 font-medium">Đảo ngược màu sắc chống mỏi mắt</div></div>
+                                <div><b className="text-gray-800 text-sm">Chế độ tối (Dark Mode)</b><div className="text-[11px] text-gray-500 mt-0.5 font-medium">Bảo vệ mắt ban đêm tuyệt đối</div></div>
                                 <button className={`v3-switch ${darkMode?'on':''}`} onClick={()=>setDarkMode(v=>!v)}><span></span></button>
                             </div>
                         </div>
                     </div>
 
+                    {/* Mục tiêu ngày */}
                     <div className="v3-card bg-white rounded-2xl p-4 md:p-5 shadow-sm border border-gray-100 mb-5 w-full">
                         <div className="v3-setting-row border-0 w-full">
                             <div><b className="text-gray-800 text-sm">Mục tiêu hằng ngày</b><div className="text-[11px] text-gray-500 mt-0.5 font-medium">Số từ cần ôn</div></div>
-                            <select value={dailyGoal} onChange={e=>setDailyGoal(Number(e.target.value))} className="border-2 border-gray-200/80 rounded-xl px-3 py-2 font-bold bg-gray-50/80 text-sm outline-none focus:border-primary">
+                            <select value={dailyGoal} onChange={e=>setDailyGoal(Number(e.target.value))} className="border-2 border-gray-200/80 rounded-xl px-3 py-2 font-bold bg-gray-50/80 text-sm outline-none focus:border-primary appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-no-repeat bg-[position:right_10px_center] pr-8">
                                 {[10,20,30,50,100].map(n=><option key={n} value={n}>{n} từ</option>)}
                             </select>
                         </div>
@@ -1450,7 +1517,7 @@
                         <h3 className="font-bold text-gray-800 mb-3 text-xs tracking-wider">DỮ LIỆU & SAO LƯU</h3>
                         <div className="space-y-3 w-full">
                             <button onClick={() => {
-                                const backup = { version: '4.2', exportedAt: new Date().toISOString(), terms, decks, favoriteIds, dailyGoal, dailyCount, streak, lastStudyDate };
+                                const backup = { version: '4.4', exportedAt: new Date().toISOString(), terms, decks, favoriteIds, dailyGoal, dailyCount, streak, lastStudyDate };
                                 const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(backup)], {type:'application/json'}));
                                 a.download = 'MEM_Backup_v4.json'; a.click();
                             }} className="w-full py-3 rounded-xl bg-gray-50/80 text-gray-700 font-bold text-sm hover:bg-gray-100 transition-colors border border-gray-200/50"><i className="fas fa-download mr-1"></i> Xuất sao lưu (Backup)</button>
@@ -1494,15 +1561,9 @@
                 );
             }
 
-            const activeBgImg = useMemo(() => {
-                const img = BG_IMAGES.find(b => b.id === appBgImage);
-                return img && img.url ? `url('${img.url}')` : 'none';
-            }, [appBgImage]);
-
             return (
                 <div className="v3-shell text-gray-900">
                     <div id="app-bg"></div>
-                    <div id="app-bg-img" className={appBgImage !== 'none' ? 'active' : ''} style={{backgroundImage: activeBgImg}}></div>
                     <div id="app-bg-overlay"></div>
 
                     {renderModal()}
@@ -1510,7 +1571,7 @@
                     <div className="w-72 bg-white/80 backdrop-blur-xl border-r border-gray-200/50 flex flex-col z-10 shadow-sm shrink-0 hidden md:flex">
                         <div className="p-6 border-b border-gray-100/50 flex items-center gap-4">
                             <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-white font-black text-2xl shadow-md"><i className="fas fa-heartbeat"></i></div>
-                            <div><h2 className="font-black text-gray-900 leading-tight text-lg drop-shadow-sm">MEDICAL</h2><h2 className="font-bold text-primary leading-tight text-sm drop-shadow-sm">ENGLISH 4.2</h2></div>
+                            <div><h2 className="font-black text-gray-900 leading-tight text-lg drop-shadow-sm">MEDICAL</h2><h2 className="font-bold text-primary leading-tight text-sm drop-shadow-sm">ENGLISH 4.4</h2></div>
                         </div>
                         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
                             <button onClick={() => {setActiveTab('home'); setDashboardListView(null);}} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === 'home' ? 'bg-primary-50/80 text-primary shadow-sm' : 'text-gray-600 hover:bg-gray-50/50'}`}><i className="fas fa-chart-pie w-5"></i> Dashboard</button>
