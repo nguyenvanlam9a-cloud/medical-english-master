@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical English Master 2.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Medical English Master 4.2</title>
     
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -11,113 +11,229 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Thư viện đọc Excel -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Comfortaa:wght@400;700&family=Dancing+Script:wght@400;700&family=Inter:wght@400;700;900&family=Lora:wght@400;700&family=Mali:wght@400;700&family=Montserrat:wght@400;700;900&family=Nunito:wght@400;700;900&family=Playfair+Display:wght@400;700;900&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: 'var(--tw-color-primary)',
+                            50: 'var(--tw-color-primary-50)',
+                            100: 'var(--tw-color-primary-100)',
+                            200: 'var(--tw-color-primary-200)',
+                            300: 'var(--tw-color-primary-300)',
+                            400: 'var(--tw-color-primary-400)',
+                            500: 'var(--tw-color-primary-500)',
+                            600: 'var(--tw-color-primary-600)',
+                            700: 'var(--tw-color-primary-700)',
+                            800: 'var(--tw-color-primary-800)',
+                            900: 'var(--tw-color-primary-900)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
+        .animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
         .animate-slideUp { animation: slideUp 0.3s ease-out forwards; }
         
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
+        .v3-dark ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+        
+        :root {
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        /* 16 DYNAMIC PASTEL THEMES */
+        html[data-theme="t-sky"] { --bg-base: #e0f2fe; --tw-color-primary: #0284c7; --tw-color-primary-50: #f0f9ff; --tw-color-primary-100: #e0f2fe; --tw-color-primary-200: #bae6fd; --tw-color-primary-300: #7dd3fc; --tw-color-primary-400: #38bdf8; --tw-color-primary-500: #0ea5e9; --tw-color-primary-600: #0284c7; --tw-color-primary-700: #0369a1; --tw-color-primary-800: #075985; --tw-color-primary-900: #0c4a6e; }
+        html[data-theme="t-emerald"] { --bg-base: #d1fae5; --tw-color-primary: #059669; --tw-color-primary-50: #ecfdf5; --tw-color-primary-100: #d1fae5; --tw-color-primary-200: #a7f3d0; --tw-color-primary-300: #6ee7b7; --tw-color-primary-400: #34d399; --tw-color-primary-500: #10b981; --tw-color-primary-600: #059669; --tw-color-primary-700: #047857; --tw-color-primary-800: #065f46; --tw-color-primary-900: #064e3b; }
+        html[data-theme="t-violet"] { --bg-base: #ede9fe; --tw-color-primary: #7c3aed; --tw-color-primary-50: #f5f3ff; --tw-color-primary-100: #ede9fe; --tw-color-primary-200: #ddd6fe; --tw-color-primary-300: #c4b5fd; --tw-color-primary-400: #a78bfa; --tw-color-primary-500: #8b5cf6; --tw-color-primary-600: #7c3aed; --tw-color-primary-700: #6d28d9; --tw-color-primary-800: #5b21b6; --tw-color-primary-900: #4c1d95; }
+        html[data-theme="t-rose"] { --bg-base: #ffe4e6; --tw-color-primary: #e11d48; --tw-color-primary-50: #fff1f2; --tw-color-primary-100: #ffe4e6; --tw-color-primary-200: #fecdd3; --tw-color-primary-300: #fda4af; --tw-color-primary-400: #fb7185; --tw-color-primary-500: #f43f5e; --tw-color-primary-600: #e11d48; --tw-color-primary-700: #be123c; --tw-color-primary-800: #9f1239; --tw-color-primary-900: #881337; }
+        html[data-theme="t-orange"] { --bg-base: #ffedd5; --tw-color-primary: #ea580c; --tw-color-primary-50: #fff7ed; --tw-color-primary-100: #ffedd5; --tw-color-primary-200: #fed7aa; --tw-color-primary-300: #fdba74; --tw-color-primary-400: #fb923c; --tw-color-primary-500: #f97316; --tw-color-primary-600: #ea580c; --tw-color-primary-700: #c2410c; --tw-color-primary-800: #9a3412; --tw-color-primary-900: #7c2d12; }
+        html[data-theme="t-yellow"] { --bg-base: #fef08a; --tw-color-primary: #ca8a04; --tw-color-primary-50: #fefce8; --tw-color-primary-100: #fef9c3; --tw-color-primary-200: #fef08a; --tw-color-primary-300: #fde047; --tw-color-primary-400: #facc15; --tw-color-primary-500: #eab308; --tw-color-primary-600: #ca8a04; --tw-color-primary-700: #a16207; --tw-color-primary-800: #854d0e; --tw-color-primary-900: #713f12; }
+        html[data-theme="t-cyan"] { --bg-base: #cffafe; --tw-color-primary: #0891b2; --tw-color-primary-50: #ecfeff; --tw-color-primary-100: #cffafe; --tw-color-primary-200: #a5f3fc; --tw-color-primary-300: #67e8f9; --tw-color-primary-400: #22d3ee; --tw-color-primary-500: #06b6d4; --tw-color-primary-600: #0891b2; --tw-color-primary-700: #0e7490; --tw-color-primary-800: #155e75; --tw-color-primary-900: #164e63; }
+        html[data-theme="t-green"] { --bg-base: #dcfce7; --tw-color-primary: #16a34a; --tw-color-primary-50: #f0fdf4; --tw-color-primary-100: #dcfce7; --tw-color-primary-200: #bbf7d0; --tw-color-primary-300: #86efac; --tw-color-primary-400: #4ade80; --tw-color-primary-500: #22c55e; --tw-color-primary-600: #16a34a; --tw-color-primary-700: #15803d; --tw-color-primary-800: #166534; --tw-color-primary-900: #14532d; }
+        html[data-theme="t-fuchsia"] { --bg-base: #fae8ff; --tw-color-primary: #c026d3; --tw-color-primary-50: #fdf4ff; --tw-color-primary-100: #fae8ff; --tw-color-primary-200: #f5d0fe; --tw-color-primary-300: #f0abfc; --tw-color-primary-400: #e879f9; --tw-color-primary-500: #d946ef; --tw-color-primary-600: #c026d3; --tw-color-primary-700: #a21caf; --tw-color-primary-800: #86198f; --tw-color-primary-900: #701a75; }
+        html[data-theme="t-red"] { --bg-base: #fee2e2; --tw-color-primary: #dc2626; --tw-color-primary-50: #fef2f2; --tw-color-primary-100: #fee2e2; --tw-color-primary-200: #fecaca; --tw-color-primary-300: #fca5a5; --tw-color-primary-400: #f87171; --tw-color-primary-500: #ef4444; --tw-color-primary-600: #dc2626; --tw-color-primary-700: #b91c1c; --tw-color-primary-800: #991b1b; --tw-color-primary-900: #7f1d1d; }
+        html[data-theme="t-teal"] { --bg-base: #ccfbf1; --tw-color-primary: #0d9488; --tw-color-primary-50: #f0fdfa; --tw-color-primary-100: #ccfbf1; --tw-color-primary-200: #99f6e4; --tw-color-primary-300: #5eead4; --tw-color-primary-400: #2dd4bf; --tw-color-primary-500: #14b8a6; --tw-color-primary-600: #0d9488; --tw-color-primary-700: #0f766e; --tw-color-primary-800: #115e59; --tw-color-primary-900: #134e4a; }
+        html[data-theme="t-pink"] { --bg-base: #fce7f3; --tw-color-primary: #db2777; --tw-color-primary-50: #fdf2f8; --tw-color-primary-100: #fce7f3; --tw-color-primary-200: #fbcfe8; --tw-color-primary-300: #f9a8d4; --tw-color-primary-400: #f472b6; --tw-color-primary-500: #ec4899; --tw-color-primary-600: #db2777; --tw-color-primary-700: #be185d; --tw-color-primary-800: #9d174d; --tw-color-primary-900: #831843; }
+        html[data-theme="t-amber"] { --bg-base: #fef3c7; --tw-color-primary: #d97706; --tw-color-primary-50: #fffbeb; --tw-color-primary-100: #fef3c7; --tw-color-primary-200: #fde68a; --tw-color-primary-300: #fcd34d; --tw-color-primary-400: #fbbf24; --tw-color-primary-500: #f59e0b; --tw-color-primary-600: #d97706; --tw-color-primary-700: #b45309; --tw-color-primary-800: #92400e; --tw-color-primary-900: #78350f; }
+        html[data-theme="t-slate"] { --bg-base: #f1f5f9; --tw-color-primary: #475569; --tw-color-primary-50: #f8fafc; --tw-color-primary-100: #f1f5f9; --tw-color-primary-200: #e2e8f0; --tw-color-primary-300: #cbd5e1; --tw-color-primary-400: #94a3b8; --tw-color-primary-500: #64748b; --tw-color-primary-600: #475569; --tw-color-primary-700: #334155; --tw-color-primary-800: #1e293b; --tw-color-primary-900: #0f172a; }
+        html[data-theme="t-indigo"] { --bg-base: #e0e7ff; --tw-color-primary: #4f46e5; --tw-color-primary-50: #eef2ff; --tw-color-primary-100: #e0e7ff; --tw-color-primary-200: #c7d2fe; --tw-color-primary-300: #a5b4fc; --tw-color-primary-400: #818cf8; --tw-color-primary-500: #6366f1; --tw-color-primary-600: #4f46e5; --tw-color-primary-700: #4338ca; --tw-color-primary-800: #3730a3; --tw-color-primary-900: #312e81; }
+        html[data-theme="t-lime"] { --bg-base: #ecfccb; --tw-color-primary: #65a30d; --tw-color-primary-50: #f7fee7; --tw-color-primary-100: #ecfccb; --tw-color-primary-200: #d9f99d; --tw-color-primary-300: #bef264; --tw-color-primary-400: #a3e635; --tw-color-primary-500: #84cc16; --tw-color-primary-600: #65a30d; --tw-color-primary-700: #4d7c0f; --tw-color-primary-800: #3f6212; --tw-color-primary-900: #365314; }
+
+        * { box-sizing: border-box; }
+        html, body, #root { width: 100%; max-width: 100vw; height: 100%; margin: 0; overflow-x: hidden; }
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
+        button, input, textarea, select { font-family: inherit; font-size: 16px; }
+        button { touch-action: manipulation; min-height: 44px; } 
+        
+        .v3-shell { width: 100vw; max-width: 100vw; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 1; }
+        .v3-main { flex: 1; min-height: 0; min-width: 0; width: 100vw; max-width: 100%; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .v3-scroll { flex: 1; min-width: 0; width: 100%; max-width: 100%; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding-bottom: calc(90px + var(--safe-bottom)); height: 100%; }
+        
+        .v3-bottom { display: none; }
+        .v3-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        
+        #app-bg { position: fixed; inset: 0; z-index: 0; background-color: var(--bg-base); transition: background-color 0.4s ease; }
+        
+        #app-bg-img { 
+            position: fixed; inset: 0; z-index: 1; 
+            background-size: cover; background-position: center; 
+            opacity: 0; transition: opacity 0.5s ease; pointer-events: none; 
+            mix-blend-mode: multiply; 
+            filter: grayscale(100%) contrast(1.4) brightness(1.1) opacity(0.12); 
+        }
+        #app-bg-img.active { opacity: 1; }
+        
+        .has-bg::before {
+            content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E");
+            mix-blend-mode: multiply;
+        }
+        
+        #app-bg-overlay { position: fixed; inset: 0; z-index: 2; background-color: var(--bg-base); opacity: 0; pointer-events: none; transition: 0.4s ease; }
+        .has-bg #app-bg-overlay { opacity: 0.2; }
+
+        .v3-card, .bg-white { transition: background-color 0.3s, border-color 0.3s; }
+        .has-bg .v3-card, .has-bg .bg-white { 
+            background-color: rgba(255, 255, 255, 0.6) !important; 
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); 
+            border-color: rgba(255, 255, 255, 0.6) !important; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.04); 
+        }
+        .has-bg .v3-bottom { background-color: rgba(255, 255, 255, 0.75) !important; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top-color: rgba(255,255,255,0.5); }
+
+        .v3-dark #app-bg { background-color: #0f172a !important; }
+        .v3-dark #app-bg-img {
+            mix-blend-mode: screen; 
+            filter: grayscale(100%) invert(100%) contrast(1.2) opacity(0.08); 
+        }
+        .v3-dark.has-bg::before { mix-blend-mode: screen; opacity: 0.3; } 
+        .v3-dark #app-bg-overlay { background-color: #0f172a !important; opacity: 0; }
+        .v3-dark.has-bg #app-bg-overlay { opacity: 0.4; } 
+        
+        .v3-dark body, .v3-dark #root, .v3-dark .text-gray-900, .v3-dark .text-gray-800 { color: #f8fafc !important; }
+        .v3-dark .v3-card, .v3-dark .bg-white { background-color: #1e293b !important; color: #e5e7eb !important; border-color: #334155 !important; }
+        .v3-dark.has-bg .v3-card, .v3-dark.has-bg .bg-white { background-color: rgba(30, 41, 59, 0.75) !important; border-color: rgba(255, 255, 255, 0.1) !important; }
+        
+        .v3-dark input, .v3-dark textarea, .v3-dark select { background: #0f172a !important; color: #e5e7eb !important; border-color: #334155 !important; }
+        .v3-dark .text-gray-700, .v3-dark .text-gray-600 { color: #cbd5e1 !important; }
+        .v3-dark .text-gray-500, .v3-dark .text-gray-400 { color: #94a3b8 !important; }
+        .v3-dark .v3-bottom { background: rgba(15, 23, 42, 0.95) !important; border-color: #334155 !important; }
+        .v3-dark.has-bg .v3-bottom { background-color: rgba(15, 23, 42, 0.85) !important; border-top-color: rgba(255, 255, 255, 0.1) !important; }
+        .v3-dark .border-b, .v3-dark .border-t { border-color: #334155 !important; }
+        .v3-dark .bg-gray-50, .v3-dark .bg-gray-100 { background: rgba(15, 23, 42, 0.5) !important; border-color: rgba(255,255,255,0.05) !important; }
+        
+        .v3-dark .text-primary { color: var(--tw-color-primary-300) !important; }
+        .v3-dark .bg-primary { background-color: var(--tw-color-primary-600) !important; color: #ffffff !important; }
+        .v3-dark .text-primary-500, .v3-dark .text-primary-600 { color: var(--tw-color-primary-400) !important; }
+        .v3-dark .bg-primary-50, .v3-dark .bg-primary-100 { background-color: color-mix(in srgb, var(--tw-color-primary-600) 20%, transparent) !important; color: var(--tw-color-primary-300) !important; border-color: color-mix(in srgb, var(--tw-color-primary-600) 30%, transparent) !important; }
+        
+        .v3-dark .v3-bottom button { color: #94a3b8; }
+        .v3-dark .v3-bottom button.active { background: #1e293b; color: var(--tw-color-primary-400); }
+
+        .v3-dark .text-green-600, .v3-dark .text-green-700 { color: #4ade80 !important; }
+        .v3-dark .text-amber-600, .v3-dark .text-amber-700 { color: #fbbf24 !important; }
+        .v3-dark .text-red-500, .v3-dark .text-red-600 { color: #f87171 !important; }
+        .v3-dark .text-purple-600 { color: #c084fc !important; }
+        .v3-dark .text-orange-600 { color: #fb923c !important; }
+        
+        .v3-dark .bg-green-50, .v3-dark .bg-green-100 { background-color: rgba(34, 197, 94, 0.15) !important; color: #4ade80 !important; border-color: rgba(34, 197, 94, 0.2) !important; }
+        .v3-dark .bg-amber-50, .v3-dark .bg-amber-100 { background-color: rgba(245, 158, 11, 0.15) !important; color: #fbbf24 !important; border-color: rgba(245, 158, 11, 0.2) !important; }
+        .v3-dark .bg-red-50, .v3-dark .bg-red-100 { background-color: rgba(239, 68, 68, 0.15) !important; color: #f87171 !important; border-color: rgba(239, 68, 68, 0.2) !important; }
+        .v3-dark .bg-purple-50, .v3-dark .bg-purple-100 { background-color: rgba(168, 85, 247, 0.15) !important; color: #c084fc !important; border-color: rgba(168, 85, 247, 0.2) !important; }
+        .v3-dark .bg-orange-50 { background-color: rgba(249, 115, 22, 0.15) !important; color: #fb923c !important; border-color: rgba(249, 115, 22, 0.2) !important;}
+        
+        .v3-switch { width: 52px; height: 30px; border-radius: 99px; border: 0; background: #cbd5e1; padding: 3px; position: relative; }
+        .v3-switch span { display: block; width: 24px; height: 24px; border-radius: 50%; background: white; transition: .2s; }
+        .v3-switch.on { background: var(--tw-color-primary); }
+        .v3-switch.on span { transform: translateX(22px); }
+        
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .break-words { word-break: break-word; overflow-wrap: break-word; }
+
+        @media (max-width: 767px) {
+            .v3-bottom { display: flex !important; position: fixed; left: 0; right: 0; bottom: 0; z-index: 9999; height: calc(60px + var(--safe-bottom)); padding: 4px 6px var(--safe-bottom); background: rgba(255, 255, 255, .98); border-top: 1px solid #f1f5f9; box-shadow: 0 -4px 20px rgba(0, 0, 0, .05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: background-color 0.3s; }
+            .v3-bottom button { flex: 1; border: 0; background: transparent; border-radius: 12px; color: #94a3b8; font-weight: 700; font-size: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
+            .v3-bottom button i { font-size: 18px; }
+            .v3-bottom button.active { background: var(--tw-color-primary-50); color: var(--tw-color-primary); }
+            .mobile-p-4 { padding: 16px !important; }
+        }
+
+        .color-circle { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .color-circle.active { border-color: var(--tw-color-primary-900); transform: scale(1.1); box-shadow: 0 0 0 2px white, 0 0 0 4px var(--tw-color-primary-500); }
+        .bg-thumb { width: 80px; height: 100px; border-radius: 12px; background-size: cover; background-position: center; cursor: pointer; border: 2px solid transparent; flex-shrink: 0; display: flex; align-items: flex-end; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .bg-thumb::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%); }
+        .bg-thumb > span { position: relative; z-index: 1; }
+        .bg-thumb.active { border-color: var(--tw-color-primary); box-shadow: 0 0 0 3px var(--tw-color-primary-200); }
+        .v3-dark .color-circle.active { box-shadow: 0 0 0 2px #0f172a, 0 0 0 4px var(--tw-color-primary-400); }
     </style>
-
-    <meta name="theme-color" content="#004b87">
-    <meta name="apple-mobile-web-app-title" content="Medical English">
-    <meta name="format-detection" content="telephone=no">
-    <style>
-      :root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
-      *{box-sizing:border-box}
-      html,body,#root{width:100%;height:100%;margin:0}
-      html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-      body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
-      button,input{font-family:inherit}
-      button{touch-action:manipulation}
-      .v2-shell{min-height:100dvh}
-      .v2-bottom{display:none}
-      .v2-setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #eef2f7}
-      .v2-dark body{background:#0f172a!important}
-      .v2-dark .v2-card{background:#111827!important;color:#e5e7eb!important;border-color:#263244!important}
-      .v2-dark .v2-muted{color:#94a3b8!important}
-      .v2-dark .v2-panel{background:#0f172a!important;color:#e5e7eb!important}
-      .v2-dark .v2-bottom{background:rgba(15,23,42,.97);border-color:#263244}
-      .v2-dark .v2-bottom button{color:#94a3b8}
-      .v2-dark .v2-bottom button.active{background:#172554;color:#60a5fa}
-      .v2-switch{width:52px;height:30px;border-radius:99px;border:0;background:#cbd5e1;padding:3px;position:relative}
-      .v2-switch span{display:block;width:24px;height:24px;border-radius:50%;background:white;transition:.2s}
-      .v2-switch.on{background:#004b87}
-      .v2-switch.on span{transform:translateX(22px)}
-      .v2-progress-ring{font-variant-numeric:tabular-nums}
-      @media(max-width:767px){
-        body{overflow:hidden!important}
-        #root>div{height:100dvh!important;min-height:100dvh}
-        #root .hidden.md\:flex{display:none!important}
-        #root .p-8{padding:16px!important}
-        #root .p-6{padding:14px!important}
-        #root .p-10{padding:20px 16px!important}
-        #root .p-12{padding:22px 16px!important}
-        #root .p-16{padding:24px 16px!important}
-        #root h1{font-size:27px!important;line-height:1.12!important}
-        #root .text-4xl{font-size:27px!important}
-        #root .text-3xl{font-size:23px!important}
-        #root .text-2xl{font-size:20px!important}
-        #root .md\:grid-cols-4{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-        #root .md\:grid-cols-2,#root .lg\:grid-cols-3{grid-template-columns:1fr!important}
-        #root input[type=text]{font-size:16px!important;min-height:52px}
-        #root button{min-height:44px}
-        #root .min-h-\[450px\]{min-height:380px!important}
-        #root .text-5xl{font-size:37px!important}
-        #root .md\:text-6xl{font-size:39px!important}
-        #root .md\:text-5xl{font-size:30px!important}
-        #root .md\:text-3xl{font-size:23px!important}
-        #root .v2-action-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:9px!important}
-        #root .v2-action-grid button{min-height:62px}
-        #root .v2-bottom{display:flex!important;position:fixed;left:0;right:0;bottom:0;z-index:9999;height:calc(66px + var(--safe-bottom));padding:5px 7px var(--safe-bottom);background:rgba(255,255,255,.97);border-top:1px solid #e5e7eb;box-shadow:0 -8px 24px rgba(0,0,0,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-        #root .v2-bottom button{flex:1;border:0;background:transparent;border-radius:13px;color:#64748b;font-weight:800;font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
-        #root .v2-bottom button i{font-size:17px}
-        #root .v2-bottom button.active{background:#eff6ff;color:#004b87}
-        #root .v2-scroll{padding-bottom:calc(80px + var(--safe-bottom))!important}
-      }
-    </style>
-
-
-    <meta name="theme-color" content="#0f766e">
-    <meta name="description" content="Ứng dụng học từ vựng tiếng Anh y khoa bằng flashcards, điền từ và ôn tập ngắt quãng.">
-    <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="apple-touch-icon" href="./icons/icon-192.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Medical English">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
 </head>
-<body class="bg-gray-50 text-gray-900 overflow-hidden font-sans">
+<body>
     <div id="root"></div>
 
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
 
+        const THEMES = [
+            { id: 't-sky', bgBase: '#e0f2fe', label: 'Sky' }, { id: 't-emerald', bgBase: '#d1fae5', label: 'Emerald' },
+            { id: 't-violet', bgBase: '#ede9fe', label: 'Violet' }, { id: 't-rose', bgBase: '#ffe4e6', label: 'Rose' },
+            { id: 't-orange', bgBase: '#ffedd5', label: 'Peach' }, { id: 't-yellow', bgBase: '#fef08a', label: 'Lemon' },
+            { id: 't-cyan', bgBase: '#cffafe', label: 'Ice' }, { id: 't-green', bgBase: '#dcfce7', label: 'Matcha' },
+            { id: 't-fuchsia', bgBase: '#fae8ff', label: 'Lilac' }, { id: 't-red', bgBase: '#fee2e2', label: 'Coral' },
+            { id: 't-teal', bgBase: '#ccfbf1', label: 'Seafoam' }, { id: 't-pink', bgBase: '#fce7f3', label: 'Dusty' },
+            { id: 't-amber', bgBase: '#fef3c7', label: 'Sand' }, { id: 't-slate', bgBase: '#f1f5f9', label: 'Clinical' },
+            { id: 't-indigo', bgBase: '#e0e7ff', label: 'Indigo' }, { id: 't-lime', bgBase: '#ecfccb', label: 'Lime' }
+        ];
+
+        const BG_IMAGES = [
+            { id: 'none', name: 'Trơn (Không nền)', url: '' },
+            { id: 'anatomy', name: 'Giải phẫu học', url: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&q=80&w=800' },
+            { id: 'botanical', name: 'Thảo dược', url: 'https://images.unsplash.com/photo-1460500063983-994d4c27756c?auto=format&fit=crop&q=80&w=800' },
+            { id: 'cardio', name: 'Điện tâm đồ', url: 'https://images.unsplash.com/photo-1628348070889-cb656235b4af?auto=format&fit=crop&q=80&w=800' },
+            { id: 'brain', name: 'Thần kinh não', url: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=800' },
+            { id: 'micro', name: 'Sinh học vi mô', url: 'https://images.unsplash.com/photo-1584982751601-97d8cb0f6669?auto=format&fit=crop&q=80&w=800' },
+            { id: 'xray', name: 'X-Quang sọ', url: 'https://images.unsplash.com/photo-1511174511562-5f7f18b874f8?auto=format&fit=crop&q=80&w=800' },
+            { id: 'instruments', name: 'Dụng cụ y khoa', url: 'https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&q=80&w=800' },
+        ];
+
+        const FONTS = [
+            { id: 'Inter, sans-serif', name: 'Inter (Hiện đại, Dễ đọc)' },
+            { id: '"Nunito", sans-serif', name: 'Nunito (Mềm mại, Tròn trịa)' },
+            { id: '"Quicksand", sans-serif', name: 'Quicksand (Thoáng đãng)' },
+            { id: '"Montserrat", sans-serif', name: 'Montserrat (Đậm đà, Chuyên nghiệp)' },
+            { id: '"Comfortaa", sans-serif', name: 'Comfortaa (Tối giản, Hình học)' },
+            { id: '"Lora", serif', name: 'Lora (Cổ điển, Sách học thuật)' },
+            { id: '"Playfair Display", serif', name: 'Playfair (Sang trọng, Truyền thống)' },
+            { id: '"Caveat", cursive', name: 'Caveat (Viết tay, Nhanh & Thanh thoát)' },
+            { id: '"Mali", cursive', name: 'Mali (Viết tay mộc mạc, Gần gũi)' },
+            { id: '"Dancing Script", cursive', name: 'Dancing Script (Viết tay nghệ thuật)' },
+        ];
+
         const CollapsibleSection = ({ title, icon, children }) => {
             const [isOpen, setIsOpen] = useState(false);
             return (
-                <div className="border-b border-gray-100 last:border-0 bg-white">
-                    <button 
-                        onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
-                        className="w-full flex justify-between items-center py-4 px-5 text-left hover:bg-gray-50 transition-colors"
-                    >
-                        <span className="font-bold text-[#004b87] text-sm flex items-center gap-3 uppercase tracking-wider">
-                            <i className={`fas ${icon} w-4 text-center text-blue-400`}></i> {title}
+                <div className="border-b border-gray-100/50 last:border-0" onClick={(e) => e.stopPropagation()}>
+                    <button onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }} className="w-full flex justify-between items-center py-4 px-5 text-left hover:bg-gray-50/50 transition-colors">
+                        <span className="font-bold text-primary text-sm flex items-center gap-3 uppercase tracking-wider">
+                            <i className={`fas ${icon} w-4 text-center text-primary-400`}></i> {title}
                         </span>
-                        <i className={`fas fa-chevron-${isOpen ? 'up' : 'down'} text-gray-400 text-sm`}></i>
+                        <i className={`fas fa-chevron-${isOpen ? 'up' : 'down'} text-gray-400 text-sm transition-transform ${isOpen ? 'rotate-180' : ''}`}></i>
                     </button>
-                    {isOpen && (
-                        <div className="px-5 pb-5 pt-1 text-gray-700 text-sm animate-fadeIn" onClick={(e) => e.stopPropagation()}>
-                            {children}
-                        </div>
-                    )}
+                    {isOpen && <div className="px-5 pb-5 pt-1 text-gray-700 text-sm animate-fadeIn">{children}</div>}
                 </div>
             );
         };
@@ -127,46 +243,103 @@
             const [terms, setTerms] = useState([]);
             const [decks, setDecks] = useState([]);
             
-            // Learning State
+            const [modal, setModal] = useState({ isOpen: false, type: 'alert', message: '', onConfirm: null });
+            const showAlert = (message) => setModal({ isOpen: true, type: 'alert', message, onConfirm: null });
+            const showConfirm = (message, onConfirm) => setModal({ isOpen: true, type: 'confirm', message, onConfirm });
+            const closeModal = () => setModal({ ...modal, isOpen: false });
+
+            const [activeDeckDetail, setActiveDeckDetail] = useState(null);
+            const [deckFilter, setDeckFilter] = useState('all'); 
+            const [deckSearchQuery, setDeckSearchQuery] = useState('');
+            const [editTerm, setEditTerm] = useState(null);
+            
+            const [dashboardListView, setDashboardListView] = useState(null);
+            const [dashboardListQuery, setDashboardListQuery] = useState('');
+            
+            const [clozeDeckId, setClozeDeckId] = useState('all');
+            const [clozeFilter, setClozeFilter] = useState('all'); 
+            
+            // Quiz State
+            const [quizDeckId, setQuizDeckId] = useState('all');
+            const [quizLimit, setQuizLimit] = useState(10);
+            const [quizQueue, setQuizQueue] = useState([]);
+            const [quizIndex, setQuizIndex] = useState(0);
+            const [quizOptions, setQuizOptions] = useState([]);
+            const [quizSelected, setQuizSelected] = useState(null);
+            const [quizCorrectCount, setQuizCorrectCount] = useState(0);
+            const [showQuizResult, setShowQuizResult] = useState(false);
+            const [quizTimeLeft, setQuizTimeLeft] = useState(30);
+
+            // Flashcard State
             const [activeDeck, setActiveDeck] = useState(null);
             const [learningQueue, setLearningQueue] = useState([]);
             const [currentIndex, setCurrentIndex] = useState(0);
             const [isRevealed, setIsRevealed] = useState(false);
-            const [sessionStats, setSessionStats] = useState({ studied: 0, again: 0, hard: 0, good: 0, easy: 0 });
+            const [sessionStats, setSessionStats] = useState({ studied: 0, forgot: 0, mastered: 0 });
             const [showSummary, setShowSummary] = useState(false);
             
-            // Search State
-            
+            // Core App & Theme Settings State
             const [searchQuery, setSearchQuery] = useState("");
+            
+            const [appTheme, setAppTheme] = useState(() => localStorage.getItem('mem_app_theme') || 't-sky');
+            const [appBgImage, setAppBgImage] = useState(() => localStorage.getItem('mem_bg_image') || 'none');
+            const [appFont, setAppFont] = useState(() => localStorage.getItem('mem_app_font') || 'Inter, sans-serif');
             const [darkMode, setDarkMode] = useState(() => localStorage.getItem('mem_dark_mode') === '1');
+            
             const [dailyGoal, setDailyGoal] = useState(() => Number(localStorage.getItem('mem_daily_goal') || 20));
             const [dailyCount, setDailyCount] = useState(() => Number(localStorage.getItem('mem_daily_count') || 0));
             const [streak, setStreak] = useState(() => Number(localStorage.getItem('mem_streak') || 0));
             const [lastStudyDate, setLastStudyDate] = useState(() => localStorage.getItem('mem_last_study_date') || '');
             const [favoriteIds, setFavoriteIds] = useState(() => JSON.parse(localStorage.getItem('mem_favorites') || '[]'));
-            const [showSettings, setShowSettings] = useState(false);
-            const [newWord, setNewWord] = useState({term:'', vietnamese:'', type:'', ipa:'', example:'', exampleVi:'', definition:''});
+            
             const [clozeIndex, setClozeIndex] = useState(0);
             const [clozeAnswer, setClozeAnswer] = useState('');
             const [clozeChecked, setClozeChecked] = useState(false);
             const [clozeQueue, setClozeQueue] = useState([]);
-
+            
+            const [newDeck, setNewDeck] = useState({ title: '', topic: '', description: '' });
 
             useEffect(() => {
                 const savedTerms = localStorage.getItem('medical_terms_db');
                 const savedDecks = localStorage.getItem('medical_decks_db');
                 if (savedTerms && savedDecks) {
                     try {
-                        setTerms(JSON.parse(savedTerms));
-                        setDecks(JSON.parse(savedDecks));
+                        const parsedDecks = JSON.parse(savedDecks);
+                        const parsedTerms = JSON.parse(savedTerms).map(t => ({
+                            ...t,
+                            status: t.status || 'new',
+                            interval: t.interval || 0,
+                            dueAt: t.dueAt || Date.now(),
+                            easeFactor: t.easeFactor || 2.5,
+                            reviewCount: t.reviewCount || 0,
+                            lapseCount: t.lapseCount || 0
+                        }));
+                        setTerms(parsedTerms);
+                        setDecks(parsedDecks);
                     } catch (e) { console.error("Lỗi đọc LocalStorage", e); }
                 }
             }, []);
 
             useEffect(() => {
-                document.documentElement.classList.toggle('v2-dark', darkMode);
+                document.documentElement.setAttribute('data-theme', appTheme);
+                localStorage.setItem('mem_app_theme', appTheme);
+            }, [appTheme]);
+
+            useEffect(() => {
+                document.documentElement.classList.toggle('v3-dark', darkMode);
                 localStorage.setItem('mem_dark_mode', darkMode ? '1' : '0');
             }, [darkMode]);
+
+            useEffect(() => {
+                document.body.style.fontFamily = appFont;
+                localStorage.setItem('mem_app_font', appFont);
+            }, [appFont]);
+
+            useEffect(() => {
+                const isHasBg = appBgImage !== 'none';
+                document.body.classList.toggle('has-bg', isHasBg);
+                localStorage.setItem('mem_bg_image', appBgImage);
+            }, [appBgImage]);
 
             useEffect(() => {
                 localStorage.setItem('mem_daily_goal', String(dailyGoal));
@@ -175,6 +348,35 @@
                 if (lastStudyDate) localStorage.setItem('mem_last_study_date', lastStudyDate);
                 localStorage.setItem('mem_favorites', JSON.stringify(favoriteIds));
             }, [dailyGoal, dailyCount, streak, lastStudyDate, favoriteIds]);
+
+            useEffect(() => {
+                let timer;
+                if (activeTab === 'quiz_run' && !showQuizResult && quizSelected === null && quizTimeLeft > 0) {
+                    timer = setTimeout(() => { setQuizTimeLeft(prev => prev - 1); }, 1000);
+                } else if (activeTab === 'quiz_run' && !showQuizResult && quizSelected === null && quizTimeLeft === 0) {
+                    handleQuizAnswer('timeout');
+                }
+                return () => clearTimeout(timer);
+            }, [activeTab, showQuizResult, quizSelected, quizTimeLeft]);
+
+            const saveToStorage = (newTerms, newDecks) => {
+                try {
+                    localStorage.setItem('medical_terms_db', JSON.stringify(newTerms));
+                    if (newDecks) localStorage.setItem('medical_decks_db', JSON.stringify(newDecks));
+                } catch (e) { showAlert("Bộ nhớ thiết bị đã đầy, không thể lưu."); }
+            };
+
+            const resetData = () => {
+                showConfirm("CẢNH BÁO: Bạn có chắc chắn muốn xóa TOÀN BỘ bộ từ, tiến trình học và từ vựng?", () => {
+                    localStorage.removeItem('medical_terms_db');
+                    localStorage.removeItem('medical_decks_db');
+                    localStorage.removeItem('mem_daily_count');
+                    localStorage.removeItem('mem_streak');
+                    localStorage.removeItem('mem_last_study_date');
+                    localStorage.removeItem('mem_favorites');
+                    setTerms([]); setDecks([]); setDailyCount(0); setStreak(0); setActiveTab('home'); setDashboardListView(null);
+                });
+            };
 
             const todayKey = () => new Date().toISOString().slice(0,10);
             const markStudyDay = () => {
@@ -187,160 +389,14 @@
                 setLastStudyDate(today);
             };
 
-            const toggleFavorite = (id) => {
-                setFavoriteIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
-            };
-
             const speakTerm = (term) => {
                 if (!('speechSynthesis' in window) || !term) return;
                 window.speechSynthesis.cancel();
-                const u = new SpeechSynthesisUtterance(term);
-                u.lang = 'en-US';
-                u.rate = 0.82;
+                const u = new SpeechSynthesisUtterance(term); u.lang = 'en-US'; u.rate = 0.85;
                 window.speechSynthesis.speak(u);
             };
 
-            const exportBackup = () => {
-                const payload = {
-                    version: '2.0',
-                    exportedAt: new Date().toISOString(),
-                    terms, decks, favoriteIds, dailyGoal, dailyCount, streak, lastStudyDate
-                };
-                const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href=url; a.download='medical-english-master-backup.json';
-                document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-            };
-
-            const importBackup = (e) => {
-                const file = e.target.files && e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = ev => {
-                    try {
-                        const p = JSON.parse(ev.target.result);
-                        if (!Array.isArray(p.terms) || !Array.isArray(p.decks)) throw new Error('File backup không hợp lệ');
-                        setTerms(p.terms); setDecks(p.decks);
-                        setFavoriteIds(Array.isArray(p.favoriteIds) ? p.favoriteIds : []);
-                        setDailyGoal(Number(p.dailyGoal) || 20);
-                        setDailyCount(Number(p.dailyCount) || 0);
-                        setStreak(Number(p.streak) || 0);
-                        setLastStudyDate(p.lastStudyDate || '');
-                        saveToStorage(p.terms, p.decks);
-                        alert('Khôi phục dữ liệu thành công.');
-                    } catch(err) { alert('Không thể khôi phục: ' + err.message); }
-                };
-                reader.readAsText(file);
-                e.target.value='';
-            };
-
-            const resetDailyProgress = () => {
-                setDailyCount(0);
-                localStorage.setItem('mem_daily_count','0');
-            };
-
-            const startCloze = () => {
-                const eligible = terms.filter(t => t.example && String(t.example).trim().length > 0);
-                if (!eligible.length) { alert('Chưa có câu ví dụ. Hãy nhập từ có câu ví dụ tiếng Anh hoặc bổ sung câu ví dụ cho từ.'); return; }
-                setClozeQueue([...eligible].sort(() => Math.random() - 0.5));
-                setClozeIndex(0); setClozeAnswer(''); setClozeChecked(false); setActiveTab('cloze');
-            };
-            const addNewTerm = (e) => {
-                e.preventDefault();
-                if (!newWord.term.trim() || !newWord.vietnamese.trim()) { alert('Vui lòng nhập thuật ngữ tiếng Anh và nghĩa tiếng Việt.'); return; }
-                const id = 'USER_' + Date.now();
-                const deckId = 'CUSTOM_TERMS';
-                const existingDeck = decks.some(d => d.id === deckId);
-                const item = { ...newWord, term:newWord.term.trim(), vietnamese:newWord.vietnamese.trim(), definition:newWord.definition.trim() || newWord.vietnamese.trim(), example:newWord.example.trim(), exampleVi:newWord.exampleVi.trim(), id, deckId, collocations:[], status:'new', interval:0, easeFactor:2.5, dueAt:Date.now() };
-                const nextTerms = [...terms, item];
-                const nextDecks = existingDeck ? decks.map(d => d.id===deckId ? {...d,count:(d.count||0)+1} : d) : [...decks,{id:deckId,title:'Từ tự thêm',topic:'Từ tự thêm',count:1}];
-                setTerms(nextTerms); setDecks(nextDecks); saveToStorage(nextTerms,nextDecks);
-                setNewWord({term:'', vietnamese:'', type:'', ipa:'', example:'', exampleVi:'', definition:''});
-                alert('Đã thêm thuật ngữ mới!');
-            };
-            const renderAddWord = () => (
-                <div className="v2-scroll p-6 max-w-3xl mx-auto h-full overflow-y-auto">
-                    <h2 className="text-3xl font-black text-gray-800 mb-2">Thêm từ mới</h2><p className="text-gray-500 mb-5">Từ mới được lưu trên thiết bị và xuất hiện trong bộ “Từ tự thêm”.</p>
-                    <form onSubmit={addNewTerm} className="v2-card bg-white rounded-2xl border p-5 space-y-3">
-                    {[['term','Thuật ngữ tiếng Anh *'],['vietnamese','Nghĩa tiếng Việt *'],['type','Loại từ (noun, verb...)'],['ipa','Phiên âm IPA'],['definition','Định nghĩa / ghi chú'],['example','Câu ví dụ tiếng Anh (dùng cho bài điền từ)'],['exampleVi','Dịch câu ví dụ tiếng Việt']].map(([key,label])=><label key={key} className="block text-sm font-bold text-gray-700">{label}<textarea rows={key==='example'?3:1} value={newWord[key]} onChange={e=>setNewWord(v=>({...v,[key]:e.target.value}))} className="mt-1 w-full border rounded-xl p-3 font-normal" placeholder={label}/></label>)}
-                    <button type="submit" className="w-full rounded-xl bg-[#004b87] text-white font-black py-3">Lưu từ mới</button></form>
-                </div>
-            );
-            const renderCloze = () => {
-                if (!clozeQueue.length) return <div className="p-6">Chưa có câu ví dụ để luyện tập.</div>;
-                const item = clozeQueue[clozeIndex];
-                const escaped = String(item.term||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-                const hasTerm = item.term && new RegExp(escaped,'i').test(item.example||'');
-                const prompt = hasTerm ? String(item.example).replace(new RegExp(escaped,'i'),'________') : String(item.example);
-                const correct = clozeAnswer.trim().toLowerCase() === String(item.term).trim().toLowerCase();
-                return <div className="v2-scroll p-6 max-w-3xl mx-auto h-full overflow-y-auto"><div className="flex justify-between items-center mb-5"><h2 className="text-2xl font-black text-[#004b87]">Điền từ còn thiếu</h2><button onClick={()=>setActiveTab('home')} className="px-4 py-2 rounded-xl bg-gray-100">Thoát</button></div>
-                <div className="v2-card bg-white rounded-2xl border p-5"><p className="text-sm text-gray-500 mb-3">Câu {clozeIndex+1} / {clozeQueue.length}</p><p className="text-xl leading-relaxed font-semibold mb-4">{prompt}</p>{!hasTerm && <p className="text-sm text-gray-500 mb-3">Gợi ý nghĩa: {item.vietnamese}</p>}
-                <input value={clozeAnswer} onChange={e=>setClozeAnswer(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!clozeChecked){setClozeChecked(true)}}} className="w-full border-2 rounded-xl p-3 mb-3" placeholder="Nhập thuật ngữ tiếng Anh..." />
-                {!clozeChecked ? <button onClick={()=>setClozeChecked(true)} className="w-full bg-[#004b87] text-white font-bold rounded-xl p-3">Kiểm tra đáp án</button> : <div className="rounded-xl bg-blue-50 p-4"><p className={"font-black " + (correct ? "text-green-700" : "text-red-600")}>{correct ? "Chính xác!" : "Chưa chính xác — hãy ghi nhớ đáp án"}</p><p className="font-black text-[#004b87] mt-1">Đáp án: {item.term}</p><p className="text-gray-700">{item.vietnamese}</p>{item.exampleVi&&<p className="italic text-gray-500 mt-1">{item.exampleVi}</p>}<button onClick={()=>{setClozeIndex(i=>(i+1)%clozeQueue.length);setClozeAnswer('');setClozeChecked(false)}} className="mt-3 w-full bg-[#004b87] text-white rounded-xl p-3 font-bold">Câu tiếp theo</button></div>}</div></div>;
-            };
-
-            const renderSettings = () => (
-                <div className="v2-scroll p-8 max-w-3xl mx-auto h-full overflow-y-auto animate-fadeIn">
-                    <div className="mb-7">
-                        <h2 className="text-3xl font-extrabold text-gray-800 tracking-tight">Cài đặt</h2>
-                        <p className="text-gray-500 text-sm mt-2">Cá nhân hóa Medical English Master 2.1</p>
-                    </div>
-                    <div className="v2-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                        <div className="v2-setting-row">
-                            <div><b>Chế độ tối</b><div className="text-xs text-gray-500 mt-1">Dễ học buổi tối trên iPhone</div></div>
-                            <button className={`v2-switch ${darkMode?'on':''}`} onClick={()=>setDarkMode(v=>!v)}><span></span></button>
-                        </div>
-                        <div className="v2-setting-row">
-                            <div><b>Mục tiêu mỗi ngày</b><div className="text-xs text-gray-500 mt-1">Số thuật ngữ muốn học/ngày</div></div>
-                            <select value={dailyGoal} onChange={e=>setDailyGoal(Number(e.target.value))} className="border rounded-xl px-3 py-2 font-bold">
-                                {[10,15,20,30,40,50].map(n=><option key={n} value={n}>{n} từ</option>)}
-                            </select>
-                        </div>
-                        <div className="v2-setting-row">
-                            <div><b>Streak</b><div className="text-xs text-gray-500 mt-1">Chuỗi ngày học liên tiếp</div></div>
-                            <span className="font-black text-amber-500 text-xl">🔥 {streak}</span>
-                        </div>
-                        <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button onClick={()=>setActiveTab('addword')} className="py-3 rounded-xl bg-indigo-50 text-indigo-700 font-bold"><i className="fas fa-plus mr-2"></i>Thêm từ mới</button>
-                            <button onClick={startCloze} className="py-3 rounded-xl bg-purple-50 text-purple-700 font-bold"><i className="fas fa-pen mr-2"></i>Ôn điền từ</button>
-                            <button onClick={startQuickReview} className="py-3 rounded-xl bg-cyan-50 text-cyan-700 font-bold"><i className="fas fa-calendar-check mr-2"></i>Ôn SRS đến hạn</button>
-                            <button onClick={exportBackup} className="py-3 rounded-xl bg-blue-50 text-[#004b87] font-bold"><i className="fas fa-download mr-2"></i>Xuất backup</button>
-                            <label className="py-3 rounded-xl bg-gray-50 text-gray-700 font-bold text-center cursor-pointer"><i className="fas fa-upload mr-2"></i>Nhập backup<input type="file" accept=".json" className="hidden" onChange={importBackup}/></label>
-                            <button onClick={resetDailyProgress} className="py-3 rounded-xl bg-amber-50 text-amber-700 font-bold"><i className="fas fa-rotate-left mr-2"></i>Reset mục tiêu hôm nay</button>
-                            <button onClick={resetData} className="py-3 rounded-xl bg-red-50 text-red-600 font-bold"><i className="fas fa-trash-alt mr-2"></i>Xóa toàn bộ dữ liệu</button>
-                        </div>
-                    </div>
-                    <div className="v2-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mt-4">
-                        <h3 className="font-black text-gray-800 mb-3">Medical English Master 2.1</h3>
-                        <p className="text-sm text-gray-500 leading-relaxed">Bản tối ưu iPhone, không dùng PWA. Dữ liệu học được lưu cục bộ trong trình duyệt của thiết bị.</p>
-                    </div>
-                </div>
-            );
-
-            const saveToStorage = (newTerms, newDecks) => {
-                try {
-                    localStorage.setItem('medical_terms_db', JSON.stringify(newTerms));
-                    if (newDecks) localStorage.setItem('medical_decks_db', JSON.stringify(newDecks));
-                } catch (e) { console.error("Local storage đầy", e); }
-            };
-
-            const resetData = () => {
-                if (window.confirm("Bạn có chắc muốn xóa toàn bộ dữ liệu và tiến trình học?")) {
-                    localStorage.removeItem('medical_terms_db');
-                    localStorage.removeItem('medical_decks_db');
-                    localStorage.removeItem('mem_daily_goal');
-                    localStorage.removeItem('mem_daily_count');
-                    localStorage.removeItem('mem_streak');
-                    localStorage.removeItem('mem_last_study_date');
-                    localStorage.removeItem('mem_favorites');
-                    setTerms([]);
-                    setDecks([]);
-                    setActiveTab('home');
-                }
-            };
-
-            const handleFileUpload = (e) => {
+            const handleGlobalFileUpload = (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
 
@@ -378,23 +434,13 @@
                                     headerRowIndex = i;
                                     row.forEach((cell, idx) => {
                                         const c = String(cell).toLowerCase().trim();
-                                        
-                                        // THUẬT TOÁN QUÉT TỪ KHÓA ƯU TIÊN MỚI
-                                        if (c.includes('từ vựng') || c.includes('thuật ngữ') || (c.includes('term') && !c.includes('determine'))) {
-                                            colMap.term = idx;
-                                        } else if (c.includes('loại từ') || c.includes('part of speech') || c === 'loại') {
-                                            colMap.type = idx;
-                                        } else if (c.includes('phát âm') || c.includes('ipa')) {
-                                            colMap.ipa = idx;
-                                        } else if (c.includes('dịch nghĩa ví dụ') || c.includes('dịch ví dụ') || (c.includes('ví dụ') && c.includes('việt'))) {
-                                            colMap.ex_vi = idx;
-                                        } else if (c.includes('ví dụ tiếng anh') || (c.includes('ví dụ') && (c.includes('anh') || c.includes('en'))) || c.includes('english example')) {
-                                            colMap.ex_en = idx;
-                                        } else if (c.includes('định nghĩa') || c.includes('tiếng việt') || c.includes('nghĩa') || c.includes('dịch')) {
-                                            colMap.viet = idx;
-                                        } else if (c.includes('ví dụ')) {
-                                            if (colMap.ex_en === -1) colMap.ex_en = idx;
-                                        }
+                                        if (c.includes('từ vựng') || c.includes('thuật ngữ') || (c.includes('term') && !c.includes('determine'))) colMap.term = idx;
+                                        else if (c.includes('loại từ') || c.includes('part of speech') || c === 'loại') colMap.type = idx;
+                                        else if (c.includes('phát âm') || c.includes('ipa')) colMap.ipa = idx;
+                                        else if (c.includes('dịch nghĩa ví dụ') || c.includes('dịch ví dụ') || (c.includes('ví dụ') && c.includes('việt'))) colMap.ex_vi = idx;
+                                        else if (c.includes('ví dụ tiếng anh') || (c.includes('ví dụ') && (c.includes('anh') || c.includes('en'))) || c.includes('english example')) colMap.ex_en = idx;
+                                        else if (c.includes('định nghĩa') || c.includes('tiếng việt') || c.includes('nghĩa') || c.includes('dịch')) colMap.viet = idx;
+                                        else if (c.includes('ví dụ')) if (colMap.ex_en === -1) colMap.ex_en = idx;
                                     });
                                     break;
                                 }
@@ -406,13 +452,8 @@
                             for (let i = headerRowIndex + 1; i < jsonData.length; i++) {
                                 const row = jsonData[i];
                                 if (!row || row.length === 0) continue;
-                                
                                 const termVal = String(row[colMap.term] || '').trim();
-                                
-                                if (!termVal) continue;
-                                if (/^\d+$/.test(termVal) || termVal.toLowerCase() === 'stt') continue; 
-                                if (termVal.toLowerCase().includes("bảng tổng hợp") || termVal.toLowerCase().includes("chuyên ngành")) continue;
-                                
+                                if (!termVal || /^\d+$/.test(termVal) || termVal.toLowerCase() === 'stt' || termVal.toLowerCase().includes("bảng tổng hợp") || termVal.toLowerCase().includes("chuyên ngành")) continue;
                                 validRows.push(row);
                             }
 
@@ -426,35 +467,21 @@
                                 const deckId = `DECK_${String(deckCounter).padStart(2, '0')}`;
                                 const deckTopic = totalParts > 1 ? `${sheetName} (Part ${p + 1})` : sheetName;
                                 
-                                parsedDecks.push({
-                                    id: deckId,
-                                    topic: sheetName,
-                                    title: deckTopic,
-                                    count: chunk.length,
-                                });
+                                parsedDecks.push({ id: deckId, topic: sheetName, title: deckTopic, count: chunk.length });
 
                                 chunk.forEach(row => {
-                                    // Tạo collocations mẫu nếu không có sẵn
-                                    const typeStr = colMap.type !== -1 ? String(row[colMap.type] || '').trim().toLowerCase() : '';
                                     const termStr = String(row[colMap.term] || '').trim();
-                                    let autoCollocations = [];
-                                    if(typeStr.includes('n')) autoCollocations = [`acute ${termStr.toLowerCase()}`, `severe ${termStr.toLowerCase()}`];
-                                    if(typeStr.includes('v')) autoCollocations = [`${termStr.toLowerCase()} a patient`, `properly ${termStr.toLowerCase()}`];
-
                                     const vietStr = colMap.viet !== -1 ? String(row[colMap.viet] || '').trim() : '';
 
                                     allParsedTerms.push({
                                         id: `MED${String(idCounter).padStart(4, '0')}`,
-                                        deckId: deckId,
-                                        term: termStr,
+                                        deckId: deckId, term: termStr,
                                         type: colMap.type !== -1 ? String(row[colMap.type] || '').trim() : '',
                                         ipa: colMap.ipa !== -1 ? String(row[colMap.ipa] || '').trim() : '',
-                                        vietnamese: vietStr,
-                                        definition: vietStr, // Gán định nghĩa để hiển thị ở mục Expand
+                                        vietnamese: vietStr, definition: vietStr,
                                         example: colMap.ex_en !== -1 ? String(row[colMap.ex_en] || '').trim() : '',
                                         exampleVi: colMap.ex_vi !== -1 ? String(row[colMap.ex_vi] || '').trim() : '',
-                                        collocations: autoCollocations,
-                                        status: 'new', interval: 0, easeFactor: 2.5
+                                        status: 'new', interval: 0, easeFactor: 2.5, dueAt: Date.now(), lapseCount: 0, reviewCount: 0
                                     });
                                     idCounter++;
                                 });
@@ -463,199 +490,438 @@
                         });
 
                         if (allParsedTerms.length > 0) {
-                            setTerms(allParsedTerms);
-                            setDecks(parsedDecks);
-                            saveToStorage(allParsedTerms, parsedDecks);
-                            alert(`Thành công! Đã nạp chính xác ${allParsedTerms.length} thuật ngữ và tạo ra ${parsedDecks.length} bộ thẻ.`);
-                        } else {
-                            alert("Không tìm thấy dữ liệu. Vui lòng kiểm tra file Excel.");
-                        }
-                    } catch (error) {
-                        console.error(error);
-                        alert("Lỗi đọc file Excel: " + error.message);
-                    }
+                            setTerms(allParsedTerms); setDecks(parsedDecks); saveToStorage(allParsedTerms, parsedDecks);
+                            showAlert(`Thành công! Đã nạp ${allParsedTerms.length} thuật ngữ và tạo ${parsedDecks.length} bộ thẻ.`);
+                        } else { showAlert("Không tìm thấy dữ liệu hợp lệ trong file Excel."); }
+                    } catch (error) { showAlert("Lỗi đọc file Excel: " + error.message); }
                 };
                 reader.readAsBinaryString(file);
                 e.target.value = null; 
             };
 
-            const stats = useMemo(() => {
-                const total = terms.length;
-                const learned = terms.filter(t => t.status !== 'new').length;
-                const mastered = terms.filter(t => t.status === 'mastered').length;
-                const needReview = terms.filter(t => t.status === 'learning' || t.status === 'review').length;
-                const progress = total === 0 ? 0 : Math.round((mastered / total) * 100);
-                return { total, learned, mastered, needReview, progress };
-            }, [terms]);
+            const handleCreateDeck = (e) => {
+                e.preventDefault();
+                if (!newDeck.title.trim()) { showAlert("Tên bộ từ là bắt buộc."); return; }
+                const id = 'DECK_' + Date.now();
+                const d = { id, title: newDeck.title.trim(), topic: newDeck.topic.trim(), description: newDeck.description.trim(), count: 0 };
+                const nextDecks = [...decks, d];
+                setDecks(nextDecks); saveToStorage(terms, nextDecks);
+                setNewDeck({ title: '', topic: '', description: '' }); setActiveTab('decks');
+            };
+
+            const handleDeleteDeck = (deckId) => {
+                showConfirm("Xóa bộ từ này và toàn bộ từ vựng bên trong?", () => {
+                    const nextDecks = decks.filter(d => d.id !== deckId);
+                    const nextTerms = terms.filter(t => t.deckId !== deckId);
+                    setDecks(nextDecks); setTerms(nextTerms);
+                    saveToStorage(nextTerms, nextDecks); setActiveTab('decks');
+                });
+            };
+
+            const handleSaveTerm = (termData, keepFormOpen) => {
+                if (!termData.term.trim() || !termData.vietnamese.trim()) { showAlert('Thiếu thuật ngữ hoặc nghĩa tiếng Việt.'); return; }
+                let nextTerms;
+                if (termData.id) {
+                    nextTerms = terms.map(t => t.id === termData.id ? {...t, ...termData} : t);
+                } else {
+                    const newId = 'MED' + Date.now() + Math.floor(Math.random()*1000);
+                    const newItem = { ...termData, id: newId, status: 'new', interval: 0, easeFactor: 2.5, dueAt: Date.now(), reviewCount: 0, lapseCount: 0 };
+                    nextTerms = [...terms, newItem];
+                }
+                const deckCount = nextTerms.filter(t => t.deckId === termData.deckId).length;
+                const nextDecks = decks.map(d => d.id === termData.deckId ? {...d, count: deckCount} : d);
+                setTerms(nextTerms); setDecks(nextDecks); saveToStorage(nextTerms, nextDecks);
+                
+                if (!keepFormOpen) {
+                    setEditTerm(null);
+                    if (activeTab === 'addword') setActiveTab('deckDetail');
+                } else {
+                    setEditTerm({ deckId: termData.deckId, term: '', vietnamese: '', type: '', ipa: '', example: '', exampleVi: '', definition: '' });
+                }
+            };
+
+            const handleDeleteTerm = (termId) => {
+                showConfirm("Xóa từ vựng này khỏi bộ?", () => {
+                    const tToDelete = terms.find(t => t.id === termId);
+                    if(!tToDelete) return;
+                    const nextTerms = terms.filter(t => t.id !== termId);
+                    const deckCount = nextTerms.filter(t => t.deckId === tToDelete.deckId).length;
+                    const nextDecks = decks.map(d => d.id === tToDelete.deckId ? {...d, count: deckCount} : d);
+                    setTerms(nextTerms); setDecks(nextDecks); saveToStorage(nextTerms, nextDecks);
+                });
+            };
+
+            const downloadExcelTemplate = () => {
+                const ws = XLSX.utils.aoa_to_sheet([['term', 'ipa', 'type', 'vietnamese', 'definition', 'example', 'exampleVi']]);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Template");
+                XLSX.writeFile(wb, "Medical_English_Template.xlsx");
+            };
+
+            const importExcelToDeck = (e, deckId) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    try {
+                        const data = evt.target.result;
+                        const workbook = XLSX.read(data, { type: 'binary' });
+                        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
+                        
+                        if (jsonData.length < 2) { showAlert("File trống hoặc định dạng sai."); return; }
+                        
+                        const headers = jsonData[0].map(h => String(h).trim().toLowerCase());
+                        const hMap = { term: headers.indexOf('term'), ipa: headers.indexOf('ipa'), type: headers.indexOf('type'), vietnamese: headers.indexOf('vietnamese'), definition: headers.indexOf('definition'), example: headers.indexOf('example'), exampleVi: headers.indexOf('examplevi') };
+                        
+                        if (hMap.term === -1 || hMap.vietnamese === -1) { showAlert("Lỗi: Cần có cột 'term' và 'vietnamese'."); return; }
+                        
+                        let validCount = 0; let errorCount = 0; let newTerms = [...terms];
+
+                        for(let i=1; i<jsonData.length; i++) {
+                            const row = jsonData[i];
+                            const tVal = String(row[hMap.term]||'').trim();
+                            const vVal = String(row[hMap.vietnamese]||'').trim();
+                            if(!tVal || !vVal) { errorCount++; continue; }
+                            
+                            const existingIdx = newTerms.findIndex(t => t.term.toLowerCase() === tVal.toLowerCase() && t.deckId === deckId);
+                            const item = {
+                                term: tVal, vietnamese: vVal,
+                                ipa: hMap.ipa !== -1 ? String(row[hMap.ipa]||'').trim() : '',
+                                type: hMap.type !== -1 ? String(row[hMap.type]||'').trim() : '',
+                                definition: hMap.definition !== -1 ? String(row[hMap.definition]||'').trim() : '',
+                                example: hMap.example !== -1 ? String(row[hMap.example]||'').trim() : '',
+                                exampleVi: hMap.exampleVi !== -1 ? String(row[hMap.exampleVi]||'').trim() : '',
+                                deckId: deckId,
+                            };
+                            
+                            if (existingIdx >= 0) newTerms[existingIdx] = { ...newTerms[existingIdx], ...item };
+                            else newTerms.push({ ...item, id: 'MED'+Date.now()+i, status: 'new', interval: 0, easeFactor: 2.5, dueAt: Date.now(), reviewCount: 0, lapseCount: 0 });
+                            validCount++;
+                        }
+                        
+                        const deckCount = newTerms.filter(t => t.deckId === deckId).length;
+                        const nextDecks = decks.map(d => d.id === deckId ? {...d, count: deckCount} : d);
+                        setTerms(newTerms); setDecks(nextDecks); saveToStorage(newTerms, nextDecks);
+                        showAlert(`Nhập thành công: ${validCount} dòng. Lỗi: ${errorCount} dòng.`);
+                    } catch(err) { showAlert("Lỗi file Excel: " + err.message); }
+                };
+                reader.readAsBinaryString(file);
+                e.target.value = null;
+            };
+
+            const handleRating = (action) => {
+                const currentTerm = learningQueue[currentIndex];
+                let nextTerms = [...terms];
+                const tIdx = nextTerms.findIndex(t => t.id === currentTerm.id);
+                if (tIdx === -1) return;
+                
+                let t = { ...nextTerms[tIdx] };
+                const now = Date.now();
+                
+                if (action === 'back') {
+                    if (currentIndex > 0) { setCurrentIndex(currentIndex - 1); setIsRevealed(false); }
+                    return;
+                }
+
+                let movedForward = false;
+                
+                if (action === 'forgot') {
+                    t.status = 'learning'; 
+                    t.lapseCount = (t.lapseCount || 0) + 1; 
+                    t.interval = 0; 
+                    t.dueAt = now + 60000; 
+                    t.lastReviewedAt = now;
+                    setSessionStats(prev => ({...prev, forgot: prev.forgot + 1, studied: prev.studied + 1}));
+                    movedForward = true;
+                } else if (action === 'mastered') {
+                    t.status = 'mastered'; 
+                    t.reviewCount = (t.reviewCount || 0) + 1; 
+                    t.interval = 5; 
+                    t.dueAt = now + (5 * 24 * 60 * 60 * 1000); 
+                    t.lastReviewedAt = now;
+                    setSessionStats(prev => ({...prev, mastered: prev.mastered + 1, studied: prev.studied + 1}));
+                    movedForward = true; 
+                    setDailyCount(prev => prev + 1); 
+                    markStudyDay();
+                } else if (action === 'next') {
+                    t.status = 'learning'; 
+                    t.dueAt = now + (6 * 60 * 1000); 
+                    movedForward = true;
+                }
+                
+                nextTerms[tIdx] = t; setTerms(nextTerms); saveToStorage(nextTerms, null);
+
+                if (movedForward) {
+                    if (currentIndex < learningQueue.length - 1) { setCurrentIndex(currentIndex + 1); setIsRevealed(false); }
+                    else { setShowSummary(true); }
+                }
+            };
 
             const startDeck = (deckId) => {
                 const deckTerms = terms.filter(t => t.deckId === deckId);
-                if (deckTerms.length === 0) return;
-                
-                const shuffled = [...deckTerms].sort(() => Math.random() - 0.5);
+                if (deckTerms.length === 0) { showAlert("Bộ từ trống."); return; }
                 setActiveDeck(decks.find(d => d.id === deckId));
-                setLearningQueue(shuffled);
-                setCurrentIndex(0);
-                setIsRevealed(false);
-                setShowSummary(false);
-                setSessionStats({ studied: 0, again: 0, hard: 0, good: 0, easy: 0 });
-                setActiveTab('learning');
+                setLearningQueue([...deckTerms].sort(() => Math.random() - 0.5));
+                setCurrentIndex(0); setIsRevealed(false); setShowSummary(false);
+                setSessionStats({ studied: 0, forgot: 0, mastered: 0 }); setActiveTab('learning');
             };
 
             const startQuickReview = () => {
                 const now = Date.now();
-                const reviewTerms = terms.filter(t => t.status === 'learning' || t.status === 'review' || t.status === 'new').filter(t => !t.dueAt || Number(t.dueAt) <= now);
-                if (reviewTerms.length === 0) {
-                    alert("Hiện chưa có từ đến hạn ôn. Hãy học bộ từ mới hoặc quay lại sau.");
+                const reviewTerms = terms.filter(t => (t.status === 'learning' || t.status === 'mastered') && t.dueAt <= now);
+                const sessionQueue = [...reviewTerms].sort(() => Math.random() - 0.5).slice(0, 30);
+                
+                if (sessionQueue.length === 0) { 
+                    showAlert("Tuyệt vời! Bạn không còn từ nào đến hạn ôn trong hôm nay. Hãy học thêm từ mới trong mục Decks nhé."); 
+                    return; 
+                }
+                setActiveDeck({ title: "SRS Review", topic: "Ôn tập", count: sessionQueue.length });
+                setLearningQueue(sessionQueue); setCurrentIndex(0); setIsRevealed(false); setShowSummary(false);
+                setSessionStats({ studied: 0, forgot: 0, mastered: 0 }); setActiveTab('learning');
+            };
+
+            const startCloze = () => {
+                let eligible = terms.filter(t => t.example && String(t.example).trim().length > 0);
+                if (clozeDeckId !== 'all') eligible = eligible.filter(t => t.deckId === clozeDeckId);
+                if (clozeFilter === 'unmastered') eligible = eligible.filter(t => t.status !== 'mastered');
+                
+                if (!eligible.length) { showAlert('Không có câu ví dụ phù hợp bộ lọc.'); return; }
+                
+                setClozeQueue([...eligible].sort(() => Math.random() - 0.5));
+                setClozeIndex(0); setClozeAnswer(''); setClozeChecked(false); setActiveTab('cloze_run');
+            };
+
+            const checkCloze = (isCorrect) => {
+                const item = clozeQueue[clozeIndex];
+                if (!isCorrect) {
+                     const nextTerms = terms.map(t => t.id === item.id ? { ...t, status: 'learning', interval: 0, dueAt: Date.now(), lapseCount: (t.lapseCount||0)+1 } : t);
+                     setTerms(nextTerms); saveToStorage(nextTerms, null);
+                }
+            };
+
+            const generateQuizOptions = (correctItem, deckId) => {
+                let pool = terms;
+                let distractors = pool.filter(t => t.id !== correctItem.id);
+                distractors = distractors.sort(() => Math.random() - 0.5).slice(0, 3);
+                
+                let opts = [correctItem, ...distractors].sort(() => Math.random() - 0.5);
+                setQuizOptions(opts);
+            };
+
+            const startQuiz = () => {
+                let eligible = terms.filter(t => t.example && String(t.example).trim().length > 0);
+                if (quizDeckId !== 'all') eligible = eligible.filter(t => t.deckId === quizDeckId);
+                
+                if (eligible.length < 4) {
+                    showAlert('Cần ít nhất 4 từ có câu ví dụ để tạo bài trắc nghiệm.');
                     return;
                 }
-                const shuffled = [...reviewTerms].sort(() => Math.random() - 0.5).slice(0, 20);
-                setActiveDeck({ title: "SRS Review", topic: "Ôn tập ngắt quãng", count: shuffled.length });
-                setLearningQueue(shuffled);
-                setCurrentIndex(0);
-                setIsRevealed(false);
-                setShowSummary(false);
-                setActiveTab('learning');
+                
+                const shuffled = [...eligible].sort(() => Math.random() - 0.5);
+                const queue = shuffled.slice(0, quizLimit);
+                
+                setQuizQueue(queue);
+                setQuizIndex(0);
+                setQuizCorrectCount(0);
+                setQuizSelected(null);
+                setShowQuizResult(false);
+                setQuizTimeLeft(30);
+                generateQuizOptions(queue[0], quizDeckId);
+                setActiveTab('quiz_run');
             };
 
-            const handleRating = (ratingStr) => {
-                const currentTerm = learningQueue[currentIndex];
-                const updatedTerms = terms.map(t => {
-                    if (t.id === currentTerm.id) {
-                        let newStatus = 'learning';
-                        if (ratingStr === 'easy') newStatus = 'mastered';
-                        if (ratingStr === 'good') newStatus = (t.status === 'new') ? 'learning' : 'review';
-                        if (ratingStr === 'again') newStatus = 'learning';
-                        const oldInterval = Number(t.interval || 0);
-                        const nextInterval = ratingStr === 'again' ? 10 / 1440 : ratingStr === 'hard' ? Math.max(1, oldInterval * 1.2) : ratingStr === 'good' ? (oldInterval < 1 ? 1 : oldInterval < 3 ? 3 : Math.round(oldInterval * Number(t.easeFactor || 2.5))) : Math.max(4, oldInterval * 2.5);
-                        const ease = Math.max(1.3, Number(t.easeFactor || 2.5) + (ratingStr === 'easy' ? 0.15 : ratingStr === 'hard' ? -0.15 : ratingStr === 'again' ? -0.2 : 0));
-                        return { ...t, status: newStatus, interval: nextInterval, easeFactor: ease, dueAt: Date.now() + nextInterval * 24 * 60 * 60 * 1000, lastReviewedAt: Date.now() };
-                    }
-                    return t;
-                });
-                
-                setTerms(updatedTerms);
-                saveToStorage(updatedTerms, null);
-                setDailyCount(prev => prev + 1);
-                markStudyDay();
-                setSessionStats(prev => ({ ...prev, studied: prev.studied + 1, [ratingStr]: prev[ratingStr] + 1 }));
-
-                if (currentIndex < learningQueue.length - 1) {
-                    setCurrentIndex(currentIndex + 1);
-                    setIsRevealed(false);
-                } else {
-                    setShowSummary(true);
+            const handleQuizAnswer = (selectedId) => {
+                setQuizSelected(selectedId);
+                if (selectedId === quizQueue[quizIndex].id) {
+                    setQuizCorrectCount(prev => prev + 1);
                 }
             };
 
-            const renderDashboard = () => (
-                <div className="v2-scroll p-8 max-w-6xl mx-auto space-y-8 animate-fadeIn h-full overflow-y-auto pb-20">
-                    <div>
-                        <h1 className="text-4xl font-black text-[#004b87] tracking-tight uppercase">Medical English Master</h1>
-                        <p className="text-gray-500 text-lg mt-2 font-medium">Hệ thống Học & Ôn tập Thuật ngữ Y khoa (Spaced Repetition)</p>
-                    </div>
+            const nextQuizQuestion = () => {
+                if (quizIndex < quizQueue.length - 1) {
+                    const nextIdx = quizIndex + 1;
+                    setQuizIndex(nextIdx);
+                    setQuizSelected(null);
+                    setQuizTimeLeft(30); 
+                    generateQuizOptions(quizQueue[nextIdx], quizDeckId);
+                } else {
+                    setShowQuizResult(true);
+                }
+            };
 
-                    {terms.length === 0 ? (
-                        <div className="bg-white p-12 rounded-3xl shadow-sm border-2 border-dashed border-gray-300 text-center">
-                            <div className="w-24 h-24 bg-blue-50 text-[#004b87] rounded-full flex items-center justify-center mx-auto mb-6">
-                                <i className="fas fa-file-excel text-4xl"></i>
-                            </div>
-                            <h2 className="text-2xl font-bold text-gray-800 mb-2">Nạp dữ liệu từ Excel</h2>
-                            <p className="text-gray-500 mb-8 max-w-md mx-auto">Vui lòng tải lên file Excel gốc chứa 1050 từ của bạn. Thuật toán sẽ tự động quét thông minh và tạo các Decks học tập.</p>
-                            
-                            <label className="bg-[#004b87] text-white px-8 py-4 rounded-xl font-bold cursor-pointer hover:bg-blue-900 transition shadow-lg shadow-blue-900/20 inline-block">
-                                <i className="fas fa-upload mr-2"></i> Chọn File Excel để Nạp
-                                <input type="file" accept=".xlsx, .xls, .csv" className="hidden" onChange={handleFileUpload} />
-                            </label>
+            const stats = useMemo(() => {
+                const total = terms.length;
+                const learningTotal = terms.filter(t => t.status !== 'new').length;
+                const mastered = terms.filter(t => t.status === 'mastered').length;
+                const due = learningTotal - mastered;
+                const progress = total === 0 ? 0 : Math.round((mastered / total) * 100);
+                return { total, learningTotal, mastered, due, progress };
+            }, [terms]);
+
+            const renderDashboardList = () => {
+                let list = [];
+                let title = '';
+                if (dashboardListView === 'total') { list = terms; title = 'TỔNG TỪ'; }
+                else if (dashboardListView === 'learningTotal') { list = terms.filter(t => t.status !== 'new'); title = 'ĐANG HỌC'; }
+                else if (dashboardListView === 'mastered') { list = terms.filter(t => t.status === 'mastered'); title = 'ĐÃ THUỘC'; }
+                else if (dashboardListView === 'due') { list = terms.filter(t => t.status === 'learning'); title = 'ĐẾN HẠN'; }
+                
+                const filteredList = list.filter(t => !dashboardListQuery || t.term.toLowerCase().includes(dashboardListQuery.toLowerCase()) || t.vietnamese.toLowerCase().includes(dashboardListQuery.toLowerCase()));
+
+                return (
+                    <div className="v3-scroll mobile-p-4 p-8 max-w-4xl mx-auto flex flex-col animate-fadeIn w-full overflow-x-hidden relative z-10">
+                        <div className="flex items-center gap-3 mb-5 w-full">
+                            <button onClick={() => {setDashboardListView(null); setDashboardListQuery('');}} className="text-gray-500 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shrink-0 border border-gray-100/50 shadow-sm"><i className="fas fa-arrow-left mr-1"></i> Trở về</button>
+                            <h2 className="text-xl font-black text-primary uppercase truncate flex-1">{title} ({list.length})</h2>
                         </div>
-                    ) : (
-                        <div className="space-y-8">
-                            <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center border-b-4 border-b-blue-500">
-                                    <div className="text-gray-400 text-xs font-bold tracking-wider mb-2">TOTAL TERMS</div>
-                                    <div className="text-4xl font-black text-[#004b87]">{stats.total}</div>
-                                </div>
-                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center border-b-4 border-b-green-500">
-                                    <div className="text-gray-400 text-xs font-bold tracking-wider mb-2">MASTERED</div>
-                                    <div className="text-4xl font-black text-[#00a651]">{stats.mastered}</div>
-                                </div>
-                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center border-b-4 border-b-amber-500">
-                                    <div className="text-gray-400 text-xs font-bold tracking-wider mb-2">NEED REVIEW</div>
-                                    <div className="text-4xl font-black text-amber-500">{stats.needReview}</div>
-                                </div>
-                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center border-b-4 border-b-purple-500">
-                                    <div className="text-gray-400 text-xs font-bold tracking-wider mb-2">PROGRESS</div>
-                                    <div className="text-4xl font-black text-purple-600">{stats.progress}%</div>
-                                    <div className="w-full bg-gray-100 rounded-full h-2 mt-4 overflow-hidden">
-                                        <div className="bg-purple-500 h-2 rounded-full transition-all" style={{ width: `${stats.progress}%` }}></div>
+                        <div className="relative mb-5 flex-shrink-0 w-full">
+                            <i className="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg"></i>
+                            <input type="text" placeholder="Tìm kiếm trong danh sách..." value={dashboardListQuery} onChange={e=>setDashboardListQuery(e.target.value)} className="w-full bg-white/80 backdrop-blur-md border-2 border-transparent shadow-sm rounded-2xl py-3.5 pl-12 pr-4 text-base focus:outline-none focus:border-primary transition-all" />
+                        </div>
+                        <div className="space-y-4 pb-6 overflow-y-auto flex-1 w-full overflow-x-hidden">
+                            {filteredList.slice(0, 50).map(t => {
+                                const deck = decks.find(d => d.id === t.deckId);
+                                return (
+                                <div key={t.id} className="v3-card w-full max-w-full bg-white p-4 rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+                                    <div className="flex justify-between items-start mb-2 w-full">
+                                        <div className="flex-1 min-w-0 pr-2">
+                                            <div className="flex items-center gap-2 mb-1 w-full">
+                                                <b className="text-xl text-primary truncate">{t.term}</b>
+                                                <button onClick={()=>speakTerm(t.term)} className="text-primary-500 shrink-0 bg-primary-50 w-7 h-7 rounded-full flex items-center justify-center"><i className="fas fa-volume-up text-xs"></i></button>
+                                            </div>
+                                            <div className="flex items-center gap-2 flex-wrap mt-2">
+                                                {t.ipa && <div className="text-primary-600 bg-primary-50 inline-block px-2 py-0.5 rounded text-xs font-mono border border-primary-100 max-w-full truncate">/{t.ipa}/</div>}
+                                                {t.type && <span className="bg-gray-100/80 text-gray-500 text-[10px] px-2 py-1 rounded font-bold uppercase">{t.type}</span>}
+                                            </div>
+                                        </div>
+                                        <button onClick={()=>{setEditTerm(t);setActiveTab('addword')}} className="text-gray-400 bg-gray-50/80 w-8 h-8 flex items-center justify-center rounded-lg shrink-0"><i className="fas fa-pen text-sm"></i></button>
+                                    </div>
+                                    <div className="text-gray-800 text-base font-bold mt-2 mb-2 w-full break-words">{t.vietnamese}</div>
+                                    {t.example && <div className="bg-primary-50/50 p-3 rounded-lg text-sm border border-primary-100/50 mb-3 text-gray-700 italic w-full break-words">"{t.example}"</div>}
+                                    <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-50 w-full">
+                                        <div className="text-xs text-gray-500 bg-gray-100/80 px-2 py-1 rounded flex items-center min-w-0 max-w-[65%]">
+                                            <i className="fas fa-folder mr-1.5 text-gray-400 shrink-0"></i> <span className="truncate">{deck ? deck.title : t.deckId}</span>
+                                        </div>
+                                        <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shrink-0 ml-2 ${t.status==='mastered'?'bg-green-100/80 text-green-700':t.status==='learning'?'bg-amber-100/80 text-amber-700':'bg-gray-100/80 text-gray-500'}`}>{t.status==='mastered'?'Đã thuộc':t.status==='learning'?'Đến hạn':'Chưa học'}</span>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                <div className="v2-card bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                                    <div className="flex justify-between items-center mb-3"><span className="text-xs font-black text-gray-400">MỤC TIÊU HÔM NAY</span><span className="font-black text-[#004b87]">{dailyCount}/{dailyGoal}</span></div>
-                                    <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden"><div className="bg-[#004b87] h-3 rounded-full transition-all" style={{width:`${Math.min(100,Math.round(dailyCount/dailyGoal*100))}%`}}></div></div>
-                                    <p className="text-xs text-gray-500 mt-2">{Math.max(0,dailyGoal-dailyCount)} từ còn lại</p>
-                                </div>
-                                <div className="v2-card bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-                                    <div><div className="text-xs font-black text-gray-400">STREAK</div><div className="text-3xl font-black text-amber-500 mt-1">🔥 {streak}</div></div>
-                                    <div className="text-right text-xs text-gray-500">ngày<br/>liên tiếp</div>
-                                </div>
-                                <div className="v2-card bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-                                    <div><div className="text-xs font-black text-gray-400">YÊU THÍCH</div><div className="text-3xl font-black text-pink-500 mt-1">{favoriteIds.length}</div></div>
-                                    <button onClick={()=>setActiveTab('favorites')} className="text-xs font-bold text-[#004b87]">Xem →</button>
-                                </div>
-                            </div>
-
-                            <div className="bg-green-50 border border-green-200 rounded-2xl p-6 flex items-start justify-between">
-                                <div>
-                                    <h3 className="text-green-800 font-bold mb-1 flex items-center gap-2"><i className="fas fa-check-circle"></i> Đã nạp thành công</h3>
-                                    <p className="text-green-900/80 text-sm">Hệ thống đã phân loại {stats.total} từ vựng thành {decks.length} Topic Decks.</p>
-                                </div>
-                                <button onClick={resetData} className="text-red-500 text-sm font-bold bg-white px-4 py-2 rounded-lg border border-red-100 hover:bg-red-50 shadow-sm transition-colors">
-                                    <i className="fas fa-trash-alt mr-1"></i> Reset Data
-                                </button>
-                            </div>
+                            )})}
+                            {filteredList.length === 0 && <p className="text-center text-gray-500 mt-10 w-full bg-white/50 backdrop-blur p-4 rounded-xl">Không tìm thấy từ vựng.</p>}
                         </div>
-                    )}
+                    </div>
+                );
+            };
+
+            const renderDashboard = () => {
+                if (dashboardListView) return renderDashboardList();
+
+                return (
+                    <div className="v3-scroll mobile-p-4 p-8 max-w-6xl mx-auto space-y-5 animate-fadeIn w-full overflow-x-hidden relative z-10">
+                        <div className="py-2">
+                            <h1 className="text-3xl md:text-4xl font-black text-primary tracking-tight uppercase drop-shadow-sm">Medical English</h1>
+                            <p className="text-gray-600 text-sm mt-1 font-medium bg-white/40 inline-block px-3 py-1 rounded-full backdrop-blur-sm border border-white/20">Spaced Repetition System 4.2</p>
+                        </div>
+
+                        {terms.length === 0 ? (
+                            <div className="v3-card bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-primary-100 text-center mt-4">
+                                <div className="w-16 h-16 bg-primary-50 text-primary-600 rounded-full flex items-center justify-center mx-auto mb-4"><i className="fas fa-file-excel text-3xl"></i></div>
+                                <h2 className="text-xl font-bold text-gray-800 mb-2">Nạp dữ liệu từ Excel</h2>
+                                <p className="text-gray-500 mb-6 text-sm">Tải lên file Excel gốc chứa 1050 từ của bạn để bắt đầu.</p>
+                                <label className="w-full bg-primary text-white py-3 rounded-xl font-bold cursor-pointer hover:bg-primary-800 transition shadow-lg inline-block text-sm">
+                                    <i className="fas fa-upload mr-2"></i> Chọn File Excel (1050 Từ)
+                                    <input type="file" accept=".xlsx, .xls, .csv" className="hidden" onChange={handleGlobalFileUpload} />
+                                </label>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                    <div onClick={()=>setDashboardListView('total')} className="v3-card bg-primary-50/50 p-4 rounded-2xl border border-primary-100/50 flex flex-col justify-center cursor-pointer active:scale-95 transition-transform backdrop-blur-md">
+                                        <div className="text-primary-500 text-[10px] font-black tracking-wider mb-1 uppercase drop-shadow-sm">Tổng từ</div>
+                                        <div className="text-2xl font-black text-primary drop-shadow-sm">{stats.total}</div>
+                                    </div>
+                                    <div onClick={()=>setDashboardListView('mastered')} className="v3-card bg-green-50/50 p-4 rounded-2xl border border-green-100/50 flex flex-col justify-center cursor-pointer active:scale-95 transition-transform backdrop-blur-md">
+                                        <div className="text-green-500 text-[10px] font-black tracking-wider mb-1 uppercase drop-shadow-sm">Đã thuộc</div>
+                                        <div className="text-2xl font-black text-green-600 drop-shadow-sm">{stats.mastered}</div>
+                                    </div>
+                                    <div onClick={()=>setDashboardListView('learningTotal')} className="v3-card bg-amber-50/50 p-4 rounded-2xl border border-amber-100/50 flex flex-col justify-center cursor-pointer active:scale-95 transition-transform backdrop-blur-md">
+                                        <div className="text-amber-500 text-[10px] font-black tracking-wider mb-1 uppercase drop-shadow-sm">Đang học</div>
+                                        <div className="text-2xl font-black text-amber-600 drop-shadow-sm">{stats.learningTotal}</div>
+                                    </div>
+                                    <div onClick={()=>setDashboardListView('due')} className="v3-card bg-purple-50/50 p-4 rounded-2xl border border-purple-100/50 flex flex-col justify-center cursor-pointer active:scale-95 transition-transform backdrop-blur-md">
+                                        <div className="text-purple-500 text-[10px] font-black tracking-wider mb-1 uppercase drop-shadow-sm">Đến hạn</div>
+                                        <div className="text-2xl font-black text-purple-600 drop-shadow-sm">{stats.due}</div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div className="v3-card bg-white p-4 rounded-2xl shadow-sm border border-gray-100/50">
+                                        <div className="flex justify-between items-center mb-2"><span className="text-xs font-black text-gray-500">MỤC TIÊU HÔM NAY</span><span className="font-black text-primary">{dailyCount}/{dailyGoal}</span></div>
+                                        <div className="w-full bg-gray-100/80 rounded-full h-2.5 overflow-hidden"><div className="bg-primary h-2.5 rounded-full transition-all shadow-sm" style={{width:`${Math.min(100,Math.round(dailyCount/dailyGoal*100))}%`}}></div></div>
+                                    </div>
+                                    <div className="v3-card bg-white p-4 rounded-2xl shadow-sm border border-gray-100/50 flex items-center justify-between">
+                                        <div><div className="text-xs font-black text-gray-500">STREAK</div><div className="text-2xl font-black text-amber-500 mt-1 drop-shadow-sm">🔥 {streak} ngày</div></div>
+                                    </div>
+                                </div>
+                                
+                                <button onClick={startQuickReview} className="w-full py-4 bg-purple-600 text-white rounded-xl font-bold shadow-lg hover:bg-purple-700 transition flex items-center justify-center gap-2 mt-4 backdrop-blur-md">
+                                    <i className="fas fa-bolt"></i> Ôn Tập Từ Đến Hạn (SRS)
+                                </button>
+                            </>
+                        )}
+                    </div>
+                );
+            };
+
+            const renderPracticeMenu = () => (
+                <div className="v3-scroll mobile-p-4 p-8 max-w-md mx-auto space-y-4 animate-fadeIn flex flex-col justify-center w-full overflow-x-hidden relative z-10">
+                    <h2 className="text-2xl md:text-3xl font-black text-primary mb-4 text-center drop-shadow-md">Chế độ Ôn tập</h2>
+                    
+                    <button onClick={startQuickReview} className="w-full py-5 md:py-6 bg-purple-600/90 backdrop-blur-md text-white rounded-2xl font-bold shadow-lg hover:bg-purple-700 transition flex flex-col items-center justify-center gap-2 active:scale-95 border border-purple-500/50">
+                        <i className="fas fa-bolt text-2xl md:text-3xl mb-1 text-purple-200"></i>
+                        <span className="text-base md:text-lg">Ôn Từ Đến Hạn (SRS)</span>
+                        <span className="text-[11px] md:text-xs font-normal text-purple-200 px-4 text-center mt-1">Chỉ ôn tập các từ cũ đã đến lịch</span>
+                    </button>
+                    
+                    <button onClick={()=>setActiveTab('cloze')} className="w-full py-5 md:py-6 bg-orange-500/90 backdrop-blur-md text-white rounded-2xl font-bold shadow-lg hover:bg-orange-600 transition flex flex-col items-center justify-center gap-2 active:scale-95 mt-4 border border-orange-400/50">
+                        <i className="fas fa-pen text-2xl md:text-3xl mb-1 text-orange-200"></i>
+                        <span className="text-base md:text-lg">Luyện Điền Từ (Cloze)</span>
+                        <span className="text-[11px] md:text-xs font-normal text-orange-200 px-4 text-center mt-1">Gõ từ vựng vào chỗ trống</span>
+                    </button>
+
+                    <button onClick={()=>setActiveTab('quiz_setup')} className="w-full py-5 md:py-6 bg-primary-500/90 backdrop-blur-md text-white rounded-2xl font-bold shadow-lg hover:bg-primary-600 transition flex flex-col items-center justify-center gap-2 active:scale-95 mt-4 border border-primary-400/50">
+                        <i className="fas fa-list-check text-2xl md:text-3xl mb-1 text-primary-200"></i>
+                        <span className="text-base md:text-lg">Trắc Nghiệm (Multiple Choice)</span>
+                        <span className="text-[11px] md:text-xs font-normal text-primary-200 px-4 text-center mt-1">Chọn đáp án đúng điền vào câu</span>
+                    </button>
                 </div>
             );
 
             const renderDecks = () => (
-                <div className="p-8 max-w-6xl mx-auto space-y-8 animate-fadeIn h-full overflow-y-auto pb-20">
-                    <div>
-                        <h2 className="text-3xl font-extrabold text-gray-800 tracking-tight">Deck Library</h2>
-                        <p className="text-gray-500 text-sm mt-2 font-medium">Tổ chức theo Logic Chuyên Khoa</p>
+                <div className="v3-scroll mobile-p-4 p-8 max-w-6xl mx-auto space-y-5 animate-fadeIn w-full overflow-x-hidden relative z-10">
+                    <div className="flex justify-between items-end mb-2 bg-white/40 p-3 rounded-xl backdrop-blur-md border border-white/20 shadow-sm">
+                        <div className="flex-1 min-w-0 pr-2">
+                            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800 tracking-tight truncate drop-shadow-sm">Deck Library</h2>
+                            <p className="text-gray-600 text-sm mt-1 truncate font-medium">Quản lý bộ từ vựng</p>
+                        </div>
+                        <button onClick={() => setActiveTab('createDeck')} className="bg-primary text-white px-3 py-2 rounded-lg font-bold shadow text-xs flex items-center shrink-0 active:scale-95 transition-transform">
+                            <i className="fas fa-plus mr-1"></i> Thêm bộ từ
+                        </button>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {decks.map((deck) => {
-                            const deckTerms = terms.filter(t => t.deckId === deck.id);
-                            const masteredInDeck = deckTerms.filter(t => t.status === 'mastered').length;
-                            const progress = deckTerms.length === 0 ? 0 : Math.round((masteredInDeck / deckTerms.length) * 100);
-                            
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+                        {decks.map((deck, idx) => {
+                            const dCount = terms.filter(t => t.deckId === deck.id).length;
+                            const colors = ['bg-primary-50 text-primary-600 border-primary-100', 'bg-green-50 text-green-600 border-green-100', 'bg-purple-50 text-purple-600 border-purple-100', 'bg-amber-50 text-amber-600 border-amber-100'];
+                            const colorClass = colors[idx % colors.length];
                             return (
-                                <div key={deck.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 transition-all flex flex-col h-full group">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-[#004b87]">
-                                            <i className="fas fa-layer-group"></i>
-                                        </div>
-                                        <span className="text-xs font-black text-gray-500 bg-gray-100 px-2 py-1 rounded tracking-widest">{deck.id}</span>
-                                    </div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-1 leading-tight">{deck.title}</h3>
-                                    
-                                    <div className="mt-auto pt-6">
-                                        <div className="flex justify-between text-xs font-bold text-gray-400 mb-2">
-                                            <span>PROGRESS {progress}%</span>
-                                            <span>{deck.count} TERMS</span>
-                                        </div>
-                                        <div className="w-full bg-gray-100 rounded-full h-1.5 mb-4 overflow-hidden">
-                                            <div className="bg-[#00a651] h-1.5 rounded-full" style={{ width: `${progress}%` }}></div>
-                                        </div>
-                                        <button onClick={() => startDeck(deck.id)} className="w-full py-3 bg-gray-50 text-[#004b87] rounded-xl font-bold group-hover:bg-[#004b87] group-hover:text-white transition-colors flex items-center justify-center gap-2">
-                                            <i className="fas fa-play text-sm"></i> Học Bộ Này
-                                        </button>
+                                <div key={deck.id} onClick={() => { setActiveDeckDetail(deck); setDeckFilter('all'); setDeckSearchQuery(''); setActiveTab('deckDetail'); }} className="v3-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition flex flex-col h-full active:scale-95 overflow-hidden w-full max-w-full relative">
+                                    <div className={`w-8 h-8 rounded-lg ${colorClass} flex items-center justify-center mb-3 shrink-0 bg-opacity-80`}><i className="fas fa-layer-group text-sm"></i></div>
+                                    <h3 className="font-bold text-gray-800 text-sm md:text-base leading-snug line-clamp-2 break-words">{deck.title}</h3>
+                                    {deck.topic && <span className="text-[10px] font-bold text-gray-500 mt-1 block truncate w-full">{deck.topic}</span>}
+                                    <div className="mt-auto pt-3 flex justify-between items-center text-[10px] font-bold border-t border-gray-50/50 mt-3 w-full">
+                                        <span className="text-gray-600 shrink-0 bg-gray-100/50 px-2 py-0.5 rounded">{dCount} từ</span>
+                                        <i className="fas fa-chevron-right text-gray-400 shrink-0"></i>
                                     </div>
                                 </div>
                             );
@@ -664,81 +930,155 @@
                 </div>
             );
 
-            const renderSearch = () => {
-                const filteredTerms = terms.filter(t => {
-                    if (!searchQuery.trim()) return false;
-                    const query = searchQuery.toLowerCase();
-                    return (t.term || '').toLowerCase().includes(query) || 
-                           (t.vietnamese || '').toLowerCase().includes(query) || 
-                           (t.type || '').toLowerCase().includes(query) || 
-                           (t.deckId || '').toLowerCase().includes(query);
-                });
-                const displayTerms = searchQuery.trim() === '' ? [] : filteredTerms.slice(0, 50);
+            const renderCreateDeck = () => (
+                <div className="v3-scroll mobile-p-4 p-8 max-w-2xl mx-auto h-full animate-fadeIn w-full overflow-x-hidden relative z-10">
+                    <div className="flex justify-between items-center mb-5 w-full bg-white/40 p-3 rounded-xl backdrop-blur-md border border-white/20 shadow-sm">
+                        <h2 className="text-xl font-black text-gray-800 truncate pr-2">Tạo bộ từ mới</h2>
+                        <button onClick={()=>setActiveTab('decks')} className="text-gray-600 bg-white/80 px-3 py-1.5 rounded-lg text-xs font-bold active:bg-gray-200 shrink-0 shadow-sm">Hủy</button>
+                    </div>
+
+                    <form onSubmit={handleCreateDeck} className="v3-card w-full max-w-full bg-white rounded-2xl border border-gray-100 p-4 space-y-3 shadow-sm">
+                        <label className="block text-xs font-bold text-gray-700 w-full">Tên bộ từ *
+                            <input required value={newDeck.title} onChange={e=>setNewDeck(v=>({...v, title: e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all" placeholder="VD: Tim mạch" />
+                        </label>
+                        <label className="block text-xs font-bold text-gray-700 w-full">Chủ đề
+                            <input value={newDeck.topic} onChange={e=>setNewDeck(v=>({...v, topic: e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all" placeholder="VD: Hệ tuần hoàn" />
+                        </label>
+                        <label className="block text-xs font-bold text-gray-700 w-full">Mô tả
+                            <textarea value={newDeck.description} onChange={e=>setNewDeck(v=>({...v, description: e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all" placeholder="Mô tả bộ từ..." rows={2}/>
+                        </label>
+                        
+                        <div className="pt-2 w-full">
+                            <button type="submit" className="w-full rounded-xl bg-primary text-white font-bold py-3 text-sm active:scale-[0.98] transition-transform shadow-md">Lưu bộ từ</button>
+                        </div>
+                    </form>
+                </div>
+            );
+
+            const renderDeckDetail = () => {
+                if (!activeDeckDetail) return null;
+                let deckTerms = terms.filter(t => t.deckId === activeDeckDetail.id);
+                const totalCount = deckTerms.length;
+                const masteredCount = deckTerms.filter(t => t.status === 'mastered').length;
+                const notMasteredCount = totalCount - masteredCount;
+
+                if (deckFilter === 'mastered') deckTerms = deckTerms.filter(t => t.status === 'mastered');
+                if (deckFilter === 'learning') deckTerms = deckTerms.filter(t => t.status !== 'mastered');
+                
+                if (deckSearchQuery.trim()) {
+                    const q = deckSearchQuery.toLowerCase();
+                    deckTerms = deckTerms.filter(t => t.term.toLowerCase().includes(q) || t.vietnamese.toLowerCase().includes(q));
+                }
+
+                const displayTerms = deckTerms.slice(0, 100);
 
                 return (
-                    <div className="p-8 max-w-6xl mx-auto space-y-8 animate-fadeIn h-full overflow-y-auto pb-20">
-                        <div>
-                            <h2 className="text-3xl font-extrabold text-gray-800 tracking-tight">Search Dictionary</h2>
-                            <p className="text-gray-500 text-sm mt-2 font-medium">Tìm kiếm trên toàn bộ {terms.length} thuật ngữ</p>
+                    <div className="v3-scroll mobile-p-4 p-8 max-w-4xl mx-auto flex flex-col animate-fadeIn w-full overflow-x-hidden relative z-10">
+                        <div className="flex items-center justify-between mb-4 w-full">
+                            <button onClick={() => setActiveTab('decks')} className="text-gray-600 bg-white/80 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-bold active:bg-gray-200 shrink-0 shadow-sm border border-gray-100/50"><i className="fas fa-arrow-left mr-1"></i> Trở về</button>
+                            <button onClick={() => handleDeleteDeck(activeDeckDetail.id)} className="text-red-500 bg-red-50/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-bold active:bg-red-100 shrink-0 border border-red-100/50"><i className="fas fa-trash"></i> Xóa Deck</button>
                         </div>
                         
-                        <div className="relative group">
-                            <i className="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl group-focus-within:text-[#004b87]"></i>
-                            <input type="text" placeholder="Gõ tiếng Anh, tiếng Việt, viết tắt, ID bộ thẻ..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-white border-2 border-gray-200 rounded-2xl py-4 pl-14 pr-4 text-lg focus:outline-none focus:border-[#004b87] focus:ring-4 focus:ring-blue-50 transition-all font-medium shadow-sm" />
+                        <div className="v3-card bg-white p-4 md:p-5 rounded-2xl shadow-sm border border-gray-100 mb-4 text-center w-full max-w-full overflow-hidden">
+                            <h2 className="text-lg md:text-xl font-black text-primary break-words drop-shadow-sm">{activeDeckDetail.title}</h2>
+                            <p className="text-gray-600 text-xs mt-1 mb-3 truncate w-full font-medium">{activeDeckDetail.topic} • <b className="text-primary">{totalCount}</b> thuật ngữ</p>
+                            
+                            <button onClick={() => startDeck(activeDeckDetail.id)} className="w-full bg-primary text-white py-3 rounded-xl font-bold text-sm shadow-md active:scale-95 transition-transform mb-3">
+                                <i className="fas fa-play mr-2"></i> BẮT ĐẦU HỌC
+                            </button>
+
+                            <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-gray-100/50 w-full">
+                                <button onClick={() => { setEditTerm({deckId: activeDeckDetail.id, term:'', vietnamese:'', type:'', ipa:'', example:'', exampleVi:'', definition:''}); setActiveTab('addword'); }} className="bg-primary-50/80 text-primary py-2.5 rounded-xl font-bold flex items-center justify-center gap-1.5 active:bg-primary-100 text-xs w-full overflow-hidden transition-colors">
+                                    <i className="fas fa-plus shrink-0"></i> <span className="truncate">Thêm thủ công</span>
+                                </button>
+                                
+                                <label className="bg-green-50/80 text-green-700 py-2.5 rounded-xl font-bold flex items-center justify-center gap-1.5 active:bg-green-100 text-xs cursor-pointer w-full overflow-hidden transition-colors">
+                                    <i className="fas fa-file-excel shrink-0"></i> <span className="truncate">Nhập Excel</span>
+                                    <input type="file" accept=".xlsx, .xls, .csv" className="hidden" onChange={(e)=>importExcelToDeck(e, activeDeckDetail.id)}/>
+                                </label>
+                            </div>
                         </div>
 
-                        <div className="space-y-4">
-                            {searchQuery.trim() !== '' && displayTerms.length === 0 && (
-                                <div className="text-center p-12 bg-white rounded-2xl border border-gray-200">
-                                    <i className="fas fa-search-minus text-4xl text-gray-300 mb-4 block"></i>
-                                    <p className="text-gray-500 font-medium">Không tìm thấy "{searchQuery}"</p>
-                                </div>
-                            )}
-                            
+                        <div className="flex bg-white/60 backdrop-blur-md rounded-lg p-1 mb-3 w-full shrink-0 border border-gray-200/50 shadow-sm">
+                            <button onClick={()=>setDeckFilter('all')} className={`flex-1 py-1.5 rounded-md text-[11px] font-bold transition truncate px-1 ${deckFilter==='all' ? 'bg-white shadow text-primary' : 'text-gray-500'}`}>Tất cả ({totalCount})</button>
+                            <button onClick={()=>setDeckFilter('mastered')} className={`flex-1 py-1.5 rounded-md text-[11px] font-bold transition truncate px-1 ${deckFilter==='mastered' ? 'bg-white shadow text-green-600' : 'text-gray-500'}`}>Đã thuộc ({masteredCount})</button>
+                            <button onClick={()=>setDeckFilter('learning')} className={`flex-1 py-1.5 rounded-md text-[11px] font-bold transition truncate px-1 ${deckFilter==='learning' ? 'bg-white shadow text-amber-600' : 'text-gray-500'}`}>Đang/Chưa ({notMasteredCount})</button>
+                        </div>
+                        
+                        <div className="relative mb-3 flex-shrink-0 w-full">
+                            <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+                            <input type="text" placeholder="Tìm kiếm trong bộ..." value={deckSearchQuery} onChange={e=>setDeckSearchQuery(e.target.value)} className="w-full bg-white/90 backdrop-blur-sm border border-gray-200/80 rounded-xl py-2.5 pl-9 pr-3 text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-100 transition-all shadow-sm" />
+                        </div>
+
+                        <div className="space-y-2 flex-1 overflow-y-auto pb-4 w-full overflow-x-hidden">
                             {displayTerms.map(t => {
-                                const deck = decks.find(d => d.id === t.deckId);
+                                const borderColors = { 'mastered': 'border-l-4 border-l-green-500', 'learning': 'border-l-4 border-l-amber-400', 'new': 'border-l-4 border-l-gray-300' };
+                                const bColor = borderColors[t.status] || 'border-l-4 border-l-gray-300';
                                 return (
-                                    <div key={t.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-4 justify-between hover:border-blue-200 transition-all">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <div className="flex items-center gap-2"><h3 className="text-2xl font-black text-[#004b87]">{t.term}</h3><button title="Phát âm" onClick={()=>speakTerm(t.term)} className="text-blue-500"><i className="fas fa-volume-up"></i></button><button title="Yêu thích" onClick={()=>toggleFavorite(t.id)} className={favoriteIds.includes(t.id) ? "text-pink-500" : "text-gray-300"}><i className="fas fa-star"></i></button></div>
-                                                {t.type && <span className="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded font-bold uppercase">{t.type}</span>}
-                                                {t.ipa && <span className="text-gray-400 font-mono text-sm">{t.ipa}</span>}
-                                            </div>
-                                            <p className="text-gray-800 font-bold text-lg mb-2">{t.vietnamese}</p>
-                                            {t.example && <p className="text-gray-500 text-sm italic">"{t.example}"</p>}
+                                <div key={t.id} className={`v3-card w-full max-w-full bg-white p-3 rounded-xl border border-gray-100 shadow-sm flex items-start justify-between gap-2 overflow-hidden ${(t.lapseCount > 0 && t.status !== 'mastered') ? 'border-l-4 border-l-red-400' : bColor}`}>
+                                    <div className="flex-1 min-w-0 pr-2">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <b className="text-sm md:text-base text-gray-900 truncate block">{t.term}</b>
+                                            <button onClick={()=>speakTerm(t.term)} className="text-primary-500 shrink-0 bg-primary-50 w-6 h-6 rounded-full flex items-center justify-center"><i className="fas fa-volume-up text-[10px]"></i></button>
                                         </div>
-                                        <div className="text-right flex-shrink-0">
-                                            <div className="text-xs font-bold text-gray-500 bg-gray-50 px-3 py-2 rounded-xl border border-gray-100 mb-2">
-                                                <i className="fas fa-folder mr-1"></i> {deck ? deck.title : t.deckId}
-                                            </div>
-                                            <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider ${t.status === 'mastered' ? 'bg-green-100 text-green-700' : t.status === 'learning' ? 'bg-amber-100 text-amber-700' : t.status === 'review' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-500'}`}>
-                                                {t.status}
-                                            </span>
+                                        <div className="text-gray-600 text-xs truncate w-full mb-1">{t.vietnamese}</div>
+                                        {t.ipa && <div className="text-primary-600 bg-primary-50 inline-block px-1.5 py-0.5 rounded text-[10px] font-mono border border-primary-100 max-w-full truncate">/{t.ipa}/</div>}
+                                    </div>
+                                    <div className="flex flex-col items-end shrink-0 gap-1.5 w-16">
+                                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase w-full text-center truncate ${t.status==='mastered'?'bg-green-100/80 text-green-700':(t.lapseCount > 0 && t.status !== 'mastered')?'bg-red-100/80 text-red-700':t.status==='learning'?'bg-amber-100/80 text-amber-700':'bg-gray-100/80 text-gray-500'}`}>{t.status==='mastered'?'Thuộc':(t.lapseCount > 0 && t.status !== 'mastered')?'Từ quên':t.status==='learning'?'Đang học':'Chưa học'}</span>
+                                        <div className="flex gap-1.5 mt-1 w-full justify-end">
+                                            <button onClick={()=>{setEditTerm(t); setActiveTab('addword');}} className="text-gray-500 hover:text-primary-500 bg-gray-100/80 w-6 h-6 rounded flex items-center justify-center shrink-0 transition-colors"><i className="fas fa-pen text-[10px]"></i></button>
+                                            <button onClick={()=>handleDeleteTerm(t.id)} className="text-red-400 hover:text-red-700 bg-red-50/80 hover:bg-red-100 w-6 h-6 rounded flex items-center justify-center shrink-0 transition-colors"><i className="fas fa-trash text-[10px]"></i></button>
                                         </div>
                                     </div>
-                                )
-                            })}
-                            
-                            {filteredTerms.length > 50 && (
-                                <div className="text-center p-4 text-gray-500 text-sm font-medium">
-                                    Chỉ hiển thị 50 kết quả đầu tiên. Vui lòng gõ chi tiết hơn.
                                 </div>
-                            )}
+                            )})}
+                            {deckTerms.length > 100 && <p className="text-center text-xs text-gray-500 py-2 w-full bg-white/40 backdrop-blur rounded-lg">Chỉ hiển thị 100 từ đầu tiên.</p>}
+                            {deckTerms.length === 0 && <p className="text-center text-sm text-gray-500 py-6 w-full bg-white/40 backdrop-blur rounded-lg">Không tìm thấy từ nào.</p>}
                         </div>
                     </div>
                 );
             };
 
+            const renderAddWord = () => (
+                <div className="v3-scroll mobile-p-4 p-8 max-w-2xl mx-auto h-full animate-fadeIn w-full overflow-x-hidden relative z-10">
+                    <div className="flex justify-between items-center mb-5 w-full bg-white/40 p-3 rounded-xl backdrop-blur-md border border-white/20 shadow-sm">
+                        <h2 className="text-xl font-black text-gray-800 truncate pr-2">{editTerm?.id ? 'Sửa từ' : 'Thêm từ mới'}</h2>
+                        <button onClick={()=>setActiveTab('deckDetail')} className="text-gray-600 bg-white/80 px-3 py-1.5 rounded-lg text-xs font-bold shrink-0 shadow-sm">Hủy</button>
+                    </div>
+
+                    <form onSubmit={(e)=>{e.preventDefault(); handleSaveTerm(editTerm, false);}} className="v3-card bg-white rounded-2xl border border-gray-100 p-4 space-y-3 shadow-sm w-full">
+                        <label className="block text-xs font-bold text-gray-700 w-full">Thuật ngữ (Anh) *<input required value={editTerm?.term||''} onChange={e=>setEditTerm(v=>({...v,term:e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all" placeholder="VD: Artery"/></label>
+                        <label className="block text-xs font-bold text-gray-700 w-full">Nghĩa (Việt) *<input required value={editTerm?.vietnamese||''} onChange={e=>setEditTerm(v=>({...v,vietnamese:e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all" placeholder="VD: Động mạch"/></label>
+                        <div className="grid grid-cols-2 gap-3 w-full">
+                            <label className="block text-xs font-bold text-gray-700 w-full">Phiên âm IPA<input value={editTerm?.ipa||''} onChange={e=>setEditTerm(v=>({...v,ipa:e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all"/></label>
+                            <label className="block text-xs font-bold text-gray-700 w-full">Từ loại<input value={editTerm?.type||''} onChange={e=>setEditTerm(v=>({...v,type:e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all" placeholder="n, v, adj"/></label>
+                        </div>
+                        <label className="block text-xs font-bold text-gray-700 w-full">Định nghĩa<textarea value={editTerm?.definition||''} onChange={e=>setEditTerm(v=>({...v,definition:e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all" rows={2}/></label>
+                        <label className="block text-xs font-bold text-gray-700 w-full">Ví dụ tiếng Anh<textarea value={editTerm?.example||''} onChange={e=>setEditTerm(v=>({...v,example:e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all" rows={2}/></label>
+                        <label className="block text-xs font-bold text-gray-700 w-full">Dịch ví dụ<textarea value={editTerm?.exampleVi||''} onChange={e=>setEditTerm(v=>({...v,exampleVi:e.target.value}))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 font-normal bg-gray-50/80 focus:ring-2 focus:ring-primary-200 outline-none transition-all" rows={2}/></label>
+                        
+                        <div className="pt-2 flex gap-2 w-full">
+                            <button type="submit" className="flex-1 rounded-xl bg-primary text-white font-bold py-3 text-sm min-w-0 truncate px-1 shadow-md">Lưu từ</button>
+                            {!editTerm?.id && <button type="button" onClick={() => handleSaveTerm(editTerm, true)} className="flex-1 rounded-xl bg-primary-50 text-primary font-bold py-3 text-sm min-w-0 truncate px-1 border border-primary-100">Lưu & Thêm tiếp</button>}
+                        </div>
+                    </form>
+                </div>
+            );
+
             const renderFlashcard = () => {
                 if (showSummary) {
                     return (
-                        <div className="flex flex-col items-center justify-center h-full p-6 bg-gray-50 animate-fadeIn">
-                            <div className="bg-white p-10 rounded-3xl shadow-xl border border-gray-100 max-w-md w-full text-center">
-                                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"><i className="fas fa-check-circle text-green-500 text-4xl"></i></div>
-                                <h2 className="text-2xl font-black text-gray-800 mb-2">SESSION COMPLETE</h2>
-                                <p className="text-gray-500 mb-8 font-medium">Bạn đã học {sessionStats.studied} thuật ngữ.</p>
-                                <button onClick={() => setActiveTab('decks')} className="w-full py-4 bg-[#004b87] text-white rounded-xl font-bold shadow-lg hover:bg-blue-900 transition-colors">Back to Library</button>
+                        <div className="v3-main items-center justify-center p-4 animate-fadeIn h-full w-full relative z-10">
+                            <div className="v3-card bg-white p-8 rounded-3xl shadow-xl border border-gray-100 max-w-sm w-full text-center">
+                                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><i className="fas fa-check-circle text-green-500 text-3xl"></i></div>
+                                <h2 className="text-xl font-black text-gray-800 mb-1">HOÀN THÀNH</h2>
+                                <p className="text-gray-500 mb-5 text-sm font-medium">Bạn đã ôn {sessionStats.studied} từ vựng.</p>
+                                <div className="flex gap-3 justify-center mb-6 text-xs font-bold w-full">
+                                    <div className="text-red-600 bg-red-50 border border-red-100 px-3 py-1.5 rounded-md shadow-sm">Quên: {sessionStats.forgot}</div>
+                                    <div className="text-green-600 bg-green-50 border border-green-100 px-3 py-1.5 rounded-md shadow-sm">Thuộc: {sessionStats.mastered}</div>
+                                </div>
+                                <button onClick={() => setActiveTab('practice')} className="w-full py-3 bg-primary text-white rounded-xl font-bold shadow-md active:scale-95 transition-transform">Về Menu Ôn Tập</button>
                             </div>
                         </div>
                     )
@@ -748,58 +1088,51 @@
                 const currentCard = learningQueue[currentIndex];
 
                 return (
-                    <div className="flex flex-col h-full bg-gray-50/50">
-                        <div className="p-6 flex justify-between items-center bg-white border-b border-gray-200 shrink-0 shadow-sm z-10">
-                            <button onClick={() => setActiveTab('decks')} className="text-gray-500 hover:text-gray-800 font-bold text-sm bg-gray-100 px-4 py-2 rounded-lg transition-colors"><i className="fas fa-times mr-2"></i> Thoát</button>
-                            <div className="text-sm font-bold text-gray-500 tracking-widest bg-gray-50 px-4 py-2 rounded-lg border border-gray-100">{activeDeck.title} • CARD {currentIndex + 1} / {learningQueue.length}</div>
-                            <div className="w-[84px]"></div>
+                    <div className="v3-main w-full overflow-hidden flex flex-col relative z-10">
+                        <div className="p-3 flex justify-between items-center bg-white/80 backdrop-blur-md border-b border-gray-200/50 shrink-0 w-full shadow-sm">
+                            <button onClick={() => setActiveTab('decks')} className="text-gray-600 bg-gray-100/80 px-3 py-1.5 rounded-lg text-xs font-bold shrink-0 shadow-sm"><i className="fas fa-times"></i> Thoát</button>
+                            <div className="text-[10px] font-bold text-gray-600 bg-white/50 px-3 py-1.5 rounded-lg border border-gray-200/50 truncate flex-1 mx-2 text-center shadow-sm">{activeDeck.title} • {currentIndex + 1}/{learningQueue.length}</div>
+                            <div className="w-[60px] shrink-0"></div>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center">
-                            <div className="w-full max-w-2xl">
-                                <div className={`w-full bg-white rounded-[2rem] shadow-xl border border-gray-100 transition-all duration-300 overflow-hidden ${!isRevealed ? 'cursor-pointer hover:shadow-2xl hover:-translate-y-1' : ''}`} onClick={() => !isRevealed && setIsRevealed(true)}>
+                        <div className="flex-1 min-h-0 overflow-y-auto p-4 flex flex-col items-center w-full overflow-x-hidden">
+                            <div className="w-full max-w-md h-full flex flex-col">
+                                <div className={`w-full v3-card bg-white rounded-3xl shadow-sm border border-gray-200/80 overflow-hidden flex-1 flex flex-col transition-transform active:scale-[0.99] ${!isRevealed ? 'cursor-pointer' : ''} ${isRevealed ? 'border-b-4 border-b-primary-500' : ''}`} onClick={() => !isRevealed && setIsRevealed(true)}>
                                 
-                                {/* LEVEL 1: ACTIVE RECALL (Mặt trước) */}
                                 {!isRevealed ? (
-                                    <div className="flex flex-col items-center justify-center p-16 min-h-[450px]">
-                                        <h2 className="text-5xl md:text-6xl font-black text-[#004b87] text-center mb-10 leading-tight">{currentCard.term}</h2>
-                                        <div className="px-6 py-3 bg-blue-50 text-blue-600 text-sm font-bold rounded-full animate-pulse"><i className="fas fa-eye mr-2"></i> CLICK ĐỂ XEM ĐÁP ÁN</div>
+                                    <div className="flex flex-col items-center justify-center p-8 flex-1 w-full relative">
+                                        <h2 className="text-3xl md:text-5xl font-black text-primary text-center mb-6 break-words w-full drop-shadow-sm">{currentCard.term}</h2>
+                                        <div className="px-5 py-2 bg-gray-100/80 text-gray-500 text-[10px] font-bold rounded-full uppercase tracking-widest border border-gray-200/50"><i className="fas fa-hand-pointer mr-1 animate-bounce"></i> Chạm để lật thẻ</div>
                                     </div>
                                 ) : (
-                                    /* LEVEL 2, 3, 4: REVEALED STATE (Mặt sau) */
-                                    <div className="flex flex-col min-h-[450px] animate-fadeIn pb-4">
-                                        {/* CORE ANSWER */}
-                                        <div className="p-8 pb-6 border-b-2 border-gray-50">
-                                            <div className="flex justify-between items-start mb-3">
-                                                <div className="flex items-center gap-3"><h2 className="text-4xl md:text-5xl font-black text-[#004b87] leading-tight">{currentCard.term}</h2><button onClick={()=>speakTerm(currentCard.term)} className="text-blue-500 bg-blue-50 w-10 h-10 rounded-full"><i className="fas fa-volume-up"></i></button><button onClick={()=>toggleFavorite(currentCard.id)} className={(favoriteIds.includes(currentCard.id) ? "text-pink-500" : "text-gray-300") + " w-10 h-10"}><i className="fas fa-star"></i></button></div>
-                                                {currentCard.type && <span className="bg-gray-100 text-gray-500 px-3 py-1 rounded-lg text-sm font-bold tracking-wider uppercase">{currentCard.type}</span>}
+                                    <div className="flex flex-col flex-1 animate-fadeIn w-full">
+                                        <div className="p-6 border-b border-gray-100/50 relative w-full">
+                                            <div className="flex justify-between items-start mb-2 w-full pr-12">
+                                                <h2 className="text-2xl md:text-4xl font-black text-primary break-words drop-shadow-sm">{currentCard.term}</h2>
+                                                <button onClick={(e)=>{e.stopPropagation(); speakTerm(currentCard.term)}} className="absolute right-6 top-6 text-primary-500 bg-primary-50 w-10 h-10 rounded-full flex items-center justify-center active:bg-primary-100 shrink-0 shadow-sm border border-primary-100/50"><i className="fas fa-volume-up"></i></button>
                                             </div>
-                                            <h3 className="text-2xl md:text-3xl font-bold text-gray-800">{currentCard.vietnamese}</h3>
+                                            <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2 break-words w-full">{currentCard.vietnamese}</h3>
+                                            <div className="flex items-center gap-2 flex-wrap w-full mt-1">
+                                                {currentCard.type && <span className="bg-gray-100/80 text-gray-600 px-2 py-1 rounded text-[10px] font-bold uppercase shrink-0 border border-gray-200/50">{currentCard.type}</span>}
+                                                {currentCard.ipa && <span className="text-gray-500 font-mono text-xs break-words">{currentCard.ipa}</span>}
+                                            </div>
                                         </div>
 
-                                        {/* OPTIONAL EXPANSION (Collapsed by default) */}
-                                        <div className="flex-grow bg-gray-50/30">
-                                            {(currentCard.ipa || currentCard.definition) && (
-                                                <CollapsibleSection title="Định nghĩa & Phát âm" icon="fa-book">
-                                                    {currentCard.ipa && <p className="font-mono text-[#004b87] mb-2 font-bold text-base">{currentCard.ipa}</p>}
-                                                    {currentCard.definition && <p className="text-gray-700 leading-relaxed text-base">{currentCard.definition}</p>}
-                                                </CollapsibleSection>
-                                            )}
-                                            {currentCard.collocations && currentCard.collocations.length > 0 && (
-                                                <CollapsibleSection title="Cụm từ thường dùng (Collocations)" icon="fa-link">
-                                                    <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                                                        {currentCard.collocations.map((col, idx) => <li key={idx}>{col}</li>)}
-                                                    </ul>
+                                        <div className="flex-1 bg-gray-50/30 overflow-y-auto w-full" onClick={(e) => e.stopPropagation()}>
+                                            {(currentCard.definition) && (
+                                                <CollapsibleSection title="Định nghĩa" icon="fa-book">
+                                                    <p className="text-gray-700 leading-relaxed text-sm break-words">{currentCard.definition}</p>
                                                 </CollapsibleSection>
                                             )}
                                             {(currentCard.example) && (
-                                                <CollapsibleSection title="Ví dụ lâm sàng" icon="fa-stethoscope">
-                                                    <div className="bg-blue-50/50 p-5 rounded-xl border border-blue-100/50">
-                                                        <p className="text-gray-900 font-medium mb-2 text-base leading-relaxed">{currentCard.example}</p>
-                                                        {currentCard.exampleVi && <p className="text-gray-600 text-sm italic">{currentCard.exampleVi}</p>}
+                                                <CollapsibleSection title="Ví dụ" icon="fa-stethoscope">
+                                                    <div className="bg-primary-50/50 p-4 rounded-xl border border-primary-100/30 shadow-sm">
+                                                        <p className="text-gray-900 font-medium mb-1 text-sm break-words">{currentCard.example}</p>
+                                                        {currentCard.exampleVi && <p className="text-gray-600 text-xs italic break-words mt-2">{currentCard.exampleVi}</p>}
                                                     </div>
                                                 </CollapsibleSection>
                                             )}
+                                            <div className="h-6 w-full"></div>
                                         </div>
                                     </div>
                                 )}
@@ -807,14 +1140,20 @@
                             </div>
                         </div>
 
-                        {/* ACTION BAR (Spaced Repetition) */}
                         {isRevealed && (
-                            <div className="bg-white border-t border-gray-200 p-5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] animate-slideUp shrink-0 z-50">
-                                <div className="max-w-2xl mx-auto flex justify-between gap-3">
-                                    <button onClick={() => handleRating('again')} className="flex-1 py-4 bg-white border-2 border-red-100 text-red-600 rounded-2xl font-black hover:bg-red-50 transition-colors flex flex-col items-center">AGAIN <span className="text-xs font-bold text-red-400 mt-1 uppercase">Quên</span></button>
-                                    <button onClick={() => handleRating('hard')} className="flex-1 py-4 bg-white border-2 border-amber-100 text-amber-600 rounded-2xl font-black hover:bg-amber-50 transition-colors flex flex-col items-center">HARD <span className="text-xs font-bold text-amber-400 mt-1 uppercase">Khó</span></button>
-                                    <button onClick={() => handleRating('good')} className="flex-1 py-4 bg-[#004b87] text-white rounded-2xl font-black shadow-lg shadow-blue-900/20 hover:bg-blue-900 transition-colors flex flex-col items-center">GOOD <span className="text-xs font-bold text-blue-200 mt-1 uppercase">Đã nhớ</span></button>
-                                    <button onClick={() => handleRating('easy')} className="flex-1 py-4 bg-white border-2 border-green-100 text-green-600 rounded-2xl font-black hover:bg-green-50 transition-colors flex flex-col items-center">EASY <span className="text-xs font-bold text-green-400 mt-1 uppercase">Rất dễ</span></button>
+                            <div className="bg-white/90 backdrop-blur-md border-t border-gray-200/50 p-3 shrink-0 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.08)] w-full overflow-hidden" style={{paddingBottom: 'max(12px, env(safe-area-inset-bottom))'}}>
+                                <div className="max-w-md mx-auto flex justify-between gap-2 w-full">
+                                    <button onClick={() => handleRating('back')} className="w-12 bg-gray-100/80 text-gray-600 rounded-xl font-black text-lg active:bg-gray-200 shrink-0 flex items-center justify-center border border-gray-200/50 shadow-sm" disabled={currentIndex===0} style={{opacity: currentIndex===0?0.3:1}}><i className="fas fa-arrow-left"></i></button>
+                                    
+                                    <button onClick={() => handleRating('forgot')} className="flex-1 py-3 bg-red-50/90 text-red-600 rounded-xl font-black active:bg-red-100 flex flex-col items-center justify-center text-sm md:text-base border border-red-200/60 min-w-0 shadow-sm">
+                                        Quên <span className="text-[9px] font-bold text-red-400 mt-0.5 uppercase hidden md:block">Lặp lại sớm</span>
+                                    </button>
+                                    
+                                    <button onClick={() => handleRating('mastered')} className="flex-1 py-3 bg-green-600/90 text-white rounded-xl font-black active:bg-green-700 flex flex-col items-center justify-center text-sm md:text-base shadow-md border border-green-700/50 min-w-0">
+                                        Thuộc <span className="text-[9px] font-bold text-green-200 mt-0.5 uppercase hidden md:block">Nhớ lâu hơn</span>
+                                    </button>
+                                    
+                                    <button onClick={() => handleRating('next')} className="w-12 bg-primary-50/90 text-primary rounded-xl font-black text-lg active:bg-primary-100 shrink-0 flex items-center justify-center border border-primary-200/50 shadow-sm"><i className="fas fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         )}
@@ -822,69 +1161,391 @@
                 );
             };
 
-
-            const renderFavorites = () => {
-                const favs = terms.filter(t => favoriteIds.includes(t.id));
-                return (
-                    <div className="v2-scroll p-8 max-w-5xl mx-auto h-full overflow-y-auto animate-fadeIn">
-                        <div className="mb-7"><h2 className="text-3xl font-extrabold text-gray-800">Từ yêu thích</h2><p className="text-gray-500 text-sm mt-2">{favs.length} thuật ngữ được đánh dấu</p></div>
-                        {favs.length===0 ? (
-                            <div className="v2-card bg-white rounded-2xl p-12 text-center border border-gray-100"><i className="fas fa-star text-4xl text-gray-200 mb-4"></i><p className="text-gray-500">Chưa có thuật ngữ yêu thích.</p></div>
-                        ) : (
-                            <div className="space-y-3">{favs.map(t=>(
-                                <div key={t.id} className="v2-card bg-white rounded-2xl p-5 border border-gray-100 flex items-center justify-between gap-4">
-                                    <div><div className="flex items-center gap-2"><b className="text-xl text-[#004b87]">{t.term}</b><button onClick={()=>speakTerm(t.term)} className="text-blue-500"><i className="fas fa-volume-up"></i></button></div><div className="font-bold text-gray-700">{t.vietnamese}</div><div className="text-xs text-gray-400 mt-1">{t.type} {t.ipa ? '• '+t.ipa : ''}</div></div>
-                                    <button onClick={()=>toggleFavorite(t.id)} className="text-pink-500 text-lg"><i className="fas fa-star"></i></button>
-                                </div>
-                            ))}</div>
-                        )}
+            const renderClozeSetup = () => (
+                <div className="v3-scroll mobile-p-4 p-8 max-w-2xl mx-auto flex flex-col animate-fadeIn w-full overflow-x-hidden relative z-10">
+                    <div className="bg-white/40 p-3 rounded-xl backdrop-blur-md border border-white/20 shadow-sm mb-4">
+                        <h2 className="text-2xl font-black text-primary mb-1 drop-shadow-sm">Luyện Điền Từ</h2>
+                        <p className="text-gray-600 font-medium text-xs">Ghi nhớ thuật ngữ qua ngữ cảnh câu ví dụ.</p>
                     </div>
-                );
-            };
-
-            return (
-                <div className="v2-shell flex h-screen bg-gray-50 text-gray-900 overflow-hidden">
-                    {/* SIDEBAR */}
-                    <div className="w-72 bg-white border-r border-gray-200 flex flex-col z-10 shadow-sm shrink-0 hidden md:flex">
-                        <div className="p-6 border-b border-gray-100 flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-[#004b87] flex items-center justify-center text-white font-black text-2xl shadow-md"><i className="fas fa-heartbeat"></i></div>
-                            <div>
-                                <h2 className="font-black text-gray-900 tracking-tight leading-tight text-lg">MEDICAL</h2>
-                                <h2 className="font-bold text-gray-500 tracking-tight leading-tight text-sm">ENGLISH MASTER</h2>
+                    <div className="v3-card bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-3 w-full">
+                        <label className="block text-xs font-bold text-gray-700 w-full">Chọn bộ từ
+                            <select value={clozeDeckId} onChange={e=>setClozeDeckId(e.target.value)} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all"><option value="all">Toàn bộ kho từ vựng</option>{decks.map(d => <option key={d.id} value={d.id}>{d.title}</option>)}</select>
+                        </label>
+                        <label className="block text-xs font-bold text-gray-700 w-full">Lọc trạng thái
+                            <select value={clozeFilter} onChange={e=>setClozeFilter(e.target.value)} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all"><option value="all">Toàn bộ từ (có ví dụ)</option><option value="unmastered">Chỉ từ chưa thuộc</option></select>
+                        </label>
+                        <button onClick={startCloze} className="w-full mt-2 bg-orange-500 text-white py-3 rounded-xl font-bold text-sm shadow-md active:scale-95 transition-transform">Bắt đầu luyện tập</button>
+                    </div>
+                </div>
+            );
+            
+            const renderClozeRun = () => {
+                const item = clozeQueue[clozeIndex];
+                const escaped = String(item.term||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+                const hasTerm = item.term && new RegExp(escaped,'i').test(item.example||'');
+                const prompt = hasTerm ? String(item.example).replace(new RegExp(escaped,'gi'),'________') : String(item.example);
+                const normalize = (str) => str.toLowerCase().replace(/[^a-z0-9]/g, '');
+                const isCorrect = normalize(clozeAnswer) === normalize(item.term);
+                return (
+                    <div className="v3-main w-full overflow-hidden flex flex-col relative z-10">
+                        <div className="p-3 flex justify-between items-center bg-white/80 backdrop-blur-md border-b border-gray-200/50 shrink-0 w-full shadow-sm">
+                            <span className="text-xs font-bold text-gray-600 bg-gray-100/80 px-3 py-1.5 rounded-md border border-gray-200/50">Câu {clozeIndex+1}/{clozeQueue.length}</span>
+                            <button onClick={()=>setActiveTab('practice')} className="text-gray-600 bg-gray-100/80 px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-200/50 shadow-sm"><i className="fas fa-times"></i></button>
+                        </div>
+                        <div className="flex-1 min-h-0 overflow-y-auto p-4 w-full max-w-md mx-auto overflow-x-hidden">
+                            <div className="v3-card bg-white rounded-2xl border border-gray-100 p-5 shadow-sm w-full max-w-full">
+                                <p className="text-lg leading-relaxed font-semibold mb-4 text-gray-800 break-words">{prompt}</p>
+                                {!hasTerm && <p className="text-xs text-gray-600 mb-3 bg-primary-50/50 border border-primary-100/50 p-2 rounded break-words w-full"><i className="fas fa-info-circle mr-1"></i> Nghĩa tiếng Việt: <b>{item.vietnamese}</b></p>}
+                                <input value={clozeAnswer} onChange={e=>setClozeAnswer(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!clozeChecked){setClozeChecked(true); checkCloze(isCorrect);}}} disabled={clozeChecked} className="w-full bg-gray-50/50 border-2 border-gray-200/80 rounded-xl p-3 mb-3 text-base font-bold focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-100 transition-all" placeholder="Nhập thuật ngữ..." />
+                                {!clozeChecked ? <button onClick={()=>{setClozeChecked(true); checkCloze(isCorrect);}} className="w-full bg-primary text-white font-bold rounded-xl p-3 shadow-md active:scale-[0.98] transition-transform">Kiểm tra</button> : (
+                                    <div className={`rounded-xl p-4 border w-full max-w-full overflow-hidden ${isCorrect ? "bg-green-50/80 border-green-200 shadow-sm" : "bg-red-50/80 border-red-200 shadow-sm"} animate-fadeIn`}>
+                                        <p className={"font-black text-sm mb-1 " + (isCorrect ? "text-green-700" : "text-red-600")}>{isCorrect ? "Chính xác!" : "Chưa chính xác!"}</p>
+                                        <div className="flex justify-between items-start w-full pr-2">
+                                            <p className="font-black text-xl text-gray-900 break-words flex-1 min-w-0 pr-2">{item.term}</p>
+                                            <button onClick={()=>speakTerm(item.term)} className="text-primary-500 bg-white w-8 h-8 rounded-full shadow-sm shrink-0 border border-gray-100"><i className="fas fa-volume-up text-xs"></i></button>
+                                        </div>
+                                        <p className="text-gray-700 font-bold mt-1 text-sm break-words w-full">{item.vietnamese}</p>
+                                        <p className="text-gray-800 mt-2 font-medium bg-white/60 p-2 rounded text-xs break-words w-full border border-white/40">{item.example}</p>
+                                        <button onClick={()=>{if (clozeIndex < clozeQueue.length - 1) { setClozeIndex(i=>i+1); setClozeAnswer(''); setClozeChecked(false); } else { showAlert("Đã hết câu hỏi!"); setActiveTab('practice'); }}} className={`mt-4 w-full text-white rounded-xl p-3 font-bold text-sm shadow-md active:scale-[0.98] transition-transform ${isCorrect ? 'bg-green-600' : 'bg-red-500'}`}>Câu tiếp theo</button>
+                                    </div>
+                                )}
                             </div>
                         </div>
-                        
-                        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-                            <div className="text-[10px] font-black text-gray-400 tracking-widest px-4 mb-3 mt-2">DASHBOARD</div>
-                            <button onClick={() => setActiveTab('home')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'home' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-chart-pie w-5"></i> Overview</button>
-                            <button onClick={() => setActiveTab('decks')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'decks' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-layer-group w-5"></i> Deck Library</button>
+                    </div>
+                );
+            };
+
+            const renderQuizSetup = () => (
+                <div className="v3-scroll mobile-p-4 p-8 max-w-2xl mx-auto flex flex-col animate-fadeIn w-full overflow-x-hidden relative z-10">
+                    <div className="bg-white/40 p-3 rounded-xl backdrop-blur-md border border-white/20 shadow-sm mb-4">
+                        <h2 className="text-2xl font-black text-primary mb-1 drop-shadow-sm">Trắc Nghiệm</h2>
+                        <p className="text-gray-600 font-medium text-xs">Chọn đáp án đúng điền vào chỗ trống trong câu ví dụ.</p>
+                    </div>
+                    <div className="v3-card bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-3 w-full">
+                        <label className="block text-xs font-bold text-gray-700 w-full">Chọn bộ từ
+                            <select value={quizDeckId} onChange={e=>setQuizDeckId(e.target.value)} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all"><option value="all">Toàn bộ kho từ vựng</option>{decks.map(d => <option key={d.id} value={d.id}>{d.title}</option>)}</select>
+                        </label>
+                        <label className="block text-xs font-bold text-gray-700 w-full">Số lượng câu hỏi
+                            <select value={quizLimit} onChange={e=>setQuizLimit(Number(e.target.value))} className="mt-1 w-full border border-gray-200/80 rounded-lg p-2.5 bg-gray-50/80 text-sm focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                                <option value={10}>10 câu</option>
+                                <option value={20}>20 câu</option>
+                                <option value={30}>30 câu</option>
+                                <option value={50}>50 câu</option>
+                            </select>
+                        </label>
+                        <button onClick={startQuiz} className="w-full mt-2 bg-primary-600 text-white py-3 rounded-xl font-bold text-sm shadow-md active:scale-95 transition-transform">Bắt đầu thi</button>
+                    </div>
+                </div>
+            );
+
+            const renderQuizRun = () => {
+                if (showQuizResult) {
+                    return (
+                        <div className="v3-main items-center justify-center p-4 animate-fadeIn h-full w-full relative z-10">
+                            <div className="v3-card bg-white p-8 rounded-3xl shadow-xl border border-gray-100 max-w-sm w-full text-center">
+                                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4"><i className="fas fa-trophy text-primary-500 text-3xl"></i></div>
+                                <h2 className="text-xl font-black text-gray-800 mb-1">KẾT QUẢ</h2>
+                                <p className="text-gray-500 mb-5 text-sm font-medium">Bài trắc nghiệm đã hoàn thành.</p>
+                                <div className="text-4xl font-black text-primary-600 mb-6 drop-shadow-sm">{quizCorrectCount} <span className="text-xl text-gray-400">/ {quizQueue.length}</span></div>
+                                <button onClick={() => setActiveTab('practice')} className="w-full py-3 bg-primary-600 text-white rounded-xl font-bold shadow-md active:scale-95 transition-transform">Về Menu Ôn Tập</button>
+                            </div>
+                        </div>
+                    );
+                }
+
+                if (!quizQueue.length) return null;
+                const item = quizQueue[quizIndex];
+                const escaped = String(item.term||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+                const hasTerm = item.term && new RegExp(escaped,'i').test(item.example||'');
+                const prompt = hasTerm ? String(item.example).replace(new RegExp(escaped,'gi'),'________') : String(item.example);
+                const labels = ['A', 'B', 'C', 'D'];
+
+                return (
+                    <div className="v3-main w-full overflow-hidden flex flex-col relative z-10">
+                        <div className="p-3 flex justify-between items-center bg-white/80 backdrop-blur-md border-b border-gray-200/50 shrink-0 w-full shadow-sm">
+                            <span className="text-xs font-bold text-gray-600 bg-gray-100/80 px-3 py-1.5 rounded-md border border-gray-200/50 shadow-sm">Câu {quizIndex+1}/{quizQueue.length}</span>
                             
-                            <div className="text-[10px] font-black text-gray-400 tracking-widest px-4 mb-3 mt-6">LEARNING</div>
-                            <button onClick={startQuickReview} className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all text-amber-600 hover:bg-amber-50"><i className="fas fa-bolt w-5"></i> Quick Review</button>
-                            <button onClick={() => setActiveTab('search')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'search' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-search w-5"></i> Search Dictionary</button>
-                            <button onClick={() => setActiveTab('favorites')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'favorites' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-star w-5"></i> Favorites</button>
-                            <button onClick={() => setActiveTab('settings')} className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all ${activeTab === 'settings' ? 'bg-blue-50 text-[#004b87]' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}><i className="fas fa-cog w-5"></i> Settings</button>
+                            <div className={`text-xs font-bold px-3 py-1.5 rounded-md flex items-center gap-1 shadow-sm border ${quizTimeLeft <= 10 ? 'bg-red-100/90 text-red-600 border-red-200 animate-pulse' : 'bg-gray-100/80 text-gray-600 border-gray-200/50'}`}>
+                                <i className="far fa-clock"></i> {quizTimeLeft}s
+                            </div>
+
+                            <button onClick={()=>setActiveTab('practice')} className="text-gray-600 bg-gray-100/80 px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-200/50 shadow-sm"><i className="fas fa-times"></i></button>
+                        </div>
+                        <div className="flex-1 min-h-0 overflow-y-auto p-4 w-full max-w-md mx-auto overflow-x-hidden">
+                            <div className="v3-card bg-white rounded-2xl border border-gray-100 p-4 shadow-sm w-full max-w-full">
+                                <p className="text-lg leading-relaxed font-semibold mb-6 text-gray-800 break-words">{prompt}</p>
+                                
+                                <div className="space-y-3">
+                                    {quizOptions.map((opt, idx) => {
+                                        const isCorrect = opt.id === item.id;
+                                        const isSelected = quizSelected === opt.id;
+                                        
+                                        let btnClass = "bg-gray-50/50 border-2 border-gray-200/80 text-gray-700 hover:border-primary-300";
+                                        
+                                        if (quizSelected) {
+                                            if (isCorrect) {
+                                                btnClass = "bg-green-50/90 border-green-500 text-green-800 shadow-sm";
+                                            } else if (isSelected) {
+                                                btnClass = "bg-red-50/90 border-red-500 text-red-800";
+                                            } else {
+                                                btnClass = "bg-gray-50/30 border-gray-100/50 text-gray-400 opacity-60";
+                                            }
+                                        }
+
+                                        return (
+                                            <button 
+                                                key={opt.id} 
+                                                onClick={() => !quizSelected && handleQuizAnswer(opt.id)} 
+                                                disabled={!!quizSelected}
+                                                className={`w-full text-left rounded-xl p-3.5 transition-all flex flex-col gap-1 outline-none ${btnClass}`}
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black shrink-0 border ${quizSelected && isCorrect ? 'bg-green-500 text-white border-green-600' : quizSelected && isSelected ? 'bg-red-500 text-white border-red-600' : 'bg-white text-gray-500 border-gray-200 shadow-sm'}`}>
+                                                        {labels[idx]}
+                                                    </span>
+                                                    <span className="font-bold text-base break-words flex-1">{opt.term}</span>
+                                                    {quizSelected && isCorrect && <i className="fas fa-check-circle text-green-500"></i>}
+                                                    {quizSelected && isSelected && !isCorrect && <i className="fas fa-times-circle text-red-500"></i>}
+                                                </div>
+                                                {quizSelected && (
+                                                    <div className="pl-10 text-sm break-words opacity-90 mt-1">{opt.vietnamese}</div>
+                                                )}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                {quizSelected && (
+                                    <div className="mt-6 animate-fadeIn">
+                                        <div className="bg-primary-50/50 border border-primary-100/50 rounded-xl p-4 mb-4 shadow-sm">
+                                            <p className="text-sm font-bold text-primary mb-1">Nghĩa câu ví dụ:</p>
+                                            <p className="text-sm text-gray-700 italic break-words">{item.exampleVi || "Không có bản dịch."}</p>
+                                        </div>
+                                        <button onClick={nextQuizQuestion} className={`w-full text-white rounded-xl p-3.5 font-bold text-sm shadow-md active:scale-[0.98] transition-transform ${quizSelected === item.id ? 'bg-green-600' : 'bg-red-500'}`}>
+                                            Câu tiếp theo <i className="fas fa-arrow-right ml-1"></i>
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
+            };
+
+            const renderSearch = () => (
+                <div className="v3-scroll mobile-p-4 p-8 max-w-4xl mx-auto flex flex-col animate-fadeIn overflow-x-hidden w-full h-full relative z-10">
+                    <div className="bg-white/40 p-3 rounded-xl backdrop-blur-md border border-white/20 shadow-sm mb-4">
+                        <h2 className="text-2xl font-black text-primary drop-shadow-sm">Tra từ điển</h2>
+                    </div>
+                    <div className="relative mb-5 flex-shrink-0 w-full">
+                        <i className="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg"></i>
+                        <input type="text" placeholder="Gõ tiếng Anh hoặc Việt..." value={searchQuery} onChange={e=>setSearchQuery(e.target.value)} className="w-full bg-white/90 backdrop-blur border-2 border-transparent rounded-2xl py-3.5 pl-12 pr-4 text-base focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-50 transition-all shadow-sm" />
+                    </div>
+                    
+                    <div className="space-y-4 pb-6 overflow-y-auto flex-1 w-full overflow-x-hidden">
+                        {terms.filter(t => searchQuery && (t.term.toLowerCase().includes(searchQuery.toLowerCase()) || t.vietnamese.toLowerCase().includes(searchQuery.toLowerCase()) || (t.deckId && t.deckId.toLowerCase().includes(searchQuery.toLowerCase())))).slice(0,50).map(t => {
+                            const deck = decks.find(d => d.id === t.deckId);
+                            return (
+                            <div key={t.id} className="v3-card w-full max-w-full bg-white p-4 rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+                                <div className="flex justify-between items-start mb-2 w-full">
+                                    <div className="flex-1 min-w-0 pr-2">
+                                        <div className="flex items-center gap-2 mb-1 w-full">
+                                            <b className="text-xl text-primary truncate">{t.term}</b>
+                                            <button onClick={()=>speakTerm(t.term)} className="text-primary-500 shrink-0 bg-primary-50 w-7 h-7 rounded-full flex items-center justify-center"><i className="fas fa-volume-up text-xs"></i></button>
+                                        </div>
+                                        <div className="flex items-center gap-2 flex-wrap mt-2">
+                                            {t.ipa && <div className="text-primary-600 bg-primary-50 inline-block px-2 py-0.5 rounded text-xs font-mono border border-primary-100 max-w-full truncate">/{t.ipa}/</div>}
+                                            {t.type && <span className="bg-gray-100/80 text-gray-500 text-[10px] px-2 py-1 rounded font-bold uppercase">{t.type}</span>}
+                                        </div>
+                                    </div>
+                                    <button onClick={()=>{setEditTerm(t);setActiveTab('addword')}} className="text-gray-400 bg-gray-50/80 w-8 h-8 flex items-center justify-center rounded-lg shrink-0"><i className="fas fa-pen text-sm"></i></button>
+                                </div>
+                                
+                                <div className="text-gray-800 text-base font-bold mt-2 mb-2 w-full break-words">{t.vietnamese}</div>
+                                {t.definition && <div className="text-gray-600 text-sm mb-2 w-full break-words"><i className="fas fa-book mr-1 text-gray-400"></i> {t.definition}</div>}
+                                {t.example && <div className="bg-primary-50/50 p-3 rounded-lg text-sm border border-primary-100/50 mb-3 text-gray-700 italic w-full break-words">"{t.example}"</div>}
+                                
+                                <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-50/50 w-full">
+                                    <div className="text-xs text-gray-500 bg-gray-100/80 px-2 py-1 rounded flex items-center min-w-0 max-w-[65%]">
+                                        <i className="fas fa-folder mr-1.5 text-gray-400 shrink-0"></i> <span className="truncate">{deck ? deck.title : t.deckId}</span>
+                                    </div>
+                                    <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shrink-0 ml-2 ${t.status==='mastered'?'bg-green-100/80 text-green-700':(t.lapseCount > 0 && t.status !== 'mastered')?'bg-red-100/80 text-red-700':t.status==='learning'?'bg-amber-100/80 text-amber-700':'bg-gray-100/80 text-gray-500'}`}>{t.status==='mastered'?'Đã thuộc':(t.lapseCount > 0 && t.status !== 'mastered')?'Từ quên':t.status==='learning'?'Đang học':'Chưa học'}</span>
+                                </div>
+                            </div>
+                        )})}
+                        
+                        {searchQuery && terms.filter(t => (t.term.toLowerCase().includes(searchQuery.toLowerCase()) || t.vietnamese.toLowerCase().includes(searchQuery.toLowerCase()) || (t.deckId && t.deckId.toLowerCase().includes(searchQuery.toLowerCase())))).length === 0 && <p className="text-center text-gray-500 mt-10 w-full bg-white/50 backdrop-blur p-4 rounded-xl">Không tìm thấy từ vựng.</p>}
+                        {!searchQuery && <div className="text-center text-gray-500 mt-10 flex flex-col items-center w-full bg-white/40 backdrop-blur p-6 rounded-xl border border-white/20"><i className="fas fa-search text-3xl mb-3 text-gray-400"></i><p className="font-medium">Tìm kiếm trong toàn bộ kho {terms.length} từ vựng.</p></div>}
+                    </div>
+                </div>
+            );
+
+            const renderSettings = () => (
+                <div className="v3-scroll mobile-p-4 p-8 max-w-3xl mx-auto animate-fadeIn w-full overflow-x-hidden relative z-10">
+                    <div className="bg-white/40 p-3 rounded-xl backdrop-blur-md border border-white/20 shadow-sm mb-5">
+                        <h2 className="text-2xl font-black text-gray-800 drop-shadow-sm">Cài đặt</h2>
+                    </div>
+                    
+                    <div className="v3-card bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 mb-5 w-full">
+                        <h3 className="font-black text-primary mb-5 text-sm tracking-widest uppercase flex items-center gap-2 border-b border-gray-100/50 pb-3"><i className="fas fa-palette text-primary-400"></i> Tùy chỉnh Giao diện</h3>
+                        
+                        <div className="space-y-6">
+                            <div>
+                                <div className="mb-2 flex items-center justify-between">
+                                    <b className="text-gray-800 text-sm">Phông chữ (Typography)</b>
+                                    <span className="text-[10px] bg-primary-50 text-primary-600 px-2 py-0.5 rounded font-bold uppercase">10 Lựa chọn</span>
+                                </div>
+                                <div className="relative">
+                                    <select value={appFont} onChange={e=>setAppFont(e.target.value)} className="w-full border-2 border-gray-200/80 rounded-xl p-3 bg-gray-50/80 text-base focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none cursor-pointer font-bold text-gray-700 shadow-sm" style={{fontFamily: appFont}}>
+                                        {FONTS.map(f => <option key={f.id} value={f.id} style={{fontFamily: f.id, fontSize: '16px'}}>{f.name}</option>)}
+                                    </select>
+                                    <i className="fas fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="mb-3 flex items-center justify-between">
+                                    <b className="text-gray-800 text-sm">Màu nền chủ đạo (Pastel Theme)</b>
+                                    <span className="text-[10px] bg-primary-50 text-primary-600 px-2 py-0.5 rounded font-bold uppercase">16 Màu</span>
+                                </div>
+                                <div className="grid grid-cols-8 gap-2.5 p-2 bg-gray-50/50 rounded-xl border border-gray-100/50">
+                                    {THEMES.map(theme => (
+                                        <div key={theme.id} onClick={() => setAppTheme(theme.id)} className={`color-circle mx-auto ${appTheme === theme.id ? 'active' : ''}`} style={{backgroundColor: theme.bgBase}} title={theme.label}></div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="mb-2 flex items-center justify-between">
+                                    <b className="text-gray-800 text-sm">Hậu cảnh mờ (Vintage Sketch)</b>
+                                    <span className="text-[10px] bg-primary-50 text-primary-600 px-2 py-0.5 rounded font-bold uppercase">Paper Texture</span>
+                                </div>
+                                <p className="text-xs text-gray-500 mb-3 font-medium">Bản vẽ phác thảo 2D hòa trộn theo tông màu nền.</p>
+                                <div className="flex gap-3 overflow-x-auto pb-3 pt-1 px-1 -mx-1 snap-x scroll-smooth">
+                                    {BG_IMAGES.map(bg => (
+                                        <div key={bg.id} onClick={() => setAppBgImage(bg.id)} className={`bg-thumb snap-start transition-all duration-300 ${appBgImage === bg.id ? 'active scale-105' : 'opacity-80 hover:opacity-100'}`} style={bg.url ? {backgroundImage: `url(${bg.url})`} : {backgroundColor: 'var(--bg-base)'}}>
+                                            <span className="text-[10px] font-bold text-white bg-black/60 px-1.5 py-1 rounded backdrop-blur-md truncate w-full text-center tracking-wide">{bg.name}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="pt-2 border-t border-gray-100/50 flex items-center justify-between">
+                                <div><b className="text-gray-800 text-sm">Chế độ tối (Dark Mode)</b><div className="text-[11px] text-gray-500 mt-0.5 font-medium">Đảo ngược màu sắc chống mỏi mắt</div></div>
+                                <button className={`v3-switch ${darkMode?'on':''}`} onClick={()=>setDarkMode(v=>!v)}><span></span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="v3-card bg-white rounded-2xl p-4 md:p-5 shadow-sm border border-gray-100 mb-5 w-full">
+                        <div className="v3-setting-row border-0 w-full">
+                            <div><b className="text-gray-800 text-sm">Mục tiêu hằng ngày</b><div className="text-[11px] text-gray-500 mt-0.5 font-medium">Số từ cần ôn</div></div>
+                            <select value={dailyGoal} onChange={e=>setDailyGoal(Number(e.target.value))} className="border-2 border-gray-200/80 rounded-xl px-3 py-2 font-bold bg-gray-50/80 text-sm outline-none focus:border-primary">
+                                {[10,20,30,50,100].map(n=><option key={n} value={n}>{n} từ</option>)}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="v3-card bg-white rounded-2xl p-4 md:p-5 shadow-sm border border-gray-100 w-full">
+                        <h3 className="font-bold text-gray-800 mb-3 text-xs tracking-wider">DỮ LIỆU & SAO LƯU</h3>
+                        <div className="space-y-3 w-full">
+                            <button onClick={() => {
+                                const backup = { version: '4.2', exportedAt: new Date().toISOString(), terms, decks, favoriteIds, dailyGoal, dailyCount, streak, lastStudyDate };
+                                const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(backup)], {type:'application/json'}));
+                                a.download = 'MEM_Backup_v4.json'; a.click();
+                            }} className="w-full py-3 rounded-xl bg-gray-50/80 text-gray-700 font-bold text-sm hover:bg-gray-100 transition-colors border border-gray-200/50"><i className="fas fa-download mr-1"></i> Xuất sao lưu (Backup)</button>
+                            
+                            <label className="w-full flex justify-center items-center py-3 rounded-xl bg-gray-50/80 text-gray-700 font-bold text-sm cursor-pointer hover:bg-gray-100 transition-colors border border-gray-200/50"><i className="fas fa-upload mr-1"></i> Nhập sao lưu (Restore)
+                                <input type="file" accept=".json" className="hidden" onChange={(e)=>{
+                                    const f = e.target.files[0]; if(!f)return; const r = new FileReader();
+                                    r.onload = ev => {
+                                        try {
+                                            const p = JSON.parse(ev.target.result); if(!p.terms || !p.decks) throw new Error("File sai định dạng");
+                                            setTerms(p.terms); setDecks(p.decks); if(p.favoriteIds) setFavoriteIds(p.favoriteIds);
+                                            saveToStorage(p.terms, p.decks); showAlert("Khôi phục thành công!");
+                                        } catch(err) { showAlert("Lỗi: " + err.message); }
+                                    }; r.readAsText(f); e.target.value='';
+                                }}/>
+                            </label>
+                            
+                            <button onClick={resetData} className="w-full mt-2 py-3 rounded-xl bg-red-50/80 text-red-600 font-bold text-sm hover:bg-red-100 transition-colors border border-red-100/50"><i className="fas fa-trash-alt mr-1"></i> Xóa toàn bộ dữ liệu (Reset)</button>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderModal = () => {
+                if (!modal.isOpen) return null;
+                return (
+                    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
+                        <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl animate-slideUp border border-gray-100">
+                            <h3 className="text-lg font-black text-primary mb-2">{modal.type === 'confirm' ? 'Xác nhận' : 'Thông báo'}</h3>
+                            <p className="text-gray-700 mb-6 text-sm leading-relaxed font-medium">{modal.message}</p>
+                            <div className="flex gap-3 justify-end">
+                                {modal.type === 'confirm' && (
+                                    <button onClick={closeModal} className="px-5 py-2.5 bg-gray-100/80 text-gray-700 font-bold rounded-xl active:bg-gray-200 transition text-sm">Hủy</button>
+                                )}
+                                <button onClick={() => { if(modal.onConfirm) modal.onConfirm(); closeModal(); }} className="px-6 py-2.5 bg-primary text-white font-bold rounded-xl active:scale-95 transition text-sm shadow-md">
+                                    {modal.type === 'confirm' ? 'Đồng ý' : 'Đã hiểu'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            const activeBgImg = useMemo(() => {
+                const img = BG_IMAGES.find(b => b.id === appBgImage);
+                return img && img.url ? `url('${img.url}')` : 'none';
+            }, [appBgImage]);
+
+            return (
+                <div className="v3-shell text-gray-900">
+                    <div id="app-bg"></div>
+                    <div id="app-bg-img" className={appBgImage !== 'none' ? 'active' : ''} style={{backgroundImage: activeBgImg}}></div>
+                    <div id="app-bg-overlay"></div>
+
+                    {renderModal()}
+                    
+                    <div className="w-72 bg-white/80 backdrop-blur-xl border-r border-gray-200/50 flex flex-col z-10 shadow-sm shrink-0 hidden md:flex">
+                        <div className="p-6 border-b border-gray-100/50 flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-white font-black text-2xl shadow-md"><i className="fas fa-heartbeat"></i></div>
+                            <div><h2 className="font-black text-gray-900 leading-tight text-lg drop-shadow-sm">MEDICAL</h2><h2 className="font-bold text-primary leading-tight text-sm drop-shadow-sm">ENGLISH 4.2</h2></div>
+                        </div>
+                        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+                            <button onClick={() => {setActiveTab('home'); setDashboardListView(null);}} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === 'home' ? 'bg-primary-50/80 text-primary shadow-sm' : 'text-gray-600 hover:bg-gray-50/50'}`}><i className="fas fa-chart-pie w-5"></i> Dashboard</button>
+                            <button onClick={() => setActiveTab('decks')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${(activeTab === 'decks' || activeTab === 'deckDetail' || activeTab === 'createDeck' || activeTab === 'addword') ? 'bg-primary-50/80 text-primary shadow-sm' : 'text-gray-600 hover:bg-gray-50/50'}`}><i className="fas fa-layer-group w-5"></i> Bộ Từ (Decks)</button>
+                            <button onClick={() => setActiveTab('practice')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${(activeTab === 'practice' || activeTab === 'cloze' || activeTab === 'cloze_run' || activeTab === 'learning' || activeTab === 'quiz_setup' || activeTab === 'quiz_run') ? 'bg-purple-50/80 text-purple-600 shadow-sm' : 'text-gray-600 hover:bg-gray-50/50'}`}><i className="fas fa-dumbbell w-5"></i> Ôn Tập</button>
+                            <button onClick={() => setActiveTab('search')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === 'search' ? 'bg-primary-50/80 text-primary shadow-sm' : 'text-gray-600 hover:bg-gray-50/50'}`}><i className="fas fa-search w-5"></i> Tra từ điển</button>
+                            <button onClick={() => setActiveTab('settings')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === 'settings' ? 'bg-primary-50/80 text-primary shadow-sm' : 'text-gray-600 hover:bg-gray-50/50'}`}><i className="fas fa-cog w-5"></i> Cài Đặt</button>
                         </nav>
                     </div>
 
-                    {/* MAIN CONTENT */}
-                    <div className="flex-1 overflow-hidden relative">
+                    <div className="v3-main">
                         {activeTab === 'home' && renderDashboard()}
                         {activeTab === 'decks' && renderDecks()}
-                        {activeTab === 'search' && renderSearch()}
-                        {activeTab === 'favorites' && renderFavorites()}
-                        {activeTab === 'settings' && renderSettings()}
-                        {activeTab === 'learning' && renderFlashcard()}
-                        {activeTab === 'cloze' && renderCloze()}
+                        {activeTab === 'createDeck' && renderCreateDeck()}
+                        {activeTab === 'deckDetail' && renderDeckDetail()}
                         {activeTab === 'addword' && renderAddWord()}
+                        {activeTab === 'practice' && renderPracticeMenu()}
+                        {activeTab === 'learning' && renderFlashcard()}
+                        {activeTab === 'search' && renderSearch()}
+                        {activeTab === 'settings' && renderSettings()}
+                        {activeTab === 'cloze' && renderClozeSetup()}
+                        {activeTab === 'cloze_run' && renderClozeRun()}
+                        {activeTab === 'quiz_setup' && renderQuizSetup()}
+                        {activeTab === 'quiz_run' && renderQuizRun()}
                     </div>
-                    <div className="v2-bottom" aria-label="Điều hướng">
-                        <button className={activeTab==='home'?'active':''} onClick={()=>setActiveTab('home')}><i className="fas fa-chart-pie"></i><span>Home</span></button>
-                        <button className={activeTab==='decks'?'active':''} onClick={()=>setActiveTab('decks')}><i className="fas fa-layer-group"></i><span>Decks</span></button>
-                        <button onClick={startQuickReview}><i className="fas fa-bolt"></i><span>Review</span></button>
-                        <button className={activeTab==='search'?'active':''} onClick={()=>setActiveTab('search')}><i className="fas fa-search"></i><span>Search</span></button>
-                        <button className={activeTab==='settings'?'active':''} onClick={()=>setActiveTab('settings')}><i className="fas fa-cog"></i><span>More</span></button>
-                    </div>
+
+                    {!['learning', 'cloze_run', 'quiz_run'].includes(activeTab) && (
+                        <div className="v3-bottom pb-safe z-40 border-t border-gray-200/50 shadow-[0_-8px_30px_rgba(0,0,0,0.04)]">
+                            <button className={activeTab==='home'?'active':''} onClick={()=>{setActiveTab('home'); setDashboardListView(null);}}><i className="fas fa-home"></i><span>Home</span></button>
+                            <button className={(activeTab==='decks' || activeTab==='deckDetail' || activeTab==='createDeck' || activeTab==='addword')?'active':''} onClick={()=>setActiveTab('decks')}><i className="fas fa-layer-group"></i><span>Decks</span></button>
+                            <button className={(activeTab==='practice' || activeTab==='cloze' || activeTab==='quiz_setup')?'active':''} onClick={()=>setActiveTab('practice')}><i className="fas fa-dumbbell"></i><span>Ôn tập</span></button>
+                            <button className={activeTab==='search'?'active':''} onClick={()=>setActiveTab('search')}><i className="fas fa-search"></i><span>Tra từ</span></button>
+                            <button className={activeTab==='settings'?'active':''} onClick={()=>setActiveTab('settings')}><i className="fas fa-cog"></i><span>Cài đặt</span></button>
+                        </div>
+                    )}
                 </div>
             );
         };
@@ -892,17 +1553,5 @@
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
-
-<script>
-  // PWA service worker: registration works on HTTPS hosting such as GitHub Pages.
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('./sw.js').catch(function (err) {
-        console.warn('Service worker registration failed:', err);
-      });
-    });
-  }
-</script>
-
 </body>
 </html>
